@@ -4,25 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>HaldarAi</title>
-
-    <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <style>
-        /* --- CSS STYLES (New UI) --- */
         :root {
             --primary-orange: #FF9800;
             --secondary-green: #4CAF50;
             --background-light: #FFF8E1;
             --card-bg: #FFFFFF;
             --text-dark: #424242;
-            --text-light: #757575;
-            --border-color: #f0e9d6;
-            --tg-theme-bg-color: var(--background-light); /* Override Telegram theme */
+            --tg-theme-bg-color: var(--background-light);
         }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             background-color: var(--background-light);
             color: var(--text-dark);
@@ -30,7 +23,6 @@
             display: flex;
             justify-content: center;
         }
-
         .app-container {
             width: 100%;
             max-width: 450px;
@@ -39,347 +31,92 @@
             flex-direction: column;
             background-color: var(--background-light);
         }
-
-        /* Top Bar */
         .top-bar {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border-color);
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f0e9d6;
         }
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .user-profile { display: flex; align-items: center; gap: 10px; }
         .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary-orange);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
+            width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-orange);
+            color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
-        .user-name {
-            font-weight: 600;
-        }
-
-        .balances {
-            display: flex;
-            gap: 10px;
-        }
+        .user-name { font-weight: 600; }
+        .balances { display: flex; gap: 10px; }
         .balance-display {
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9em;
+            padding: 8px 15px; border-radius: 20px; font-weight: 700; display: flex;
+            align-items: center; gap: 5px; font-size: 0.9em;
         }
-        .gem-balance {
-            background-color: #e0f2f1; /* Light Green */
-            color: #00796b;
-        }
-        .coin-balance {
-            background-color: #fff3e0; /* Light Orange */
-            color: #ef6c00;
-        }
-
-        /* Main Content */
-        #main-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
+        .gem-balance { background-color: #e0f2f1; color: #00796b; }
+        .coin-balance { background-color: #fff3e0; color: #ef6c00; }
+        #main-content { flex-grow: 1; overflow-y: auto; padding: 20px; }
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .page-title {
-            font-size: 1.8em;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        /* Task Cards */
+        .page-title { font-size: 1.8em; font-weight: 800; margin-bottom: 20px; }
         .task-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .task-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .task-icon svg { width: 28px; height: 28px; }
+        .task-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
         .task-info { flex-grow: 1; }
         .task-info h3 { margin: 0 0 5px; font-size: 1em; }
         .task-info p { margin: 0; font-size: 0.9em; color: var(--secondary-green); font-weight: bold; }
-        
         .btn-go {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            color: white;
-            background-color: var(--primary-orange);
-            cursor: pointer;
-            transition: background-color 0.2s;
+            padding: 10px 20px; border: none; border-radius: 10px; font-weight: bold; color: white;
+            background-color: var(--primary-orange); cursor: pointer;
         }
         .btn-go:disabled { background-color: #BDBDBD; }
-        .btn-go:active { background-color: #e65100; }
-        
-        /* Referral & Play Page Cards */
-        .feature-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .feature-card h2 { margin-top: 0; }
-        .feature-card p { color: var(--text-light); line-height: 1.5; }
-        .invite-button {
-            background: linear-gradient(45deg, var(--secondary-green), #66BB6A);
-            color: white;
-            font-size: 1.1em;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        /* Bottom Navigation */
         .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 5px;
-            background: var(--card-bg);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
+            display: flex; justify-content: space-around; padding: 10px 5px; background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top-left-radius: 20px; border-top-right-radius: 20px;
         }
         .nav-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-light);
-            font-size: 0.75em;
-            width: 70px;
-            padding: 5px 0;
-            border-radius: 10px;
-            transition: color 0.2s, background-color 0.2s;
+            background: none; border: none; cursor: pointer; display: flex; flex-direction: column;
+            align-items: center; gap: 4px; color: #757575; font-size: 0.75em; width: 70px;
+            padding: 5px 0; border-radius: 10px;
         }
-        .nav-btn svg { width: 24px; height: 24px; stroke: var(--text-light); transition: stroke 0.2s; }
+        .nav-btn svg { width: 24px; height: 24px; stroke: #757575; }
         .nav-btn.active { color: var(--primary-orange); }
         .nav-btn.active svg { stroke: var(--primary-orange); }
     </style>
 </head>
 <body>
-
     <div class="app-container">
-        <!-- Top Status Bar -->
         <header class="top-bar">
             <div class="user-profile">
                 <div id="user-avatar" class="user-avatar">?</div>
-                <span id="user-name" class="user-name">Loading...</span>
+                <span id="user-name" class="user-name">User</span>
             </div>
             <div class="balances">
-                <div class="gem-balance">
-                    <span id="gem-balance">3</span>💎
-                </div>
-                <div class="coin-balance">
-                    <span id="coin-balance">100K</span>🪙
-                </div>
+                <div class="gem-balance"><span id="gem-balance">3</span>💎</div>
+                <div class="coin-balance"><span id="coin-balance">100K</span>🪙</div>
             </div>
         </header>
-
-        <!-- Main Content (Pages) -->
         <main id="main-content">
-            <!-- Earn Page -->
             <div id="earn-page" class="page">
                 <h1 class="page-title">Daily Tasks</h1>
-                
                 <div class="task-card">
-                    <div class="task-icon" style="background: #E3F2FD;">
-                        <!-- Icon: Gift Box -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#1E88E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                    </div>
-                    <div class="task-info">
-                        <h3>Daily Free Box</h3>
-                        <p>+300 Gems</p>
-                    </div>
+                    <div class="task-icon" style="background: #E3F2FD;"><svg viewBox="0 0 24 24" fill="none" stroke="#1E88E5" stroke-width="2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+                    <div class="task-info"><h3>Daily Free Box</h3><p>+300 Gems</p></div>
                     <button id="claim-check-in" class="btn-go">Claim</button>
                 </div>
-
-                <div class="task-card">
-                    <div class="task-icon" style="background: #FCE4EC;">
-                        <!-- Icon: Play/Video -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#D81B60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    </div>
-                    <div class="task-info">
-                        <h3>Watch Latest Video</h3>
-                        <p>+80 Gems</p>
-                    </div>
-                    <button class="btn-go">Go</button>
-                </div>
-                
-                 <div class="task-card">
-                    <div class="task-icon" style="background: #E8EAF6;">
-                        <!-- Icon: Telegram -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#3949AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13 L2 9 L22 2 Z M22 2 L15 22 L11 13 L2 9 L22 2 Z"></path></svg>
-                    </div>
-                    <div class="task-info">
-                        <h3>Visit Channel</h3>
-                        <p>+10 Gems</p>
-                    </div>
-                    <button class="btn-go">Go</button>
-                </div>
-            </div>
-
-            <!-- Play Page -->
-            <div id="play-page" class="page">
-                 <h1 class="page-title">Play Zone</h1>
-                 <div class="feature-card">
-                     <img src="https://i.ibb.co/6wN7dYk/btc-dash.png" alt="BTC Dash" style="width: 150px; margin-bottom: 10px;">
-                     <h2>BTC Dash</h2>
-                     <p>Trade and test your skills in a fun, simulated environment.</p>
-                     <button class="btn-go" style="padding: 12px 40px; font-size: 1em;">Start</button>
-                 </div>
-                 <div class="feature-card">
-                     <img src="https://i.ibb.co/s5d5zsz/under-construction.png" alt="Under Construction" style="width: 120px; margin-bottom: 10px;">
-                     <h2>More Games</h2>
-                     <p>New exciting games are coming soon. Stay tuned!</p>
-                 </div>
-            </div>
-
-            <!-- Referral Page -->
-            <div id="referral-page" class="page">
-                 <h1 class="page-title">Refer Friends</h1>
-                 <div class="feature-card">
-                     <img src="https://i.ibb.co/2d11g9k/referral-cat.png" alt="Invite Friends" style="width: 150px; margin-bottom: 10px;">
-                     <h2>Invite & Earn Big!</h2>
-                     <p>Get <strong>50%</strong> from your referral's trades and a <strong>10% bonus</strong> on their deposits. Share the fun!</p>
-                     <button id="invite-btn" class="invite-button">Invite a Fren</button>
-                 </div>
             </div>
         </main>
-
-        <!-- Bottom Navigation Bar -->
         <footer class="bottom-nav">
-            <button class="nav-btn" data-page="play-page">
-                <!-- Icon: Gamepad -->
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20.5v-3.5a2.5 2.5 0 0 1 5 0v3.5"/><path d="M12 17a2.5 2.5 0 0 1-2.5-2.5V9.055a2.5 2.5 0 1 1 5 0V14.5A2.5 2.5 0 0 1 12 17z"/><path d="M12 17a2.5 2.5 0 0 0 2.5-2.5V9.055a2.5 2.5 0 1 0-5 0V14.5A2.5 2.5 0 0 0 12 17z"/><path d="M4.5 14H2m20 0h-2.5"/><circle cx="12" cy="12" r="10"/></svg>
-                <span>Play</span>
-            </button>
             <button class="nav-btn active" data-page="earn-page">
-                <!-- Icon: Gem -->
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 15L22 7l-10-5z"/><path d="M2 7l10 15L22 7"/><path d="M12 2v20"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 15L22 7l-10-5z"/><path d="M2 7l10 15L22 7"/><path d="M12 2v20"/></svg>
                 <span>Earn</span>
-            </button>
-            <button class="nav-btn" data-page="referral-page">
-                <!-- Icon: Users -->
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Frens</span>
             </button>
         </footer>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- SDK & App Setup ---
             const tg = window.Telegram.WebApp;
             tg.ready();
             tg.expand();
-            tg.setHeaderColor('#FFF8E1'); // Match header with body
-
-            // --- DOM Elements ---
-            const userAvatarEl = document.getElementById('user-avatar');
-            const userNameEl = document.getElementById('user-name');
-            const gemBalanceEl = document.getElementById('gem-balance');
-            const coinBalanceEl = document.getElementById('coin-balance');
-            const claimCheckInBtn = document.getElementById('claim-check-in');
-            const inviteBtn = document.getElementById('invite-btn');
-            const mainContent = document.getElementById('main-content');
-            const navButtons = document.querySelectorAll('.nav-btn');
-
-            // --- App State ---
-            let state = {
-                user: tg.initDataUnsafe?.user || { first_name: 'Guest', id: '0' },
-                gemBalance: 3,
-                coinBalance: 100000,
-                isCheckInClaimed: false
-            };
-
-            // --- Functions ---
-            function updateUI() {
-                userNameEl.textContent = state.user.first_name;
-                userAvatarEl.textContent = state.user.first_name.charAt(0).toUpperCase();
-                gemBalanceEl.textContent = state.gemBalance.toLocaleString();
-                coinBalanceEl.textContent = state.coinBalance.toLocaleString();
-                
-                if (state.isCheckInClaimed) {
-                    claimCheckInBtn.textContent = 'Claimed';
-                    claimCheckInBtn.disabled = true;
-                }
-            }
-
-            function switchPage(pageId) {
-                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-                document.getElementById(pageId).classList.add('active');
-
-                navButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.page === pageId);
-                });
-                mainContent.scrollTop = 0;
-            }
-
-            // --- Event Listeners ---
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => switchPage(button.dataset.page));
-            });
-
-            claimCheckInBtn.addEventListener('click', () => {
-                if (!state.isCheckInClaimed) {
-                    state.gemBalance += 300;
-                    state.isCheckInClaimed = true;
-                    updateUI();
-                    tg.HapticFeedback.notificationOccurred('success');
-                }
-            });
-
-            inviteBtn.addEventListener('click', () => {
-                const botUsername = tg.initDataUnsafe?.bot_username || 'your_bot_username'; 
-                const referralLink = `https://t.me/${botUsername}?start=${state.user.id}`;
-                const shareText = `🐱 Join me on HaldarAi! Let's earn together.`;
-                tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(shareText)}`);
-            });
-
-            // --- Initial Setup ---
-            updateUI();
-            switchPage('earn-page'); // Start on the 'Earn' page
+            const state = { user: tg.initDataUnsafe?.user || { first_name: 'Guest' } };
+            document.getElementById('user-name').textContent = state.user.first_name;
+            document.getElementById('user-avatar').textContent = state.user.first_name.charAt(0);
+            document.getElementById('earn-page').classList.add('active');
         });
     </script>
 </body>
