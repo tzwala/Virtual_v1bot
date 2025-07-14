@@ -1050,7 +1050,31 @@
 
         <section id="home-page" class="page-section">
             <div id="tournament-list">
-                <!-- Tournament cards will be injected here -->
+                <!-- Static example card. This would have been injected by JavaScript. -->
+                 <div class="card tournament-card">
+                    <img src="https://via.placeholder.com/400x180.png/673AB7/FFFFFF?text=Tournament" alt="Tournament Banner" class="tournament-banner">
+                    <div class="card-content">
+                        <div class="details-wrapper">
+                            <div class="title-container">
+                                 <h3 class="card-title">Example Tournament</h3>
+                                 <span class="tournament-status-badge status-active">Active</span>
+                            </div>
+                            <div class="tournament-info">
+                                <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹50</strong></span></div>
+                                <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹1000</strong></span></div>
+                                <div class="info-item"><i class="material-icons">groups</i><span>Player: <strong>5/10</strong></span></div>
+                                <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>Jul 15, 2025, 8:00 PM</strong></span></div>
+                            </div>
+                            <div class="participant-list"><strong>Joined (5/10):</strong> <span>Player1</span><span>Player2</span><span>Player3</span><span>Player4</span><span>Player5</span></div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="button join-button">
+                                <i class="material-icons">login</i>
+                                <span>Join Now</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1232,49 +1256,9 @@
     </div>
 
     <script type="module">
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import {
-            getAuth,
-            createUserWithEmailAndPassword,
-            signInWithEmailAndPassword,
-            signOut,
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import {
-            getDatabase,
-            ref,
-            set,
-            get,
-            onValue,
-            push,
-            query,
-            orderByChild,
-            equalTo,
-            update,
-            serverTimestamp,
-            runTransaction
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-        // --- Firebase Config ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyD0xOZyow2k2JYfASpsNylT5wSkjogDrtc",
-            authDomain: "tournament-6d8b5.firebaseapp.com",
-            databaseURL: "https://tournament-6d8b5-default-rtdb.firebaseio.com",
-            projectId: "tournament-6d8b5",
-            storageBucket: "tournament-6d8b5.firebasestorage.app",
-            messagingSenderId: "579100292095",
-            appId: "1:579100292095:web:3e741fab0ccd4cd0032dca",
-            measurementId: "G-EXLFQ7Z5BQ"
-        };
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-
-        // --- App Version ---
-        const currentAppVersion = "1.0.0";
-
+        // --- All Firebase related code has been removed. ---
+        // --- The application is now a static template. ---
+        // --- Functionality like login, signup, loading data, and submitting forms is disabled. ---
 
         // --- DOM Elements ---
         const mainLoader = document.getElementById('main-loader');
@@ -1351,18 +1335,7 @@
         const walletTransactionsBtn = document.getElementById('wallet-transactions-btn');
         const walletAddCashBtn = document.getElementById('wallet-add-cash-btn');
         const walletWithdrawBtn = document.getElementById('wallet-withdraw-btn');
-
-        let currentUser = null;
-        let currentUserData = null;
-
-        let currentRealBalance = 0;
-        let currentBonusBalance = 0;
-
-        let allTournamentsListener = null;
-        let withdrawalHistoryListener = null;
-        let appUpdateListener = null;
-        let isUpdateAvailable = false;
-        let availableUpdateData = null;
+        
         let pageHistory = ['auth-section'];
 
         // --- UI / Theme Management ---
@@ -1389,7 +1362,7 @@
         }
 
         function showPage(pageId, isBack = false) {
-            if (!isBack && pageId !== pageHistory[pageHistory.length - 1]) {
+             if (!isBack && pageId !== pageHistory[pageHistory.length - 1]) {
                 pageHistory.push(pageId);
             }
 
@@ -1403,7 +1376,7 @@
             } else if (pageId === 'auth-section') {
                 mainAppBar.style.display = 'none';
                 secondaryAppBar.style.display = 'none';
-                pageHistory = ['auth-section']; // Reset history on logout/auth screen
+                 pageHistory = ['auth-section']; 
             } else {
                 mainAppBar.style.display = 'none';
                 secondaryAppBar.style.display = 'flex';
@@ -1430,55 +1403,7 @@
             drawerMenu.classList.remove('open');
             drawerOverlay.classList.remove('open');
         }
-
-        function formatTimestamp(timestamp) {
-            if (!timestamp) return 'N/A';
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-IN', {
-                dateStyle: 'medium',
-                timeStyle: 'short'
-            });
-        }
-
-        function formatMatchTime(dateStr, timeStr) {
-            if (!dateStr || !timeStr) return 'N/A';
-            const [year, month, day] = dateStr.split('-');
-            const [hours, minutes] = timeStr.split(':');
-            const date = new Date(year, month - 1, day, hours, minutes);
-            return date.toLocaleString('en-IN', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
-        }
-
-        function updateWalletDisplay(real, bonus) {
-            currentRealBalance = real || 0;
-            currentBonusBalance = bonus || 0;
-            const totalPlayable = currentRealBalance + currentBonusBalance;
-
-            // Update top app bar - ONLY show total balance
-            walletBalance.textContent = `₹${totalPlayable.toFixed(2)}`;
-            walletBalanceBonus.style.display = 'none'; // Ensure bonus is always hidden
-
-            // Update withdraw page
-            withdrawAvailableBalance.textContent = `₹${currentRealBalance.toFixed(2)}`;
-
-            // Update dedicated wallet page
-            updateWalletPageDisplay();
-        }
-
-        function updateWalletPageDisplay() {
-            const total = currentRealBalance + currentBonusBalance;
-            walletPageTotal.textContent = `₹${total.toFixed(2)}`;
-            walletPageDeposit.textContent = `₹${currentRealBalance.toFixed(2)}`;
-            walletPageBonus.textContent = `₹${currentBonusBalance.toFixed(2)}`;
-        }
-
-
+        
         function displayMessage(element, message, isError = true) {
             element.textContent = message;
             element.style.display = 'flex';
@@ -1490,414 +1415,67 @@
         }
 
         // --- Authentication ---
-        onAuthStateChanged(auth, (user) => {
-            showLoader();
-            if (user) {
-                currentUser = user;
-                const userRef = ref(db, `users/${user.uid}`);
-                onValue(userRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        currentUserData = snapshot.val();
-                        if (currentUserData.isBlocked) {
-                            alert('Your account has been blocked. Please contact the administrator.');
-                            handleLogout();
-                            return;
-                        }
-                        profileUsername.textContent = currentUserData.username;
-                        drawerUsername.textContent = currentUserData.username;
-                        updateWalletDisplay(currentUserData.walletBalance, currentUserData.bonusBalance);
-
-                        profilePageUsername.textContent = currentUserData.username;
-                        profilePageEmail.textContent = currentUserData.email;
-
-                        showPage('home-page');
-                        loadAllTournaments();
-                        loadWithdrawalHistory();
-                        checkForAppUpdate();
-                    } else {
-                        handleLogout();
-                    }
-                    hideLoader();
-                }, (error) => {
-                    handleLogout();
-                    hideLoader();
-                });
-            } else {
-                currentUser = null;
-                currentUserData = null;
-                if (allTournamentsListener) allTournamentsListener();
-                if (withdrawalHistoryListener) withdrawalHistoryListener();
-                if (appUpdateListener) appUpdateListener();
-                showPage('auth-section');
-                loginCard.style.display = 'block';
-                signupCard.style.display = 'none';
-                loginForm.reset();
-                signupForm.reset();
-                loginError.style.display = 'none';
-                signupError.style.display = 'none';
-                hideLoader();
-            }
-        });
-
-        loginForm.addEventListener('submit', async (e) => {
+        // All Firebase auth logic removed. Forms will not work.
+        loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-            loginError.style.display = 'none';
-            showLoader();
-
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                console.error("Login error:", error.message || error);
-                displayMessage(loginError, "Login failed: " + mapAuthError(error.code));
-                hideLoader();
-            }
+            displayMessage(loginError, "Login functionality is disabled.");
         });
 
-        signupForm.addEventListener('submit', async (e) => {
+        signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const username = document.getElementById('signup-username').value.trim().toLowerCase();
-            const email = document.getElementById('signup-email').value.trim();
-            const password = document.getElementById('signup-password').value;
-            signupError.style.display = 'none';
-
-            if (!username || !email || !password) {
-                displayMessage(signupError, "All fields are required.");
-                return;
-            }
-            if (password.length < 6) {
-                displayMessage(signupError, "Password must be at least 6 characters long.");
-                return;
-            }
-            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-                displayMessage(signupError, "Username can only contain letters, numbers, and underscores (_).");
-                return;
-            }
-
-            showLoader();
-            const usernameRef = ref(db, `usernames/${username}`);
-            try {
-                const usernameSnap = await get(usernameRef);
-                if (usernameSnap.exists()) {
-                    displayMessage(signupError, "This username is already taken. Please choose another.");
-                    hideLoader();
-                    return;
-                }
-
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                const userData = {
-                    username: username,
-                    email: user.email,
-                    walletBalance: 0,
-                    bonusBalance: 0,
-                    createdAt: serverTimestamp(),
-                    isBlocked: false
-                };
-                await set(ref(db, `users/${user.uid}`), userData);
-                await set(ref(db, `usernames/${username}`), {
-                    uid: user.uid
-                });
-            } catch (error) {
-                console.error("Signup error:", error.message || error);
-                displayMessage(signupError, "Sign up failed: " + mapAuthError(error.code));
-                hideLoader();
-            }
+            displayMessage(signupError, "Signup functionality is disabled.");
         });
-
-        logoutBtn.addEventListener('click', handleLogout);
-
-        function handleLogout() {
-            showLoader();
-            signOut(auth).catch((error) => {
-                console.error("Sign-out error:", error.message || error);
-                hideLoader();
-            });
-        }
+        
+        logoutBtn.addEventListener('click', () => {
+            showPage('auth-section');
+        });
 
         showSignupBtn.addEventListener('click', (e) => {
             e.preventDefault();
             loginCard.style.display = 'none';
             signupCard.style.display = 'block';
-            loginError.style.display = 'none';
-            loginForm.reset();
         });
 
         showLoginBtn.addEventListener('click', (e) => {
             e.preventDefault();
             signupCard.style.display = 'none';
             loginCard.style.display = 'block';
-            signupError.style.display = 'none';
-            signupForm.reset();
         });
-
-        function mapAuthError(code) {
-            switch (code) {
-                case 'auth/invalid-email':
-                    return 'Invalid email format.';
-                case 'auth/user-not-found':
-                    return 'No user found with this email.';
-                case 'auth/wrong-password':
-                    return 'Incorrect password.';
-                case 'auth/email-already-in-use':
-                    return 'This email is already registered.';
-                case 'auth/weak-password':
-                    return 'Password is too weak.';
-                case 'auth/network-request-failed':
-                    return 'Network error. Please try again.';
-                default:
-                    return `An unknown error occurred.`;
-            }
-        }
-
+        
         // --- Navigation Handlers ---
         drawerToggleBtn.addEventListener('click', toggleDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
         navHome.addEventListener('click', () => showPage('home-page'));
         navProfile.addEventListener('click', () => showPage('profile-page'));
         navWallet.addEventListener('click', () => showPage('wallet-page'));
-        navMyTournaments.addEventListener('click', () => {
-            showPage('my-tournaments-page');
-            loadMyJoinedTournaments();
-        });
-        navLeaderboard.addEventListener('click', () => {
-            showPage('leaderboard-page');
-            loadLeaderboard();
-        });
+        navMyTournaments.addEventListener('click', () => showPage('my-tournaments-page'));
+        navLeaderboard.addEventListener('click', () => showPage('leaderboard-page'));
 
         backBtn.addEventListener('click', () => {
-            if (pageHistory.length > 1) {
+             if (pageHistory.length > 1) {
                 pageHistory.pop();
                 const prevPage = pageHistory[pageHistory.length - 1];
-                showPage(prevPage, true); // true indicates it's a back navigation
+                showPage(prevPage, true);
             }
         });
 
         // Wallet page button navigation
         walletAddCashBtn.addEventListener('click', () => showPage('add-funds-page'));
         walletWithdrawBtn.addEventListener('click', () => showPage('withdraw-page'));
-        walletTransactionsBtn.addEventListener('click', () => {
-            showPage('my-tournaments-page');
-            loadMyJoinedTournaments();
-        });
-
-
-        // --- Tournament Loading & Display ---
-        function loadAllTournaments() {
-            const tournamentsRef = ref(db, 'tournaments');
-            if (allTournamentsListener) allTournamentsListener();
-            allTournamentsListener = onValue(tournamentsRef, (snapshot) => {
-                tournamentList.innerHTML = '';
-                if (!snapshot.exists()) {
-                    tournamentList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">No tournaments right now.</p>';
-                    return;
-                }
-                const tournaments = [];
-                snapshot.forEach(child => tournaments.push({
-                    id: child.key,
-                    ...child.val()
-                }));
-                tournaments.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                tournaments.forEach(t => displayTournamentCard(t));
-            }, (error) => {
-                tournamentList.innerHTML = '<p style="text-align: center; color: var(--error-color); grid-column: 1 / -1;">Failed to load tournaments.</p>';
-            });
-        }
-
-        async function displayTournamentCard(data) {
-            const card = document.createElement('div');
-            card.className = 'card tournament-card';
-            card.dataset.tournamentId = data.id;
-
-            const participants = data.participants ? Object.keys(data.participants) : [];
-            const participantCount = participants.length;
-            const maxPlayers = data.maxPlayers || 0;
-            const isFull = participantCount >= maxPlayers;
-            const hasJoined = currentUser && data.participants && data.participants[currentUser.uid];
-
-            const status = data.status || 'active';
-            let buttonText = 'Join Now';
-            let buttonIcon = 'login';
-            let isButtonDisabled = false;
-
-            if (status === 'finished') {
-                buttonText = 'Finished';
-                buttonIcon = 'check_circle_outline';
-                isButtonDisabled = true;
-            } else if (status === 'cancelled') {
-                buttonText = 'Cancelled';
-                buttonIcon = 'cancel';
-                isButtonDisabled = true;
-            } else {
-                if (isFull) {
-                    buttonText = 'Full';
-                    isButtonDisabled = true;
-                }
-                if (hasJoined) {
-                    buttonText = 'Joined';
-                    buttonIcon = 'check_circle';
-                    isButtonDisabled = true;
-                }
-            }
-
-            const statusBadgeHtml = `<span class="tournament-status-badge status-${status}">${status}</span>`;
-
-            let winnerHtml = '';
-            if (status === 'finished' && data.winner && data.winner.username) {
-                winnerHtml = `
-                    <div class="winner-display">
-                        <i class="material-icons">emoji_events</i>
-                        <span>Winner: <strong>${data.winner.username}</strong></span>
-                    </div>
-                `;
-            }
-
-            let bannerHtml = data.bannerUrl ? `<img src="${data.bannerUrl}" alt="Tournament Banner" class="tournament-banner" loading="lazy">` : '';
-
-            let participantsHtml = `<div class="participant-list">Joined (${participantCount}/${maxPlayers}): Loading...</div>`;
-            if (participantCount > 0) {
-                try {
-                    const names = await fetchParticipantUsernames(participants);
-                    participantsHtml = `<div class="participant-list"><strong>Joined (${participantCount}/${maxPlayers}):</strong> ${names.map(name => `<span>${name}</span>`).join('') || 'None'}</div>`;
-                } catch (err) {
-                    participantsHtml = `<div class="participant-list"><strong>Joined (${participantCount}/${maxPlayers}):</strong> Error loading</div>`;
-                }
-            } else {
-                participantsHtml = `<div class="participant-list"><strong>Joined (${participantCount}/${maxPlayers}):</strong> None</div>`;
-            }
-
-            let roomInfoHtml = '';
-            if (hasJoined && status === 'active' && (data.roomId || data.roomPassword)) {
-                roomInfoHtml = `<div class="room-details"><p><strong>Room ID:</strong> ${data.roomId || 'TBA'}<br><strong>Password:</strong> ${data.roomPassword || 'TBA'}</p></div>`;
-            }
-
-            card.innerHTML = `
-                ${bannerHtml}
-                <div class="card-content">
-                    <div class="details-wrapper">
-                        <div class="title-container">
-                             <h3 class="card-title">${data.name || 'N/A'}</h3>
-                             ${statusBadgeHtml}
-                        </div>
-                        <div class="tournament-info">
-                            <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹${data.entryFee || 0}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹${data.prize || 0}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">groups</i><span>Player: <strong>${participantCount}/${maxPlayers}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>${formatMatchTime(data.matchDate, data.matchTime)}</strong></span></div>
-                        </div>
-                        ${winnerHtml}
-                        ${roomInfoHtml}
-                        ${participantsHtml}
-                    </div>
-                    <div class="card-actions">
-                        <button class="button join-button" data-tournament-id="${data.id}" data-entry-fee="${data.entryFee || 0}" ${isButtonDisabled ? 'disabled' : ''}>
-                            <i class="material-icons">${buttonIcon}</i>
-                            <span>${buttonText}</span>
-                        </button>
-                    </div>
-                </div>`;
-            tournamentList.appendChild(card);
-
-            const joinButton = card.querySelector('.join-button');
-            if (joinButton && !isButtonDisabled) {
-                joinButton.addEventListener('click', handleJoinTournament);
-            }
-        }
-
-        async function fetchParticipantUsernames(uids) {
-            const promises = uids.map(uid => get(ref(db, `users/${uid}/username`)));
-            const snapshots = await Promise.all(promises);
-            return snapshots.map(snap => snap.val() || 'Unknown');
-        }
-
-        async function handleJoinTournament(event) {
-            if (isUpdateAvailable && availableUpdateData) {
-                showUpdateModal(availableUpdateData);
-                return;
-            }
-
-            if (!currentUser || !currentUserData) {
-                alert("Please log in first to join.");
-                return;
-            }
-
-            const button = event.currentTarget;
-            const tournamentId = button.dataset.tournamentId;
-            const entryFee = parseInt(button.dataset.entryFee, 10);
-
-            const totalPlayableBalance = currentRealBalance + currentBonusBalance;
-
-            if (isNaN(entryFee) || totalPlayableBalance < entryFee) {
-                alert(isNaN(entryFee) ? "Invalid entry fee." : "Insufficient balance. Please add funds.");
-                return;
-            }
-
-            if (!confirm(`Join tournament for ₹${entryFee}? This will use your bonus balance first.`)) return;
-
-            button.disabled = true;
-            button.querySelector('span').textContent = 'Joining...';
-
-            const tournamentRef = ref(db, `tournaments/${tournamentId}`);
-
-            try {
-                const transactionResult = await runTransaction(tournamentRef, (currentData) => {
-                    if (!currentData) return;
-                    if (currentData.status !== 'active') return;
-                    if (currentData.participants && currentData.participants[currentUser.uid]) return;
-
-                    const participantCount = currentData.participants ? Object.keys(currentData.participants).length : 0;
-                    if (participantCount >= currentData.maxPlayers) return;
-
-                    currentData.participants = currentData.participants || {};
-                    currentData.participants[currentUser.uid] = true;
-                    return currentData;
-                });
-
-                if (transactionResult.committed) {
-                    const bonusToUse = Math.min(entryFee, currentBonusBalance);
-                    const realMoneyToUse = entryFee - bonusToUse;
-
-                    const newRealBalance = currentRealBalance - realMoneyToUse;
-                    const newBonusBalance = currentBonusBalance - bonusToUse;
-
-                    await update(ref(db, `users/${currentUser.uid}`), {
-                        walletBalance: newRealBalance,
-                        bonusBalance: newBonusBalance
-                    });
-
-                    alert(`Successfully joined the tournament! ₹${entryFee} has been deducted (₹${bonusToUse} from bonus, ₹${realMoneyToUse} from main wallet).`);
-                } else {
-                    alert("Failed to join tournament. It might be full, cancelled, or you might have already joined.");
-                    button.disabled = false;
-                    button.querySelector('span').textContent = 'Join Now';
-                }
-            } catch (error) {
-                console.error("Error joining tournament:", error);
-                alert("An error occurred while trying to join. Your balance has not been changed.");
-                button.disabled = false;
-                button.querySelector('span').textContent = 'Join Now';
-            }
-        }
+        walletTransactionsBtn.addEventListener('click', () => showPage('my-tournaments-page'));
 
         // --- Add Funds Logic ---
         addFundsForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (!currentUserData) {
-                alert("Please log in to add funds.");
-                return;
-            }
-
             const amount = parseFloat(depositAmountInput.value);
             if (isNaN(amount) || amount < 10) {
                 alert("Please enter a valid amount (minimum ₹10).");
                 return;
             }
-
+             // Logic to generate QR code remains for UI demonstration
             const vpa = '7022785980@ibl';
             const payeeName = 'Tournament Admin';
-            const transactionNote = `Deposit for user: ${currentUserData.username}`;
+            const transactionNote = `Deposit for user`;
 
             const upiUrl = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(payeeName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
@@ -1906,259 +1484,14 @@
             upiPaymentLink.href = upiUrl;
             paymentAmountDisplay.textContent = `Amount to Pay: ₹${amount.toFixed(2)}`;
             paymentDetailsContainer.style.display = 'block';
-            paymentDetailsContainer.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
         });
 
         // --- Withdrawal ---
-        withdrawForm.addEventListener('submit', async (e) => {
+        withdrawForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (!currentUser || !currentUserData) return;
-
-            const phonePe = withdrawPhonePeInput.value;
-            const amount = parseInt(withdrawAmountInput.value, 10);
-            withdrawError.style.display = 'none';
-            withdrawSuccess.style.display = 'none';
-
-            if (!/^[6-9]\d{9}$/.test(phonePe)) {
-                displayMessage(withdrawError, "Please enter a valid 10-digit Indian mobile number.");
-                return;
-            }
-            if (isNaN(amount) || amount <= 0) {
-                displayMessage(withdrawError, "Please enter a valid amount.");
-                return;
-            }
-
-            if (amount > currentRealBalance) {
-                displayMessage(withdrawError, "Insufficient withdrawable balance.");
-                return;
-            }
-
-            const button = withdrawForm.querySelector('button[type="submit"]');
-            button.disabled = true;
-            button.textContent = 'Submitting...';
-
-            const withdrawalData = {
-                userId: currentUser.uid,
-                username: currentUserData.username,
-                phonePeNumber: phonePe,
-                amount: amount,
-                status: 'pending',
-                requestedAt: serverTimestamp()
-            };
-
-            try {
-                const newWithdrawalRef = push(ref(db, 'withdrawals'));
-                await set(newWithdrawalRef, withdrawalData);
-
-                const newBalance = currentRealBalance - amount;
-                await update(ref(db, `users/${currentUser.uid}`), {
-                    walletBalance: newBalance
-                });
-
-                displayMessage(withdrawSuccess, `Withdrawal request for ₹${amount} submitted successfully.`, false);
-                withdrawForm.reset();
-            } catch (error) {
-                console.error("Withdrawal request error:", error);
-                displayMessage(withdrawError, "Failed to submit request.");
-            } finally {
-                button.disabled = false;
-                button.innerHTML = '<i class="material-icons">send</i>Submit Request';
-            }
+            displayMessage(withdrawError, "Withdrawal functionality is disabled.");
         });
 
-        function loadWithdrawalHistory() {
-            if (!currentUser) return;
-            const userWithdrawalsRef = query(ref(db, 'withdrawals'), orderByChild('userId'), equalTo(currentUser.uid));
-            if (withdrawalHistoryListener) withdrawalHistoryListener();
-            withdrawalHistoryListener = onValue(userWithdrawalsRef, (snapshot) => {
-                withdrawalHistory.innerHTML = '';
-                if (!snapshot.exists()) {
-                    withdrawalHistory.innerHTML = '<p style="padding: 24px;">No withdrawal history.</p>';
-                    return;
-                }
-
-                const requests = [];
-                snapshot.forEach(childSnapshot => requests.push({
-                    id: childSnapshot.key,
-                    ...childSnapshot.val()
-                }));
-                requests.sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
-
-                let historyHtml = requests.map(req => `
-                    <div class="history-item">
-                        <div class="history-details">
-                            <p><strong>Amount:</strong> ₹${req.amount} to ${req.phonePeNumber}</p>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary);">On: ${formatTimestamp(req.requestedAt)}</p>
-                        </div>
-                        <span class="status ${req.status}">${req.status}</span>
-                    </div>`).join('');
-                withdrawalHistory.innerHTML = historyHtml || '<p style="padding: 24px;">No withdrawal history.</p>';
-            }, (error) => {
-                withdrawalHistory.innerHTML = '<p style="padding: 24px; color: var(--error-color);">Error loading history.</p>';
-            });
-        }
-
-        function loadMyJoinedTournaments() {
-            if (!currentUser) return;
-            myTournamentsList.innerHTML = '<div class="loader" style="display: block; margin: 24px auto;"></div>';
-
-            get(ref(db, 'tournaments')).then(snapshot => {
-                if (!snapshot.exists()) {
-                    myTournamentsList.innerHTML = '<p style="padding: 24px;">You have not joined any tournaments yet.</p>';
-                    return;
-                }
-
-                const joinedTournaments = [];
-                snapshot.forEach(child => {
-                    const tournament = {
-                        id: child.key,
-                        ...child.val()
-                    };
-                    if (tournament.participants && tournament.participants[currentUser.uid]) {
-                        joinedTournaments.push(tournament);
-                    }
-                });
-
-                if (joinedTournaments.length === 0) {
-                    myTournamentsList.innerHTML = '<p style="padding: 24px;">You have not joined any tournaments yet.</p>';
-                    return;
-                }
-
-                joinedTournaments.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-                const historyHtml = joinedTournaments.map(t => {
-                    let statusHtml = '';
-                    switch (t.status) {
-                        case 'finished':
-                            if (t.winner && t.winner.uid === currentUser.uid) {
-                                statusHtml = `<span class="status accepted">WIN - ₹${t.prize}</span>`;
-                            } else if (t.winner && t.winner.uid) {
-                                statusHtml = `<span class="status rejected">LOSS</span>`;
-                            } else {
-                                statusHtml = `<span class="status pending">FINISHED</span>`;
-                            }
-                            break;
-                        case 'cancelled':
-                            statusHtml = `<span class="status rejected">CANCELLED</span>`;
-                            break;
-                        case 'active':
-                        default:
-                            statusHtml = `<span class="status pending">ACTIVE</span>`;
-                            break;
-                    }
-
-                    return `
-                        <div class="history-item">
-                            <div class="history-details">
-                                <p><strong>${t.name}</strong></p>
-                                <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    Fee: ₹${t.entryFee} | On: ${formatMatchTime(t.matchDate, t.matchTime)}
-                                </p>
-                            </div>
-                            ${statusHtml}
-                        </div>
-                    `;
-                }).join('');
-
-                myTournamentsList.innerHTML = historyHtml;
-
-            }).catch(error => {
-                console.error("Error loading joined tournaments:", error);
-                myTournamentsList.innerHTML = '<p style="padding: 24px; color: var(--error-color);">Error loading your tournament history.</p>';
-            });
-        }
-
-        function loadLeaderboard() {
-            leaderboardContent.innerHTML = '<div class="loader" style="display: block;"></div>';
-            const finishedTournamentsRef = query(ref(db, 'tournaments'), orderByChild('status'), equalTo('finished'));
-            get(finishedTournamentsRef).then(snapshot => {
-                leaderboardContent.innerHTML = '';
-                if (!snapshot.exists()) {
-                    leaderboardContent.innerHTML = '<p style="padding: 24px;">No finished tournaments or winners declared yet.</p>';
-                    return;
-                }
-                const winners = [];
-                snapshot.forEach(childSnapshot => {
-                    const data = childSnapshot.val();
-                    if (data.winner && data.winner.uid && data.winner.username) {
-                        winners.push({
-                            tournamentName: data.name || 'Unnamed Tournament',
-                            winnerUsername: data.winner.username,
-                            wonAt: data.finishedAt || data.createdAt || 0
-                        });
-                    }
-                });
-                winners.sort((a, b) => (b.wonAt || 0) - (a.wonAt || 0));
-                if (winners.length === 0) {
-                    leaderboardContent.innerHTML = '<p style="padding: 24px;">No winners have been declared yet.</p>';
-                    return;
-                }
-                const leaderboardHtml = winners.map((entry, index) => `
-                    <div class="leaderboard-entry">
-                        <span class="rank">${index + 1}</span>
-                        <i class="material-icons">${index < 3 ? 'military_tech' : 'emoji_events'}</i>
-                        <div class="winner-info">
-                            <div class="winner-name">${entry.winnerUsername}</div>
-                            <div class="tournament-name">Won: ${entry.tournamentName}</div>
-                        </div>
-                        <span class="won-at">${formatTimestamp(entry.wonAt)}</span>
-                    </div>`).join('');
-                leaderboardContent.innerHTML = leaderboardHtml;
-            }).catch(error => {
-                leaderboardContent.innerHTML = '<p style="padding: 24px; color: var(--error-color);">Failed to load leaderboard.</p>';
-            });
-        }
-
-        // --- App Update Checker ---
-        function checkForAppUpdate() {
-            if (appUpdateListener) appUpdateListener();
-            const appUpdateRef = ref(db, 'appUpdate');
-            appUpdateListener = onValue(appUpdateRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const updateData = snapshot.val();
-                    if (updateData.version && updateData.version > currentAppVersion) {
-                        isUpdateAvailable = true;
-                        availableUpdateData = updateData;
-                    } else {
-                        isUpdateAvailable = false;
-                        availableUpdateData = null;
-                    }
-                } else {
-                    isUpdateAvailable = false;
-                    availableUpdateData = null;
-                }
-            });
-        }
-
-        function showUpdateModal(data) {
-            updateVersionDisplay.textContent = data.version || 'N/A';
-            updateDescriptionDisplay.textContent = data.description || 'No description provided.';
-            updateNowLink.href = data.updateLink || '#';
-
-            if (data.forceUpdate) {
-                updateLaterBtn.style.display = 'none';
-            } else {
-                updateLaterBtn.style.display = 'inline-flex';
-            }
-
-            updateModal.style.display = 'block';
-            updateOverlay.style.display = 'block';
-        }
-
-        function hideUpdateModal() {
-            updateModal.style.display = 'none';
-            updateOverlay.style.display = 'none';
-        }
-
-        updateLaterBtn.addEventListener('click', hideUpdateModal);
-        updateOverlay.addEventListener('click', () => {
-            if (updateLaterBtn.style.display !== 'none') {
-                hideUpdateModal();
-            }
-        });
     </script>
 </body>
 
