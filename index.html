@@ -3,339 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tournament App</title>
-    <!-- Google Fonts for a modern look -->
+    <title>Tournament Mobile App</title>
+    <!-- Google Fonts: Inter is a great choice for modern UIs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-color: #3d5afe;
-            --secondary-color: #1e2a78;
-            --background-color: #f0f2f5;
-            --card-background: #ffffff;
-            --text-color: #333;
-            --light-text-color: #666;
-            --border-color: #e0e0e0;
-            --winner-color: #4caf50;
-            --loser-color: #f44336;
+            --bg-color: #121212;
+            --primary-card-bg: #1e1e1e;
+            --secondary-card-bg: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a7a7a7;
+            --accent-color: #3d5afe;
+            --live-color: #ff3b30;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
+            font-family: 'Inter', sans-serif;
+            background-color: #333;
             margin: 0;
-            padding: 20px;
-            color: var(--text-color);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        /* --- Header Styles --- */
-        .header {
-            background: var(--primary-color);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-
-        /* --- Card Styles --- */
-        .card {
-            background-color: var(--card-background);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        .card-header {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            color: var(--secondary-color);
-        }
-
-        /* --- Bracket Styles --- */
-        .bracket {
             display: flex;
-            justify-content: space-between;
-            overflow-x: auto;
-            padding-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
         }
 
-        .round {
+        /* The phone's frame */
+        .mobile-frame {
+            width: 390px;
+            height: 844px;
+            background-color: var(--bg-color);
+            border-radius: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            border: 10px solid #111;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            flex-grow: 1;
-            min-width: 250px;
         }
-        
-        .round-title {
-            text-align: center;
+
+        /* --- App Header --- */
+        .app-header {
+            padding: 25px 20px 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-title h1 {
+            color: var(--text-primary);
+            font-size: 28px;
+            margin: 0;
             font-weight: 700;
-            color: var(--primary-color);
+        }
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 4px 0 0;
+        }
+        .header-actions i {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-left: 16px;
+        }
+
+        /* --- Main Content Area --- */
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+        /* Hide scrollbar */
+        .app-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Reusable Card Style */
+        .card {
+            background-color: var(--primary-card-bg);
+            border-radius: 20px;
+            padding: 20px;
             margin-bottom: 20px;
         }
 
-        .match {
-            background: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin: 10px 0;
-            position: relative;
-        }
-
-        .match-content {
-            padding: 15px;
-        }
-        
-        .team {
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            margin-bottom: 15px;
         }
-
-        .team.winner .team-name {
-            font-weight: 700;
-            color: var(--winner-color);
+        .card-header h2 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin: 0;
+            font-weight: 600;
         }
-
-        .team-name {
-            font-size: 1rem;
-        }
-
-        .team-score {
-            font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 6px;
-            background: #e0e0e0;
-        }
-
-        .team.winner .team-score {
-            background: var(--winner-color);
-            color: white;
-        }
-
-        /* --- Recent Matches & Leaderboard --- */
-        .layout-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .match-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .match-list-item:last-child {
-            border-bottom: none;
-        }
-        .match-teams {
+        .card-header a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 14px;
             font-weight: 500;
         }
-        .match-score {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
+        /* --- Live Matches Section --- */
+        .live-match {
+            display: flex;
+            align-items: center;
+            background: var(--secondary-card-bg);
+            border-radius: 15px;
             padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
         }
-        th {
-            background-color: #f8f8f8;
+        .team-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: 700;
+            color: var(--text-primary);
         }
-        td .rank {
+        .team-alpha { background-color: #c83c3c; }
+        .team-beta { background-color: #3c7ac8; }
+        
+        .match-info {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .match-info .score {
+            font-size: 24px;
             font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--live-color);
+            font-weight: 600;
+        }
+        .live-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--live-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
         }
 
-        @media (min-width: 992px) {
-            .container {
-                grid-template-columns: 2fr 1fr;
-            }
+        /* --- Upcoming Matches Section --- */
+        .match-list-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
         }
+        .match-list-item:last-child { border-bottom: none; }
+        
+        .match-details { flex-grow: 1; }
+        .match-details p {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .match-details span {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .match-time {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--primary-card-bg);
+            padding: 15px 0 25px 0; /* Extra padding for home bar area */
+            border-top: 1px solid #333;
+        }
+        .nav-item {
+            color: var(--text-secondary);
+            font-size: 22px;
+            transition: color 0.2s ease-in-out;
+        }
+        .nav-item.active,
+        .nav-item:hover {
+            color: var(--accent-color);
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1>Esports Championship 2025</h1>
-        </div>
-
-        <!-- Bracket Column -->
-        <div class="card">
-            <div class="card-header">
-                Tournament Bracket
+    <div class="mobile-frame">
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="header-title">
+                <h1>Tournaments</h1>
+                <p>Champions League 2025</p>
             </div>
-            <div class="bracket">
-                <!-- Round 1 -->
-                <div class="round">
-                    <h3 class="round-title">Quarter-Finals</h3>
-                    <div class="match">
-                        <div class="match-content">
-                            <div class="team winner">
-                                <span class="team-name">Team Alpha</span>
-                                <span class="team-score">2</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name">Team Beta</span>
-                                <span class="team-score">1</span>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="match">
-                        <div class="match-content">
-                            <div class="team">
-                                <span class="team-name">Team Gamma</span>
-                                <span class="team-score">0</span>
-                            </div>
-                            <div class="team winner">
-                                <span class="team-name">Team Delta</span>
-                                <span class="team-score">2</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="header-actions">
+                <i class="fa-solid fa-search"></i>
+                <i class="fa-solid fa-bell"></i>
+            </div>
+        </header>
 
-                <!-- Round 2 -->
-                <div class="round">
-                    <h3 class="round-title">Semi-Finals</h3>
-                    <div class="match">
-                        <div class="match-content">
-                            <div class="team winner">
-                                <span class="team-name">Team Alpha</span>
-                                <span class="team-score">3</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name">Team Delta</span>
-                                <span class="team-score">2</span>
-                            </div>
+        <!-- Scrollable Content Area -->
+        <main class="app-content">
+            <!-- Live Match Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Live Now</h2>
+                </div>
+                <div class="live-match">
+                    <div class="team-logo team-alpha">A</div>
+                    <div class="match-info">
+                        <div class="score">2 - 1</div>
+                        <div class="live-indicator">
+                            <div class="dot"></div>
+                            <span>LIVE</span>
                         </div>
                     </div>
+                    <div class="team-logo team-beta">B</div>
                 </div>
+            </div>
 
-                <!-- Final Round -->
-                <div class="round">
-                    <h3 class="round-title">Finals</h3>
-                     <div class="match">
-                        <div class="match-content">
-                             <div class="team winner">
-                                <span class="team-name">Team Alpha</span>
-                                <span class="team-score">4</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name">Team Zeta</span>
-                                <span class="team-score">1</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Upcoming Matches Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Upcoming</h2>
+                    <a href="#">View Bracket</a>
                 </div>
-                 <!-- Winner -->
-                 <div class="round">
-                    <h3 class="round-title">Champion</h3>
-                     <div class="match" style="background: var(--winner-color); color: white;">
-                        <div class="match-content" style="text-align: center;">
-                            <i class="fas fa-trophy" style="font-size: 2rem;"></i>
-                            <h4 style="margin: 10px 0 0;">Team Alpha</h4>
+                <div class="match-list">
+                    <div class="match-list-item">
+                        <div class="match-details">
+                            <p>Team Gamma vs. Team Delta</p>
+                            <span>Semi-Finals</span>
                         </div>
+                        <div class="match-time">14:00</div>
+                    </div>
+                     <div class="match-list-item">
+                        <div class="match-details">
+                            <p>Team Epsilon vs. Team Zeta</p>
+                            <span>Semi-Finals</span>
+                        </div>
+                        <div class="match-time">16:30</div>
+                    </div>
+                     <div class="match-list-item">
+                        <div class="match-details">
+                            <p>Winner SF1 vs. Winner SF2</p>
+                            <span>Grand Final</span>
+                        </div>
+                        <div class="match-time">19:00</div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <!-- Side Column -->
-        <div>
-            <div class="layout-grid">
-                 <!-- Recent Matches Card -->
-                <div class="card">
-                    <div class="card-header">
-                        Recent Matches
-                    </div>
-                    <div class="match-list">
-                        <div class="match-list-item">
-                            <span class="match-teams">Team Alpha vs Team Delta</span>
-                            <span class="match-score">3 - 2</span>
-                        </div>
-                        <div class="match-list-item">
-                            <span class="match-teams">Team Gamma vs Team Delta</span>
-                            <span class="match-score">0 - 2</span>
-                        </div>
-                         <div class="match-list-item">
-                            <span class="match-teams">Team Alpha vs Team Beta</span>
-                            <span class="match-score">2 - 1</span>
-                        </div>
-                    </div>
-                </div>
-
-                 <!-- Leaderboard Card -->
-                <div class="card">
-                    <div class="card-header">
-                        Leaderboard
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Team</th>
-                                <th>Wins</th>
-                                <th>Losses</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td>Team Alpha</td>
-                                <td>3</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td>Team Zeta</td>
-                                <td>2</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td>Team Delta</td>
-                                <td>1</td>
-                                <td>2</td>
-                            </tr>
-                             <tr>
-                                <td class="rank">4</td>
-                                <td>Team Beta</td>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <!-- Bottom Navigation Bar -->
+        <footer class="bottom-nav">
+            <a href="#" class="nav-item active"><i class="fa-solid fa-trophy"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-list-ul"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-video"></i></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-user"></i></a>
+        </footer>
     </div>
 
 </body>
