@@ -13,16 +13,11 @@
         /* --- Global Styles & Premium Theme --- */
         :root {
             --primary-color: #673AB7;
-            /* Deep Purple - CHANGED */
             --primary-light: #9575CD;
-            /* CHANGED */
             --primary-dark: #512DA8;
-            /* CHANGED */
             --accent-color: #FFA000;
-            /* Amber/Gold */
             --accent-dark: #FF6F00;
             --border-radius: 16px;
-            /* --- UI CHANGE: Softer, modern radius --- */
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             --font-heading: 'Poppins', sans-serif;
             --font-body: 'Inter', sans-serif;
@@ -217,12 +212,6 @@
             font-family: var(--font-body);
         }
 
-        /* HIDE NAV ITEMS AS REQUESTED */
-        #nav-add-amount,
-        #nav-withdraw {
-            display: none;
-        }
-
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -296,7 +285,6 @@
             max-width: 1400px;
             margin: 0 auto;
             perspective: 1500px;
-            /* For 3D card effect on hover */
         }
 
         /* --- Premium Card Design --- */
@@ -314,7 +302,6 @@
 
         .card:not(.wallet-card):hover {
             transform: translateY(-8px) rotateX(2deg);
-            /* More lift and slight tilt */
             box-shadow: 0 2px 5px rgba(var(--shadow-color), 0.12),
                 0 10px 25px rgba(var(--shadow-color), 0.18),
                 0 25px 50px rgba(var(--shadow-color), 0.12);
@@ -770,15 +757,12 @@
             font-weight: 600;
         }
 
-        /* --- NEW: Wallet Page Styles --- */
+        /* --- Wallet Page Styles --- */
         .wallet-card {
             background: #1C1C1E;
-            /* Near-black color - CHANGED */
             color: #f0f0f0;
             border: 1px solid #3A3A3C;
-            /* Subtle border - CHANGED */
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            /* CHANGED */
         }
 
         .wallet-item {
@@ -797,7 +781,6 @@
             display: block;
             font-size: 0.9rem;
             color: #b0b0b0;
-            /* Neutral light gray - CHANGED */
             margin-bottom: 4px;
         }
 
@@ -822,13 +805,11 @@
 
         .button-transactions {
             background-color: var(--primary-color);
-            /* CHANGED */
             color: white;
         }
 
         .button-transactions:hover {
             background-color: var(--primary-dark);
-            /* CHANGED */
             transform: translateY(-2px);
         }
 
@@ -844,13 +825,11 @@
 
         .button-withdraw {
             background-color: var(--primary-color);
-            /* CHANGED */
             color: white;
         }
 
         .button-withdraw:hover {
             background-color: var(--primary-dark);
-            /* CHANGED */
             transform: translateY(-2px);
         }
 
@@ -880,7 +859,6 @@
             overflow-y: auto;
             border: 1px solid var(--border-color);
             white-space: pre-wrap;
-            /* To respect newlines from admin textarea */
         }
 
         /* Responsive */
@@ -902,7 +880,6 @@
                 display: none;
             }
 
-            /* Hide for more space */
             main {
                 padding: 16px;
             }
@@ -941,7 +918,7 @@
             <i class="material-icons-outlined">account_balance_wallet</i>
             <span id="wallet-balance-wrapper">
                 <span id="wallet-balance">₹0.00</span>
-                <span id="wallet-balance-bonus" style="display: none;"></span> <!-- Always hidden -->
+                <span id="wallet-balance-bonus" style="display: none;"></span>
             </span>
         </div>
     </header>
@@ -970,14 +947,6 @@
         <div class="drawer-item" id="nav-my-tournaments">
             <i class="material-icons">history</i>
             <span>My Tournaments</span>
-        </div>
-        <div class="drawer-item" id="nav-withdraw">
-            <i class="material-icons">account_balance</i>
-            <span>Withdraw Funds</span>
-        </div>
-        <div class="drawer-item" id="nav-add-amount">
-            <i class="material-icons">add_circle</i>
-            <span>Add Funds</span>
         </div>
         <div class="drawer-item" id="nav-leaderboard">
             <i class="material-icons">leaderboard</i>
@@ -1050,31 +1019,7 @@
 
         <section id="home-page" class="page-section">
             <div id="tournament-list">
-                <!-- Static example card. This would have been injected by JavaScript. -->
-                 <div class="card tournament-card">
-                    <img src="https://via.placeholder.com/400x180.png/673AB7/FFFFFF?text=Tournament" alt="Tournament Banner" class="tournament-banner">
-                    <div class="card-content">
-                        <div class="details-wrapper">
-                            <div class="title-container">
-                                 <h3 class="card-title">Example Tournament</h3>
-                                 <span class="tournament-status-badge status-active">Active</span>
-                            </div>
-                            <div class="tournament-info">
-                                <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹50</strong></span></div>
-                                <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹1000</strong></span></div>
-                                <div class="info-item"><i class="material-icons">groups</i><span>Player: <strong>5/10</strong></span></div>
-                                <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>Jul 15, 2025, 8:00 PM</strong></span></div>
-                            </div>
-                            <div class="participant-list"><strong>Joined (5/10):</strong> <span>Player1</span><span>Player2</span><span>Player3</span><span>Player4</span><span>Player5</span></div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="button join-button">
-                                <i class="material-icons">login</i>
-                                <span>Join Now</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <!-- Tournament cards will be injected here by JavaScript -->
             </div>
         </section>
 
@@ -1102,7 +1047,6 @@
             </div>
         </section>
 
-        <!-- NEW: Wallet Page Section -->
         <section id="wallet-page" class="page-section">
             <div class="card wallet-card" style="max-width: 600px; margin: 0 auto;">
                 <div class="card-content" style="padding: 0;">
@@ -1137,13 +1081,13 @@
                     <h2 class="card-title">Add Funds to Wallet</h2>
                 </div>
                 <div class="card-content">
-                    <p>Enter the amount you wish to add and proceed to pay using any UPI app like PhonePe, GPay, or Paytm.</p>
+                    <p>Enter the amount you wish to add and proceed to pay using any UPI app.</p>
                     <form id="add-funds-form">
                         <div class="form-group">
                             <label for="deposit-amount">Amount to Add (₹)</label>
                             <input type="number" id="deposit-amount" required min="10" placeholder="e.g., 100">
                             <i class="material-icons">currency_rupee</i>
-                            <small>Minimum deposit is ₹10. UPI: 7022785980@ibl</small>
+                            <small>Minimum deposit is ₹10. UPI: your-upi-id@okhdfcbank</small>
                         </div>
                         <button type="submit" class="button" style="width: 100%;">
                             <i class="material-icons">qr_code_scanner</i>
@@ -1160,7 +1104,7 @@
                             <span>Pay with UPI App</span>
                         </a>
                         <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
-                            <strong>Important:</strong> After payment, funds will be credited to your account within a few minutes after admin verification. If you face any issues, contact support with your transaction details and username.
+                            <strong>Important:</strong> After payment, funds will be credited to your account within a few minutes after admin verification.
                         </p>
                     </div>
                 </div>
@@ -1175,10 +1119,10 @@
                 <div class="card-content">
                     <form id="withdraw-form">
                         <div class="form-group">
-                            <label for="withdraw-phonepe">PhonePe Number</label>
-                            <input type="tel" id="withdraw-phonepe" required pattern="[0-9]{10}">
-                            <i class="material-icons">phone_android</i>
-                            <small>Enter a valid 10-digit number.</small>
+                            <label for="withdraw-phonepe">UPI ID / PhonePe Number</label>
+                            <input type="text" id="withdraw-upi" required>
+                            <i class="material-icons">payment</i>
+                            <small>Enter a valid UPI ID or 10-digit number.</small>
                         </div>
                         <div class="form-group">
                             <label for="withdraw-amount">Amount (₹)</label>
@@ -1229,7 +1173,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Update Modal -->
@@ -1242,9 +1185,7 @@
             <p>A new version of the app is ready!</p>
             <p><strong>Version:</strong> <span id="update-version-display"></span></p>
             <p><strong>What's New:</strong></p>
-            <div id="update-description-display">
-                <!-- Description from Firebase goes here -->
-            </div>
+            <div id="update-description-display"></div>
         </div>
         <div class="card-actions" style="justify-content: space-between; padding: 20px;">
             <button id="update-later-btn" class="button" style="background: var(--text-secondary); color: var(--text-primary);">Later</button>
@@ -1256,9 +1197,49 @@
     </div>
 
     <script type="module">
-        // --- All Firebase related code has been removed. ---
-        // --- The application is now a static template. ---
-        // --- Functionality like login, signup, loading data, and submitting forms is disabled. ---
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {
+            getDatabase,
+            ref,
+            set,
+            get,
+            onValue,
+            push,
+            query,
+            orderByChild,
+            equalTo,
+            update,
+            serverTimestamp,
+            runTransaction
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // --- Your web app's Firebase configuration ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZsRpAktNNB9GPslwhB6ldy-p0CTLaIY4",
+            authDomain: "tubesoftyt.firebaseapp.com",
+            databaseURL: "https://tubesoftyt-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tubesoftyt",
+            storageBucket: "tubesoftyt.appspot.com",
+            messagingSenderId: "882353288559",
+            appId: "1:882353288559:web:e704290c28176b8773e49a"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // --- App Version ---
+        const currentAppVersion = "1.0.0";
+
 
         // --- DOM Elements ---
         const mainLoader = document.getElementById('main-loader');
@@ -1282,13 +1263,12 @@
         const profileUsername = document.getElementById('profile-username');
         const drawerUsername = document.getElementById('drawer-username');
         const walletBalance = document.getElementById('wallet-balance');
-        const walletBalanceBonus = document.getElementById('wallet-balance-bonus');
         const logoutBtn = document.getElementById('logout-btn');
         const homePage = document.getElementById('home-page');
         const tournamentList = document.getElementById('tournament-list');
         const withdrawPage = document.getElementById('withdraw-page');
         const withdrawForm = document.getElementById('withdraw-form');
-        const withdrawPhonePeInput = document.getElementById('withdraw-phonepe');
+        const withdrawUpiInput = document.getElementById('withdraw-upi');
         const withdrawAmountInput = document.getElementById('withdraw-amount');
         const withdrawAvailableBalance = document.getElementById('withdraw-available-balance');
         const withdrawError = document.getElementById('withdraw-error');
@@ -1297,20 +1277,15 @@
         const leaderboardPage = document.getElementById('leaderboard-page');
         const leaderboardContent = document.getElementById('leaderboard-content');
         const navHome = document.getElementById('nav-home');
-        const navWithdraw = document.getElementById('nav-withdraw');
-        const navAddAmount = document.getElementById('nav-add-amount');
         const navLeaderboard = document.getElementById('nav-leaderboard');
         const themeSwitch = document.getElementById('theme-switch');
-
         const profilePage = document.getElementById('profile-page');
         const navProfile = document.getElementById('nav-profile');
         const profilePageUsername = document.getElementById('profile-page-username');
         const profilePageEmail = document.getElementById('profile-page-email');
-
         const myTournamentsPage = document.getElementById('my-tournaments-page');
         const navMyTournaments = document.getElementById('nav-my-tournaments');
         const myTournamentsList = document.getElementById('my-tournaments-list');
-
         const addFundsPage = document.getElementById('add-funds-page');
         const addFundsForm = document.getElementById('add-funds-form');
         const depositAmountInput = document.getElementById('deposit-amount');
@@ -1318,15 +1293,12 @@
         const upiQrCodeImg = document.getElementById('upi-qr-code');
         const upiPaymentLink = document.getElementById('upi-payment-link');
         const paymentAmountDisplay = document.getElementById('payment-amount-display');
-
         const updateOverlay = document.getElementById('update-overlay');
         const updateModal = document.getElementById('update-modal');
         const updateVersionDisplay = document.getElementById('update-version-display');
         const updateDescriptionDisplay = document.getElementById('update-description-display');
         const updateLaterBtn = document.getElementById('update-later-btn');
         const updateNowLink = document.getElementById('update-now-link');
-
-        // Wallet and Transaction Page Elements
         const navWallet = document.getElementById('nav-wallet');
         const walletPage = document.getElementById('wallet-page');
         const walletPageTotal = document.getElementById('wallet-page-total');
@@ -1335,7 +1307,16 @@
         const walletTransactionsBtn = document.getElementById('wallet-transactions-btn');
         const walletAddCashBtn = document.getElementById('wallet-add-cash-btn');
         const walletWithdrawBtn = document.getElementById('wallet-withdraw-btn');
-        
+
+        let currentUser = null;
+        let currentUserData = null;
+        let currentRealBalance = 0;
+        let currentBonusBalance = 0;
+        let allTournamentsListener = null;
+        let withdrawalHistoryListener = null;
+        let appUpdateListener = null;
+        let isUpdateAvailable = false;
+        let availableUpdateData = null;
         let pageHistory = ['auth-section'];
 
         // --- UI / Theme Management ---
@@ -1362,31 +1343,36 @@
         }
 
         function showPage(pageId, isBack = false) {
-             if (!isBack && pageId !== pageHistory[pageHistory.length - 1]) {
+            if (!isBack && pageId !== pageHistory[pageHistory.length - 1]) {
                 pageHistory.push(pageId);
             }
 
             document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
 
+            const pageTitles = {
+                'home-page': 'Home',
+                'withdraw-page': 'Withdraw Funds',
+                'leaderboard-page': 'Leaderboard',
+                'profile-page': 'My Profile',
+                'my-tournaments-page': 'My Tournaments',
+                'wallet-page': 'My Wallet',
+                'add-funds-page': 'Add Funds'
+            };
+
             if (pageId === 'home-page') {
                 mainAppBar.style.display = 'flex';
                 secondaryAppBar.style.display = 'none';
-                appBarTitle.textContent = 'Home';
+                appBarTitle.textContent = pageTitles[pageId];
             } else if (pageId === 'auth-section') {
                 mainAppBar.style.display = 'none';
                 secondaryAppBar.style.display = 'none';
-                 pageHistory = ['auth-section']; 
+                pageHistory = ['auth-section'];
             } else {
                 mainAppBar.style.display = 'none';
                 secondaryAppBar.style.display = 'flex';
-                if (pageId === 'withdraw-page') secondaryTitle.textContent = 'Withdraw Funds';
-                if (pageId === 'leaderboard-page') secondaryTitle.textContent = 'Leaderboard';
-                if (pageId === 'profile-page') secondaryTitle.textContent = 'My Profile';
-                if (pageId === 'my-tournaments-page') secondaryTitle.textContent = 'My Tournaments';
-                if (pageId === 'wallet-page') secondaryTitle.textContent = 'My Wallet';
+                secondaryTitle.textContent = pageTitles[pageId] || 'Page';
                 if (pageId === 'add-funds-page') {
-                    secondaryTitle.textContent = 'Add Funds';
                     addFundsForm.reset();
                     paymentDetailsContainer.style.display = 'none';
                 }
@@ -1403,7 +1389,48 @@
             drawerMenu.classList.remove('open');
             drawerOverlay.classList.remove('open');
         }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-IN', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            });
+        }
+
+        function formatMatchTime(dateStr, timeStr) {
+            if (!dateStr || !timeStr) return 'TBA';
+            const [year, month, day] = dateStr.split('-');
+            const [hours, minutes] = timeStr.split(':');
+            const date = new Date(year, month - 1, day, hours, minutes);
+            return date.toLocaleString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        function updateWalletDisplay(real, bonus) {
+            currentRealBalance = real || 0;
+            currentBonusBalance = bonus || 0;
+            const totalPlayable = currentRealBalance + currentBonusBalance;
+            walletBalance.textContent = `₹${totalPlayable.toFixed(2)}`;
+            withdrawAvailableBalance.textContent = `₹${currentRealBalance.toFixed(2)}`;
+            updateWalletPageDisplay();
+        }
         
+        function updateWalletPageDisplay() {
+            const total = currentRealBalance + currentBonusBalance;
+            walletPageTotal.textContent = `₹${total.toFixed(2)}`;
+            walletPageDeposit.textContent = `₹${currentRealBalance.toFixed(2)}`;
+            walletPageBonus.textContent = `₹${currentBonusBalance.toFixed(2)}`;
+        }
+
+
         function displayMessage(element, message, isError = true) {
             element.textContent = message;
             element.style.display = 'flex';
@@ -1415,20 +1442,116 @@
         }
 
         // --- Authentication ---
-        // All Firebase auth logic removed. Forms will not work.
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            displayMessage(loginError, "Login functionality is disabled.");
+        onAuthStateChanged(auth, (user) => {
+            showLoader();
+            if (user) {
+                currentUser = user;
+                const userRef = ref(db, `users/${user.uid}`);
+                onValue(userRef, (snapshot) => {
+                    hideLoader();
+                    if (snapshot.exists()) {
+                        currentUserData = snapshot.val();
+                        if (currentUserData.isBlocked) {
+                            alert('Your account has been blocked. Please contact support.');
+                            handleLogout();
+                            return;
+                        }
+                        profileUsername.textContent = currentUserData.username;
+                        drawerUsername.textContent = currentUserData.username;
+                        updateWalletDisplay(currentUserData.walletBalance, currentUserData.bonusBalance);
+                        profilePageUsername.textContent = currentUserData.username;
+                        profilePageEmail.textContent = currentUserData.email;
+
+                        showPage('home-page');
+                        loadAllTournaments();
+                        loadWithdrawalHistory();
+                        checkForAppUpdate();
+                    } else {
+                        handleLogout();
+                    }
+                }, (error) => {
+                    hideLoader();
+                    handleLogout();
+                });
+            } else {
+                currentUser = null;
+                currentUserData = null;
+                if (allTournamentsListener) allTournamentsListener();
+                if (withdrawalHistoryListener) withdrawalHistoryListener();
+                if (appUpdateListener) appUpdateListener();
+                showPage('auth-section');
+                loginForm.reset();
+                signupForm.reset();
+                hideLoader();
+            }
         });
 
-        signupForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            displayMessage(signupError, "Signup functionality is disabled.");
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            showLoader();
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                displayMessage(loginError, "Login failed: " + mapAuthError(error.code));
+                hideLoader();
+            }
         });
-        
-        logoutBtn.addEventListener('click', () => {
-            showPage('auth-section');
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('signup-username').value.trim().toLowerCase();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+
+            if (password.length < 6) {
+                displayMessage(signupError, "Password must be at least 6 characters.");
+                return;
+            }
+            if (!/^[a-z0-9_]+$/.test(username)) {
+                displayMessage(signupError, "Username can only contain lowercase letters, numbers, and underscores (_).");
+                return;
+            }
+
+            showLoader();
+            const usernameRef = ref(db, `usernames/${username}`);
+            try {
+                const usernameSnap = await get(usernameRef);
+                if (usernameSnap.exists()) {
+                    displayMessage(signupError, "This username is already taken.");
+                    hideLoader();
+                    return;
+                }
+
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                const userData = {
+                    username: username,
+                    email: user.email,
+                    walletBalance: 0,
+                    bonusBalance: 0,
+                    createdAt: serverTimestamp(),
+                    isBlocked: false
+                };
+                await set(ref(db, `users/${user.uid}`), userData);
+                await set(ref(db, `usernames/${username}`), { uid: user.uid });
+            } catch (error) {
+                displayMessage(signupError, "Sign up failed: " + mapAuthError(error.code));
+                hideLoader();
+            }
         });
+
+        logoutBtn.addEventListener('click', handleLogout);
+
+        function handleLogout() {
+            showLoader();
+            signOut(auth).catch((error) => {
+                console.error("Sign-out error:", error);
+                hideLoader();
+            });
+        }
 
         showSignupBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1441,41 +1564,218 @@
             signupCard.style.display = 'none';
             loginCard.style.display = 'block';
         });
-        
+
+        function mapAuthError(code) {
+            switch (code) {
+                case 'auth/invalid-email': return 'Invalid email format.';
+                case 'auth/user-not-found': case 'auth/wrong-password': return 'Incorrect email or password.';
+                case 'auth/email-already-in-use': return 'This email is already registered.';
+                case 'auth/weak-password': return 'Password is too weak.';
+                case 'auth/network-request-failed': return 'Network error. Please check your connection.';
+                default: return `An unknown error occurred.`;
+            }
+        }
+
         // --- Navigation Handlers ---
         drawerToggleBtn.addEventListener('click', toggleDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
         navHome.addEventListener('click', () => showPage('home-page'));
         navProfile.addEventListener('click', () => showPage('profile-page'));
         navWallet.addEventListener('click', () => showPage('wallet-page'));
-        navMyTournaments.addEventListener('click', () => showPage('my-tournaments-page'));
-        navLeaderboard.addEventListener('click', () => showPage('leaderboard-page'));
+        navMyTournaments.addEventListener('click', () => {
+            showPage('my-tournaments-page');
+            loadMyJoinedTournaments();
+        });
+        navLeaderboard.addEventListener('click', () => {
+            showPage('leaderboard-page');
+            loadLeaderboard();
+        });
 
         backBtn.addEventListener('click', () => {
-             if (pageHistory.length > 1) {
+            if (pageHistory.length > 1) {
                 pageHistory.pop();
-                const prevPage = pageHistory[pageHistory.length - 1];
-                showPage(prevPage, true);
+                showPage(pageHistory[pageHistory.length - 1], true);
             }
         });
 
-        // Wallet page button navigation
         walletAddCashBtn.addEventListener('click', () => showPage('add-funds-page'));
         walletWithdrawBtn.addEventListener('click', () => showPage('withdraw-page'));
         walletTransactionsBtn.addEventListener('click', () => showPage('my-tournaments-page'));
 
-        // --- Add Funds Logic ---
+
+        // --- Tournament Loading & Display ---
+        function loadAllTournaments() {
+            const tournamentsRef = ref(db, 'tournaments');
+            if (allTournamentsListener) allTournamentsListener();
+            allTournamentsListener = onValue(tournamentsRef, (snapshot) => {
+                tournamentList.innerHTML = '';
+                if (!snapshot.exists()) {
+                    tournamentList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">No tournaments available right now.</p>';
+                    return;
+                }
+                const tournaments = [];
+                snapshot.forEach(child => tournaments.push({ id: child.key, ...child.val() }));
+                tournaments.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                tournaments.forEach(displayTournamentCard);
+            }, (error) => {
+                tournamentList.innerHTML = '<p style="text-align: center; color: var(--error-color); grid-column: 1 / -1;">Failed to load tournaments.</p>';
+            });
+        }
+
+        async function displayTournamentCard(data) {
+            const card = document.createElement('div');
+            card.className = 'card tournament-card';
+
+            const participants = data.participants ? Object.keys(data.participants) : [];
+            const participantCount = participants.length;
+            const maxPlayers = data.maxPlayers || 0;
+            const hasJoined = currentUser && data.participants && data.participants[currentUser.uid];
+            const status = data.status || 'active';
+
+            let buttonText = 'Join Now';
+            let buttonIcon = 'login';
+            let isButtonDisabled = false;
+
+            if (status === 'finished' || status === 'cancelled') {
+                buttonText = status === 'finished' ? 'Finished' : 'Cancelled';
+                buttonIcon = status === 'finished' ? 'check_circle' : 'cancel';
+                isButtonDisabled = true;
+            } else if (participantCount >= maxPlayers) {
+                buttonText = 'Full';
+                isButtonDisabled = true;
+            } else if (hasJoined) {
+                buttonText = 'Joined';
+                buttonIcon = 'check_circle';
+                isButtonDisabled = true;
+            }
+
+            const winnerHtml = status === 'finished' && data.winner && data.winner.username ? `
+                <div class="winner-display">
+                    <i class="material-icons">emoji_events</i>
+                    <span>Winner: <strong>${data.winner.username}</strong></span>
+                </div>` : '';
+
+            const bannerHtml = data.bannerUrl ? `<img src="${data.bannerUrl}" alt="Tournament Banner" class="tournament-banner" loading="lazy">` : '';
+
+            const roomInfoHtml = hasJoined && status === 'active' && (data.roomId || data.roomPassword) ?
+                `<div class="room-details"><p><strong>Room ID:</strong> ${data.roomId || 'TBA'}<br><strong>Password:</strong> ${data.roomPassword || 'TBA'}</p></div>` : '';
+            
+            card.innerHTML = `
+                ${bannerHtml}
+                <div class="card-content">
+                    <div class="details-wrapper">
+                        <div class="title-container">
+                             <h3 class="card-title">${data.name || 'N/A'}</h3>
+                             <span class="tournament-status-badge status-${status}">${status}</span>
+                        </div>
+                        <div class="tournament-info">
+                            <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹${data.entryFee || 0}</strong></span></div>
+                            <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹${data.prize || 0}</strong></span></div>
+                            <div class="info-item"><i class="material-icons">groups</i><span>Players: <strong>${participantCount}/${maxPlayers}</strong></span></div>
+                            <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>${formatMatchTime(data.matchDate, data.matchTime)}</strong></span></div>
+                        </div>
+                        ${winnerHtml}
+                        ${roomInfoHtml}
+                        <div class="participant-list"><strong>Joined (${participantCount}/${maxPlayers}):</strong> Loading...</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="button join-button" data-tournament-id="${data.id}" data-entry-fee="${data.entryFee || 0}" ${isButtonDisabled ? 'disabled' : ''}>
+                            <i class="material-icons">${buttonIcon}</i>
+                            <span>${buttonText}</span>
+                        </button>
+                    </div>
+                </div>`;
+            tournamentList.appendChild(card);
+
+            if (participantCount > 0) {
+                fetchParticipantUsernames(participants).then(names => {
+                    const listEl = card.querySelector('.participant-list');
+                    if (listEl) listEl.innerHTML = `<strong>Joined (${participantCount}/${maxPlayers}):</strong> ${names.map(name => `<span>${name}</span>`).join('') || 'None'}`;
+                });
+            } else {
+                 const listEl = card.querySelector('.participant-list');
+                 if (listEl) listEl.innerHTML = `<strong>Joined (0/${maxPlayers}):</strong> None`;
+            }
+
+            const joinButton = card.querySelector('.join-button');
+            if (joinButton && !isButtonDisabled) {
+                joinButton.addEventListener('click', handleJoinTournament);
+            }
+        }
+
+        async function fetchParticipantUsernames(uids) {
+            const promises = uids.map(uid => get(ref(db, `users/${uid}/username`)));
+            const snapshots = await Promise.all(promises);
+            return snapshots.map(snap => snap.val() || 'Unknown');
+        }
+
+        async function handleJoinTournament(event) {
+            if (isUpdateAvailable) {
+                showUpdateModal(availableUpdateData);
+                return;
+            }
+            if (!currentUser) { alert("Please log in to join."); return; }
+
+            const button = event.currentTarget;
+            const tournamentId = button.dataset.tournamentId;
+            const entryFee = parseInt(button.dataset.entryFee, 10);
+            const totalPlayableBalance = currentRealBalance + currentBonusBalance;
+
+            if (totalPlayableBalance < entryFee) {
+                alert("Insufficient balance. Please add funds to your wallet.");
+                return;
+            }
+
+            if (!confirm(`Join tournament for ₹${entryFee}? This will use your bonus balance first.`)) return;
+
+            button.disabled = true;
+            button.querySelector('span').textContent = 'Joining...';
+
+            const tournamentRef = ref(db, `tournaments/${tournamentId}`);
+
+            try {
+                const result = await runTransaction(tournamentRef, (currentData) => {
+                    if (!currentData || currentData.status !== 'active' || (currentData.participants && currentData.participants[currentUser.uid])) {
+                        return; // Abort transaction
+                    }
+                    const participantCount = currentData.participants ? Object.keys(currentData.participants).length : 0;
+                    if (participantCount >= currentData.maxPlayers) {
+                        return; // Abort transaction
+                    }
+                    if (!currentData.participants) currentData.participants = {};
+                    currentData.participants[currentUser.uid] = true;
+                    return currentData;
+                });
+
+                if (result.committed) {
+                    const bonusToUse = Math.min(entryFee, currentBonusBalance);
+                    const realMoneyToUse = entryFee - bonusToUse;
+                    await update(ref(db, `users/${currentUser.uid}`), {
+                        walletBalance: currentRealBalance - realMoneyToUse,
+                        bonusBalance: currentBonusBalance - bonusToUse
+                    });
+                    alert(`Successfully joined! ₹${entryFee} deducted.`);
+                } else {
+                    alert("Failed to join. The tournament might be full or no longer active.");
+                    button.disabled = false;
+                    button.querySelector('span').textContent = 'Join Now';
+                }
+            } catch (error) {
+                alert("An error occurred while trying to join.");
+                button.disabled = false;
+                button.querySelector('span').textContent = 'Join Now';
+            }
+        }
+
+        // --- Add Funds & Withdrawal ---
         addFundsForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const amount = parseFloat(depositAmountInput.value);
-            if (isNaN(amount) || amount < 10) {
-                alert("Please enter a valid amount (minimum ₹10).");
-                return;
-            }
-             // Logic to generate QR code remains for UI demonstration
-            const vpa = '7022785980@ibl';
-            const payeeName = 'Tournament Admin';
-            const transactionNote = `Deposit for user`;
+            if (isNaN(amount) || amount < 10) { alert("Please enter a valid amount (minimum ₹10)."); return; }
+            
+            const vpa = 'your-upi-id@okhdfcbank'; // IMPORTANT: Change this to your actual UPI ID
+            const payeeName = 'Your Name or Company'; // IMPORTANT: Change this
+            const transactionNote = `Deposit for user: ${currentUserData.username}`;
 
             const upiUrl = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(payeeName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
@@ -1486,10 +1786,183 @@
             paymentDetailsContainer.style.display = 'block';
         });
 
-        // --- Withdrawal ---
-        withdrawForm.addEventListener('submit', (e) => {
+        withdrawForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            displayMessage(withdrawError, "Withdrawal functionality is disabled.");
+            const upiId = withdrawUpiInput.value.trim();
+            const amount = parseInt(withdrawAmountInput.value, 10);
+            
+            if (!upiId) { displayMessage(withdrawError, "Please enter a valid UPI ID or Phone number."); return; }
+            if (isNaN(amount) || amount <= 0) { displayMessage(withdrawError, "Please enter a valid amount."); return; }
+            if (amount > currentRealBalance) { displayMessage(withdrawError, "Insufficient withdrawable balance."); return; }
+
+            const button = withdrawForm.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.textContent = 'Submitting...';
+
+            try {
+                await set(push(ref(db, 'withdrawals')), {
+                    userId: currentUser.uid,
+                    username: currentUserData.username,
+                    upiId: upiId,
+                    amount: amount,
+                    status: 'pending',
+                    requestedAt: serverTimestamp()
+                });
+                await update(ref(db, `users/${currentUser.uid}`), { walletBalance: currentRealBalance - amount });
+                displayMessage(withdrawSuccess, `Withdrawal request for ₹${amount} submitted.`, false);
+                withdrawForm.reset();
+            } catch (error) {
+                displayMessage(withdrawError, "Failed to submit request.");
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i class="material-icons">send</i>Submit Request';
+            }
+        });
+        
+        function loadWithdrawalHistory() {
+            if (!currentUser) return;
+            const q = query(ref(db, 'withdrawals'), orderByChild('userId'), equalTo(currentUser.uid));
+            if (withdrawalHistoryListener) withdrawalHistoryListener();
+            withdrawalHistoryListener = onValue(q, (snapshot) => {
+                withdrawalHistory.innerHTML = '';
+                if (!snapshot.exists()) {
+                    withdrawalHistory.innerHTML = '<p style="padding: 24px;">No withdrawal history.</p>';
+                    return;
+                }
+                const requests = [];
+                snapshot.forEach(child => requests.push({ id: child.key, ...child.val() }));
+                requests.sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
+                withdrawalHistory.innerHTML = requests.map(req => `
+                    <div class="history-item">
+                        <div class="history-details">
+                            <p><strong>Amount:</strong> ₹${req.amount} to ${req.upiId}</p>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">On: ${formatTimestamp(req.requestedAt)}</p>
+                        </div>
+                        <span class="status ${req.status}">${req.status}</span>
+                    </div>`).join('');
+            });
+        }
+        
+        // --- History & Leaderboard ---
+        async function loadMyJoinedTournaments() {
+            if (!currentUser) return;
+            myTournamentsList.innerHTML = '<div class="loader" style="display: block;"></div>';
+            try {
+                const snapshot = await get(ref(db, 'tournaments'));
+                if (!snapshot.exists()) throw new Error();
+                
+                const joined = [];
+                snapshot.forEach(child => {
+                    const t = { id: child.key, ...child.val() };
+                    if (t.participants && t.participants[currentUser.uid]) joined.push(t);
+                });
+
+                if (joined.length === 0) {
+                    myTournamentsList.innerHTML = '<p style="padding: 24px;">You have not joined any tournaments yet.</p>';
+                    return;
+                }
+
+                joined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                myTournamentsList.innerHTML = joined.map(t => {
+                    let statusHtml = `<span class="status pending">ACTIVE</span>`;
+                    if (t.status === 'finished') {
+                        statusHtml = t.winner && t.winner.uid === currentUser.uid ?
+                            `<span class="status accepted">WIN - ₹${t.prize}</span>` :
+                            `<span class="status rejected">LOSS</span>`;
+                    } else if (t.status === 'cancelled') {
+                         statusHtml = `<span class="status rejected">CANCELLED</span>`;
+                    }
+                    return `
+                        <div class="history-item">
+                            <div class="history-details">
+                                <p><strong>${t.name}</strong></p>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                                    Fee: ₹${t.entryFee} | On: ${formatMatchTime(t.matchDate, t.matchTime)}
+                                </p>
+                            </div>
+                            ${statusHtml}
+                        </div>`;
+                }).join('');
+            } catch {
+                myTournamentsList.innerHTML = '<p style="padding: 24px;">Could not load tournament history.</p>';
+            }
+        }
+        
+        async function loadLeaderboard() {
+            leaderboardContent.innerHTML = '<div class="loader" style="display: block;"></div>';
+            try {
+                const q = query(ref(db, 'tournaments'), orderByChild('status'), equalTo('finished'));
+                const snapshot = await get(q);
+                if (!snapshot.exists()) throw new Error();
+
+                const winners = [];
+                snapshot.forEach(child => {
+                    const data = child.val();
+                    if (data.winner && data.winner.uid) {
+                        winners.push({
+                            name: data.name || 'Unnamed',
+                            username: data.winner.username,
+                            wonAt: data.finishedAt || data.createdAt
+                        });
+                    }
+                });
+                
+                if (winners.length === 0) {
+                    leaderboardContent.innerHTML = '<p style="padding: 24px;">No winners have been declared yet.</p>';
+                    return;
+                }
+
+                winners.sort((a, b) => (b.wonAt || 0) - (a.wonAt || 0));
+                leaderboardContent.innerHTML = winners.map((entry, index) => `
+                    <div class="leaderboard-entry">
+                        <span class="rank">${index + 1}</span>
+                        <i class="material-icons">${index < 3 ? 'military_tech' : 'emoji_events'}</i>
+                        <div class="winner-info">
+                            <div class="winner-name">${entry.username}</div>
+                            <div class="tournament-name">Won: ${entry.name}</div>
+                        </div>
+                        <span class="won-at">${formatTimestamp(entry.wonAt)}</span>
+                    </div>`).join('');
+            } catch {
+                 leaderboardContent.innerHTML = '<p style="padding: 24px;">No finished tournaments found.</p>';
+            }
+        }
+        
+        // --- App Update Checker ---
+        function checkForAppUpdate() {
+            if (appUpdateListener) appUpdateListener();
+            const appUpdateRef = ref(db, 'appUpdate');
+            appUpdateListener = onValue(appUpdateRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const updateData = snapshot.val();
+                    if (updateData.version && updateData.version > currentAppVersion) {
+                        isUpdateAvailable = true;
+                        availableUpdateData = updateData;
+                    } else {
+                        isUpdateAvailable = false;
+                        availableUpdateData = null;
+                    }
+                }
+            });
+        }
+        
+        function showUpdateModal(data) {
+            updateVersionDisplay.textContent = data.version || 'N/A';
+            updateDescriptionDisplay.textContent = data.description || 'No description provided.';
+            updateNowLink.href = data.updateLink || '#';
+            updateLaterBtn.style.display = data.forceUpdate ? 'none' : 'inline-flex';
+            updateModal.style.display = 'block';
+            updateOverlay.style.display = 'block';
+        }
+        
+        function hideUpdateModal() {
+            updateModal.style.display = 'none';
+            updateOverlay.style.display = 'none';
+        }
+        
+        updateLaterBtn.addEventListener('click', hideUpdateModal);
+        updateOverlay.addEventListener('click', () => {
+            if (updateLaterBtn.style.display !== 'none') hideUpdateModal();
         });
 
     </script>
