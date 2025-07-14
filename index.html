@@ -3,135 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Link Setup</title>
+    <title>User Panel</title>
     <style>
         body {
-            background-color: #141414;
             font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .sidebar .profile h3 {
             margin: 0;
         }
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
-            max-width: 400px;
-            width: 100%;
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
         }
-        .app-item {
-            text-align: center;
-            text-decoration: none;
+        .sidebar nav ul li a {
             color: white;
-        }
-        .app-item img {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            background-color: #fff; /* Fallback for transparent icons */
-        }
-        .app-item span {
-            font-size: 12px;
+            text-decoration: none;
             display: block;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .sidebar nav ul li a:hover, .sidebar nav ul li a.active {
+            background-color: #575757;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <div class="app-grid">
-        <!-- Row 1 -->
-        <a href="https://www.iqoo.com/in" class="app-item" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Iqoo-logo-for-wikipidia.png/480px-Iqoo-logo-for-wikipidia.png" alt="iQOO Store">
-            <span>iQOO Store</span>
-        </a>
-        <a href="https://cloud.vivo.com/" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/A8333gC7e_G32Ff5zQW_UX_B2NnB9-a7hV2cIAlC5H9sVp_2i8LGC3Xc_TfT5_4pLg=w240-h480-rw" alt="iQOOCloud">
-            <span>iQOOCloud</span>
-        </a>
-        <a href="https://github.com/kiwibrowser/src" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/y357-j3_45t9c2Gj_rA98gXnJ2fY3vt2r_5g3Lw4t2sVDAI22r0K5V0e0i5yR5F0sw=w240-h480-rw" alt="Kiwi Browser">
-            <span>Kiwi Browser</span>
-        </a>
-        <a href="#" class="app-item">
-            <img src="https://i.ibb.co/68v8z9m/lock-icon.png" alt="Lock">
-            <span>Lock</span>
-        </a>
+    <div class="sidebar">
+        <div class="profile">
+            <img src="https://i.ibb.co/6yT4R0n/user-avatar.png" alt="User Avatar">
+            <h3>John Doe</h3>
+            <p>john.doe@example.com</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">My Orders</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 
-        <!-- Row 2 -->
-        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.maps" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/_x0-PyYI8chP5oJOD2l_-mDca2s-p_Qqp7D0F6gq-V0WvQv0iy-2TDg_dGflT2x0k9I=w240-h480-rw" alt="Maps">
-            <span>Maps</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.meetings" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/0u4I2jUj2aW13b3n_4-b_XyNreTC3bSqD-38-j-2Fj2INdG5-z0x123OhX5I8E1d4fM=w240-h480-rw" alt="Meet">
-            <span>Meet</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.messaging" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/d_a-5S_f-3KY9yP_Q_3_a9-k2WjKNO0Q2e2YJb7s0U3t4q_di9XJgIqH2-OF99p7Hw=w240-h480-rw" alt="Messages">
-            <span>Messages</span>
-        </a>
-        <a href="https://monetag.com/" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/h2f_jUfL4j3-sPZ8I22y4u2S5KqFSTr4fA68pysbJzY1fB2c-GQlJ82u2a1Ld0PnXg=w240-h480-rw" alt="Monetag">
-            <span>Monetag</span>
-        </a>
-
-        <!-- Row 3 -->
-        <a href="#" class="app-item">
-            <img src="https://i.ibb.co/3kXfCjH/music-icon.png" alt="Music">
-            <span>Music</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.jio.myjio" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/5rrg4cCk6hYy11Oo3gSDJ-9cMdd-RO2R-42pYRk3s5uLg-FGYkU8Qy7FTuDvX4i_6j4=w240-h480-rw" alt="MyJio">
-            <span>MyJio</span>
-        </a>
-        <a href="#" class="app-item">
-            <img src="https://i.ibb.co/d2xL50P/notes-icon.png" alt="Notes">
-            <span>Notes</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.ht.ottplay" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/IoslH_1F5x3-2e4l1g-a-naM2s-j2jQkPfvPwwbC-r-436Zd_i_o-2yvVd-5K18w6A=w240-h480-rw" alt="OTTplay">
-            <span>OTTplay</span>
-        </a>
-
-        <!-- Row 4 -->
-        <a href="#" class="app-item">
-            <img src="https://i.ibb.co/R97V4xL/phone-icon.png" alt="Phone">
-            <span>Phone</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.photos" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/1-hPxafOxdYp5EV9L12PDjAi5ms8-QwJq2AfcfI-wsCgfx8ns_T0JqyVCe-gZ3K4qQ=w240-h480-rw" alt="Photos">
-            <span>Photos</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.picsart.studio" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/V90s-16n_1NE39sXg_mB5T-2BMDkO59ge6VIycs15S2-5L3-ZIy2fkb7ZuO23zhs_4U=w240-h480-rw" alt="Picsart">
-            <span>Picsart</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.pinterest" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/dVsv8Hc4TOUeLFAahxR8L2Vv-4G_h5_2ynBD_mI5B4vxdTPeXy-0Jmr58s2w_u2s-4c=w240-h448-rw" alt="Pinterest">
-            <span>Pinterest</span>
-        </a>
-
-        <!-- Row 5 -->
-        <a href="https://play.google.com/store/apps/details?id=com.imaginstudio.imagetools.pixellab" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/h5T2hsee2V-9Xgvl09-24Enajs-2T-X_mX-hN-52Ua3Kx2i0-MHY0h6VobhWcI-4p9U=w240-h480-rw" alt="PixelLab">
-            <span>PixelLab</span>
-        </a>
-        <a href="https://play.google.com/store/apps" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmUjxbquXoOMYJee2Hh2Pa4=w240-h480-rw" alt="Play Store">
-            <span>Play Store</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.rhmsoft.edit" class="app-item" target="_blank">
-            <img src="https://play-lh.googleusercontent.com/yVqF9B2xYyAqg2E-tNu2P-vFwBCh4NqAFvjQhL2b_fcyyO2-fBso2P_jgw-a6D2_sA=w240-h480-rw" alt="QuickEdit">
-            <span>QuickEdit</span>
-        </a>
-        <a href="#" class="app-item">
-            <img src="https://i.ibb.co/zX7K0N2/recorder-icon.png" alt="Recorder">
-            <span>Recorder</span>
-        </a>
+    <div class="main-content">
+        <header>
+            <h1>Welcome to your Dashboard</h1>
+        </header>
+        <div class="cards">
+            <div class="card">
+                <h2>My Profile</h2>
+                <p>View and edit your personal information.</p>
+            </div>
+            <div class="card">
+                <h2>Recent Orders</h2>
+                <p>You have 3 new orders. Track their status.</p>
+            </div>
+            <div class="card">
+                <h2>Notifications</h2>
+                <p>You have 5 unread notifications.</p>
+            </div>
+             <div class="card">
+                <h2>Support</h2>
+                <p>Contact support for any assistance.</p>
+            </div>
+        </div>
     </div>
 
 </body>
