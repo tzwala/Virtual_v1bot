@@ -3,182 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct User Input</title>
+    <title>App & Admin Panel</title>
+    <!-- Using Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* --- General Styles --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #e9e9e9;
+            margin: 0;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 40px;
+            flex-wrap: wrap; /* Allows panels to stack on smaller screens */
+        }
+
+        /* --- Mobile App Styles --- */
+        .mobile-app-container {
+            width: 375px;
+            height: 812px;
+            background-color: #1c1c1e; /* Dark mode background */
+            border-radius: 40px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 10px solid #111;
+        }
+        .app-header {
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            color: white;
         }
+        .app-header .time { font-weight: 600; }
+        .app-header .status-icons i { margin-left: 6px; }
 
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 25px;
-            box-sizing: border-box;
+        .app-content {
+            flex-grow: 1;
+            background-color: #000000;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
         }
-
-        h1 {
-            font-size: 24px;
-            color: #1c1e21;
+        .app-content h1 {
+            font-size: 28px;
             margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
         }
-        
-        /* The form for adding new items */
-        #add-item-form {
+        #app-form {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
-
-        #item-input {
+        #app-input {
             flex-grow: 1;
             padding: 12px;
-            border: 1px solid #dddfe2;
-            border-radius: 6px;
+            border: 1px solid #444;
+            border-radius: 8px;
             font-size: 16px;
+            background-color: #2c2c2e;
+            color: white;
         }
-        
-        #item-input:focus {
-            outline: none;
-            border-color: #1877f2; /* Facebook blue for focus */
-        }
-
-        #add-item-form button {
+        #app-form button {
             padding: 12px 20px;
-            background-color: #1877f2;
+            background-color: #0A84FF; /* iOS Blue */
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
-        
-        #add-item-form button:hover {
-            background-color: #166fe5;
-        }
-
-        /* The list where new items will appear */
-        #items-list {
+        #app-items-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
-        .list-item {
-            background-color: #f7f8fa;
+        .app-list-item {
+            background-color: #1c1c1e;
             padding: 15px;
-            border: 1px solid #dddfe2;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 10px;
             font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* Animation for when items are added */
             animation: fadeIn 0.4s ease;
         }
 
-        .list-item .delete-btn {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 18px;
+        /* --- Admin Panel Styles --- */
+        .admin-panel-container {
+            width: 100%;
+            max-width: 800px;
+            height: 812px;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f2f5;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
         }
-        
-        .list-item .delete-btn:hover {
-            color: #e74c3c; /* Red for delete hover */
+        .admin-header {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-bottom: 1px solid #ddd;
         }
-        
+        .admin-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .admin-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .admin-content h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden; /* For border-radius on table */
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        thead {
+            background-color: #f7f9fc;
+            color: #667085;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .status-pill {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-new {
+            background-color: #eaf_fef2;
+            color: #027a48;
+        }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>My To-Do List</h1>
+    <!-- ======================= -->
+    <!--      MOBILE APP UI      -->
+    <!-- ======================= -->
+    <div class="mobile-app-container">
+        <header class="app-header">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </header>
 
-        <!-- The form to add a new item -->
-        <form id="add-item-form">
-            <input type="text" id="item-input" placeholder="Add a new task..." required>
-            <button type="submit">Add</button>
-        </form>
+        <main class="app-content">
+            <h1>Today's Tasks</h1>
+            <form id="app-form">
+                <input type="text" id="app-input" placeholder="Add a new task..." required>
+                <button type="submit">Add</button>
+            </form>
+            <ul id="app-items-list">
+                <!-- App items will be added here -->
+            </ul>
+        </main>
+    </div>
 
-        <!-- The list where user items will be displayed -->
-        <ul id="items-list">
-            <!-- New items will be added here by JavaScript -->
-        </ul>
+    <!-- ======================= -->
+    <!--      ADMIN PANEL UI     -->
+    <!-- ======================= -->
+    <div class="admin-panel-container">
+        <header class="admin-header">
+            <h1>Admin Dashboard</h1>
+        </header>
+        <main class="admin-content">
+            <h2>Live User Submissions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task ID</th>
+                        <th>User Task</th>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <!-- Admin data will be added here -->
+                </tbody>
+            </table>
+        </main>
     </div>
 
     <script>
-        // Get references to the HTML elements we need
-        const form = document.getElementById('add-item-form');
-        const input = document.getElementById('item-input');
-        const list = document.getElementById('items-list');
+        // --- Shared State & Logic ---
+        let taskId = 0;
 
-        // Listen for the form to be submitted
-        form.addEventListener('submit', function(event) {
-            // Prevent the form from actually submitting and reloading the page
+        // --- App Logic ---
+        const appForm = document.getElementById('app-form');
+        const appInput = document.getElementById('app-input');
+        const appList = document.getElementById('app-items-list');
+
+        appForm.addEventListener('submit', function(event) {
             event.preventDefault();
+            const taskText = appInput.value.trim();
 
-            // Get the text the user typed (and remove any extra whitespace)
-            const itemText = input.value.trim();
+            if (taskText !== '') {
+                taskId++;
+                const timestamp = new Date();
 
-            // If the input isn't empty, add the item
-            if (itemText !== '') {
-                addItemToList(itemText);
+                // 1. Add item to the app UI
+                addAppItem(taskText);
 
-                // Clear the input field for the next item
-                input.value = '';
+                // 2. "Send" data to the admin panel
+                addAdminItem(taskId, taskText, timestamp);
 
-                // Put the focus back on the input field
-                input.focus();
+                // 3. Clear the input
+                appInput.value = '';
+                appInput.focus();
             }
         });
-        
-        // Function to add a new item to the list
-        function addItemToList(text) {
-            // 1. Create a new list item element
-            const newItem = document.createElement('li');
-            newItem.className = 'list-item'; // Assign a class for styling
-            
-            // 2. Set its content to the user's text
-            newItem.innerHTML = `
-                <span>${text}</span>
-                <button class="delete-btn">×</button>
-            `;
 
-            // 3. Add the new item to the list
-            list.appendChild(newItem);
-            
-            // 4. Add functionality to the delete button
-            const deleteButton = newItem.querySelector('.delete-btn');
-            deleteButton.addEventListener('click', function() {
-                list.removeChild(newItem);
-            });
+        function addAppItem(text) {
+            const listItem = document.createElement('li');
+            listItem.className = 'app-list-item';
+            listItem.textContent = text;
+            appList.prepend(listItem); // Prepend to add to the top
         }
+
+
+        // --- Admin Panel Logic ---
+        const adminTableBody = document.getElementById('admin-table-body');
+
+        function addAdminItem(id, text, time) {
+            const tableRow = document.createElement('tr');
+            
+            const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            tableRow.innerHTML = `
+                <td>#${id}</td>
+                <td>${text}</td>
+                <td>${formattedTime}</td>
+                <td><span class="status-pill status-new">New</span></td>
+            `;
+            
+            adminTableBody.prepend(tableRow); // Prepend to add to the top
+        }
+
     </script>
 
 </body>
