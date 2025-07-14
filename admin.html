@@ -29,11 +29,39 @@
             margin: 0;
             background-color: var(--background-color);
             color: var(--text-primary);
-            display: none; /* Hidden by default until authenticated */
         }
 
-        .container {
+        /* NEW: Login Screen Styles */
+        #login-screen {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--primary-dark);
+        }
+        #login-box {
+            background-color: var(--surface-color);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #login-box h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--primary-dark);
+        }
+        #login-error-message {
+            color: var(--error-color);
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* The main container is now hidden by default */
+        #admin-container {
+            display: none;
             height: 100vh;
         }
 
@@ -271,8 +299,23 @@
 </head>
 
 <body>
-
-    <div class="container">
+    
+    <!-- NEW: Login Screen -->
+    <div id="login-screen">
+        <div id="login-box">
+            <h2>Admin Panel Login</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <input type="password" id="admin-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="button button-primary" style="width: 100%;">Enter</button>
+                <p id="login-error-message">Incorrect Password</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Admin Panel Container (initially hidden) -->
+    <div id="admin-container" class="container">
         <aside class="sidebar">
             <h1>Tournament<br>Admin Panel</h1>
             <div class="nav-item active" data-page="dashboard">
@@ -496,23 +539,27 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- Simple Authentication ---
+        // --- NEW: HTML-based Authentication ---
         const ADMIN_PASSWORD = "admin123"; // CHANGE THIS PASSWORD!
-        
-        function authenticate() {
-            const password = prompt("Enter Admin Password:");
-            if (password === ADMIN_PASSWORD) {
-                document.body.style.display = 'flex';
-                initializeApp();
+        const loginScreen = document.getElementById('login-screen');
+        const adminContainer = document.getElementById('admin-container');
+        const loginForm = document.getElementById('admin-login-form');
+        const passwordInput = document.getElementById('admin-password');
+        const loginError = document.getElementById('login-error-message');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (passwordInput.value === ADMIN_PASSWORD) {
+                loginScreen.style.display = 'none';
+                adminContainer.style.display = 'flex';
+                initializeAdminPanel(); // Start the main app logic
             } else {
-                alert("Incorrect Password. Access Denied.");
-                document.body.innerHTML = `<h1 style="text-align: center; margin-top: 50px;">Access Denied</h1>`;
-                document.body.style.display = 'block';
+                loginError.style.display = 'block';
             }
-        }
+        });
         
         // --- Core App Logic ---
-        function initializeApp() {
+        function initializeAdminPanel() {
             // Setup Navigation
             const navItems = document.querySelectorAll('.nav-item');
             const pages = document.querySelectorAll('.page');
@@ -546,10 +593,10 @@
             onValue(ref(db, 'users'), (snapshot) => {
                 document.getElementById('total-users').textContent = snapshot.exists() ? snapshot.size : 0;
             });
-             onValue(query(ref(db, 'tournaments'), orderByChild('status'), "active"), (snapshot) => {
+             onValue(query(ref(db, 'tournaments'), orderByChild('status'), equalTo("active")), (snapshot) => {
                  document.getElementById('total-tournaments').textContent = snapshot.exists() ? snapshot.size : 0;
             });
-            onValue(query(ref(db, 'withdrawals'), orderByChild('status'), "pending"), (snapshot) => {
+            onValue(query(ref(db, 'withdrawals'), orderByChild('status'), equalTo("pending")), (snapshot) => {
                 const count = snapshot.exists() ? snapshot.size : 0;
                 document.getElementById('pending-withdrawals').textContent = count;
                 const badge = document.getElementById('pending-withdrawals-badge');
@@ -949,10 +996,6 @@
                 renderUserTable(filteredUsers);
             });
         }
-        
-        // --- Start the app ---
-        authenticate();
-
     </script>
 </body>
 
