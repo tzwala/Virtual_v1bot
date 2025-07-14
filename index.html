@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Tournament App - User</title>
+    <title>TUBESOFTYT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -1020,6 +1020,10 @@
                         <p class="error-message" id="login-error" style="display: none;"></p>
                         <button type="submit" class="button" style="width: 100%;">Log In</button>
                     </form>
+                    <!-- NEW LINK FOR FORGOT PASSWORD -->
+                    <p style="text-align: center; margin-top: 20px; margin-bottom: 0;">
+                        <a href="#" id="show-reset-btn">Forgot Password?</a>
+                    </p>
                     <p style="text-align: center; margin-top: 20px;">No account? <a href="#" id="show-signup-btn">Sign up</a></p>
                 </div>
                 <div id="signup-card" class="card-content" style="display: none;">
@@ -1044,6 +1048,21 @@
                         <button type="submit" class="button" style="width: 100%;">Sign Up</button>
                     </form>
                     <p style="text-align: center; margin-top: 20px;">Already have an account? <a href="#" id="show-login-btn">Log in</a></p>
+                </div>
+                <!-- NEW CARD FOR PASSWORD RESET -->
+                <div id="reset-password-card" class="card-content" style="display: none;">
+                    <h2 class="card-title" style="text-align: center; margin-bottom: 24px;">Reset Password</h2>
+                    <form id="reset-password-form">
+                        <div class="form-group">
+                            <label for="reset-email">Enter your Email</label>
+                            <input type="email" id="reset-email" required>
+                            <i class="material-icons">email</i>
+                        </div>
+                        <p class="error-message" id="reset-error" style="display: none;"></p>
+                        <p class="success-message" id="reset-success" style="display: none;"></p>
+                        <button type="submit" class="button" style="width: 100%;">Send Reset Link</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 20px;">Remembered your password? <a href="#" id="show-login-btn-from-reset">Log in</a></p>
                 </div>
             </div>
         </section>
@@ -1078,7 +1097,6 @@
             </div>
         </section>
 
-        <!-- NEW: Wallet Page Section -->
         <section id="wallet-page" class="page-section">
             <div class="card wallet-card" style="max-width: 600px; margin: 0 auto;">
                 <div class="card-content" style="padding: 0;">
@@ -1240,7 +1258,8 @@
             createUserWithEmailAndPassword,
             signInWithEmailAndPassword,
             signOut,
-            onAuthStateChanged
+            onAuthStateChanged,
+            sendPasswordResetEmail // <-- NEW: IMPORT THIS
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import {
             getDatabase,
@@ -1258,7 +1277,6 @@
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         // --- Firebase Config ---
-        // THIS CONFIGURATION IS NOW CONNECTED TO YOUR 'tubesoftyt' PROJECT
         const firebaseConfig = {
             apiKey: "AIzaSyDZsRpAktNNB9GPslwhB6ldy-p0CTLaIY4",
             authDomain: "tubesoftyt.firebaseapp.com",
@@ -1269,14 +1287,12 @@
             appId: "1:882353288559:web:e704290c28176b8773e49a",
             measurementId: "G-PVB1BVL7Z0"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
         // --- App Version ---
         const currentAppVersion = "1.0.0";
-
 
         // --- DOM Elements ---
         const mainLoader = document.getElementById('main-loader');
@@ -1319,6 +1335,14 @@
         const navAddAmount = document.getElementById('nav-add-amount');
         const navLeaderboard = document.getElementById('nav-leaderboard');
         const themeSwitch = document.getElementById('theme-switch');
+
+        // NEW: PASSWORD RESET ELEMENTS
+        const resetPasswordCard = document.getElementById('reset-password-card');
+        const resetPasswordForm = document.getElementById('reset-password-form');
+        const resetError = document.getElementById('reset-error');
+        const resetSuccess = document.getElementById('reset-success');
+        const showResetBtn = document.getElementById('show-reset-btn');
+        const showLoginBtnFromReset = document.getElementById('show-login-btn-from-reset');
 
         const profilePage = document.getElementById('profile-page');
         const navProfile = document.getElementById('nav-profile');
@@ -1533,6 +1557,7 @@
                 showPage('auth-section');
                 loginCard.style.display = 'block';
                 signupCard.style.display = 'none';
+                resetPasswordCard.style.display = 'none';
                 loginForm.reset();
                 signupForm.reset();
                 loginError.style.display = 'none';
@@ -1609,6 +1634,33 @@
             }
         });
 
+        // NEW: PASSWORD RESET FORM HANDLER
+        resetPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reset-email').value.trim();
+            resetError.style.display = 'none';
+            resetSuccess.style.display = 'none';
+
+            if (!email) {
+                displayMessage(resetError, "Please enter your email address.");
+                return;
+            }
+
+            const button = resetPasswordForm.querySelector('button');
+            button.disabled = true;
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                displayMessage(resetSuccess, "Success! If an account exists for this email, a reset link has been sent.", false);
+                resetPasswordForm.reset();
+            } catch (error) {
+                console.error("Password reset error:", error);
+                displayMessage(resetError, "Failed to send reset email: " + mapAuthError(error.code));
+            } finally {
+                button.disabled = false;
+            }
+        });
+
         logoutBtn.addEventListener('click', handleLogout);
 
         function handleLogout() {
@@ -1619,20 +1671,42 @@
             });
         }
 
+        // UPDATED: Now hides the reset card
         showSignupBtn.addEventListener('click', (e) => {
             e.preventDefault();
             loginCard.style.display = 'none';
+            resetPasswordCard.style.display = 'none';
             signupCard.style.display = 'block';
             loginError.style.display = 'none';
             loginForm.reset();
         });
-
+        
+        // UPDATED: Now hides the reset card
         showLoginBtn.addEventListener('click', (e) => {
             e.preventDefault();
             signupCard.style.display = 'none';
+            resetPasswordCard.style.display = 'none';
             loginCard.style.display = 'block';
             signupError.style.display = 'none';
             signupForm.reset();
+        });
+        
+        // NEW: Logic to show the reset card
+        showResetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginCard.style.display = 'none';
+            signupCard.style.display = 'none';
+            resetPasswordCard.style.display = 'block';
+            loginError.style.display = 'none';
+        });
+
+        // NEW: Logic to go back to login from the reset card
+        showLoginBtnFromReset.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetPasswordCard.style.display = 'none';
+            loginCard.style.display = 'block';
+            resetError.style.display = 'none';
+            resetSuccess.style.display = 'none';
         });
 
         function mapAuthError(code) {
@@ -1893,11 +1967,11 @@
 
             const amount = parseFloat(depositAmountInput.value);
             if (isNaN(amount) || amount < 10) {
-                alert("Please enter a valid amount (minimum ₹10).");
+                alert("Please enter a valid amount (minimum ₹100).");
                 return;
             }
 
-            const vpa = '7022785980@ibl';
+            const vpa = '8637856826@amazonpay';
             const payeeName = 'Tournament Admin';
             const transactionNote = `Deposit for user: ${currentUserData.username}`;
 
