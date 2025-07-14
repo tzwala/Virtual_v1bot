@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Tournament App - User</title>
+    <title>Tournament App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -145,14 +145,7 @@
         .app-bar .balance .material-icons-outlined {
             font-size: 20px;
         }
-
-        #wallet-balance-bonus {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-left: 4px;
-        }
-
-
+        
         /* --- Drawer --- */
         .drawer {
             position: fixed;
@@ -284,29 +277,20 @@
             padding: 24px;
             max-width: 1400px;
             margin: 0 auto;
-            perspective: 1500px;
         }
 
-        /* --- Premium Card Design --- */
+        /* --- Card Design --- */
         .card {
             background-color: var(--surface);
             border-radius: var(--border-radius);
             box-shadow: 0 1px 3px rgba(var(--shadow-color), 0.1),
-                0 5px 15px rgba(var(--shadow-color), 0.12),
-                0 15px 35px rgba(var(--shadow-color), 0.08);
+                0 5px 15px rgba(var(--shadow-color), 0.12);
             margin-bottom: 24px;
             transition: var(--transition);
             border: 1px solid var(--border-color);
             overflow: hidden;
         }
-
-        .card:not(.wallet-card):hover {
-            transform: translateY(-8px) rotateX(2deg);
-            box-shadow: 0 2px 5px rgba(var(--shadow-color), 0.12),
-                0 10px 25px rgba(var(--shadow-color), 0.18),
-                0 25px 50px rgba(var(--shadow-color), 0.12);
-        }
-
+        
         .card-header {
             padding: 20px 24px;
             border-bottom: 1px solid var(--border-color);
@@ -334,7 +318,6 @@
         .card-content p strong {
             color: var(--text-primary);
             font-weight: 500;
-            margin-right: 8px;
         }
 
         /* --- Buttons --- */
@@ -367,12 +350,10 @@
 
         .button:active {
             transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(var(--primary-dark), 0.2);
         }
 
         .button-accent {
             background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
-            color: white;
         }
 
         .button-accent:hover {
@@ -406,7 +387,6 @@
             left: 15px;
             top: 45px;
             color: var(--text-secondary);
-            transition: var(--transition);
         }
 
         .form-group input {
@@ -426,10 +406,6 @@
             border-color: var(--primary-color);
             outline: none;
             box-shadow: 0 0 0 4px rgba(var(--primary-color), 0.1);
-        }
-
-        .form-group input:focus+.material-icons {
-            color: var(--primary-color);
         }
 
         .form-group small {
@@ -485,8 +461,6 @@
             }
         }
 
-        /* --- Specific Page Styles --- */
-
         /* Home - Tournament List */
         #tournament-list {
             display: grid;
@@ -498,16 +472,10 @@
             width: 100%;
             height: 180px;
             object-fit: cover;
-            display: block;
         }
 
-        .tournament-card .card-content {
-            padding: 0;
-        }
-
-        .tournament-card .details-wrapper {
-            padding: 20px;
-        }
+        .tournament-card .card-content { padding: 0; }
+        .tournament-card .details-wrapper { padding: 20px; }
 
         .tournament-card .title-container {
             display: flex;
@@ -516,12 +484,8 @@
             gap: 12px;
             margin-bottom: 16px;
         }
-
-        .tournament-card .card-title {
-            font-size: 1.3rem;
-            margin-bottom: 0;
-            flex-grow: 1;
-        }
+        
+        .tournament-card .card-title { font-size: 1.3rem; margin-bottom: 0; }
 
         .tournament-status-badge {
             padding: 6px 12px;
@@ -529,27 +493,11 @@
             font-size: 0.8rem;
             font-weight: 600;
             text-transform: capitalize;
-            white-space: nowrap;
-            border: 1px solid transparent;
         }
 
-        .status-active {
-            background-color: #C8E6C9;
-            color: #2E7D32;
-            border-color: #388E3C;
-        }
-
-        .status-finished {
-            background-color: #E0E0E0;
-            color: #424242;
-            border-color: #9E9E9E;
-        }
-
-        .status-cancelled {
-            background-color: #FFCDD2;
-            color: #C62828;
-            border-color: #D32F2F;
-        }
+        .status-active { background-color: #C8E6C9; color: #2E7D32; }
+        .status-finished { background-color: #E0E0E0; color: #424242; }
+        .status-cancelled { background-color: #FFCDD2; color: #C62828; }
 
         .tournament-info {
             display: grid;
@@ -558,24 +506,9 @@
             margin-bottom: 20px;
         }
 
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-
-        .info-item .material-icons {
-            color: var(--primary-light);
-        }
-
-        .info-item span {
-            color: var(--text-secondary);
-        }
-
-        .info-item strong {
-            color: var(--text-primary);
-        }
+        .info-item { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .info-item .material-icons { color: var(--primary-light); }
+        .info-item span { color: var(--text-secondary); }
 
         .winner-display {
             display: flex;
@@ -585,24 +518,11 @@
             padding: 12px 16px;
             border-radius: 12px;
             margin-top: 16px;
-            border: 1px solid var(--accent-color);
-            font-family: var(--font-heading);
         }
 
-        .winner-display .material-icons {
-            color: var(--accent-color);
-            font-size: 2rem;
-        }
-
-        .winner-display span {
-            color: var(--text-secondary);
-        }
-
-        .winner-display strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
+        .winner-display .material-icons { color: var(--accent-color); font-size: 2rem; }
+        .winner-display span { color: var(--text-secondary); }
+        
         .participant-list {
             font-size: 0.9rem;
             color: var(--text-secondary);
@@ -623,10 +543,9 @@
 
         .room-details {
             background-color: rgba(var(--primary-color), 0.1);
-            border: 1px solid var(--primary-light);
+            border-left: 4px solid var(--primary-light);
             padding: 16px;
             margin-top: 16px;
-            border-radius: 12px;
         }
 
         .tournament-card .card-actions {
@@ -638,33 +557,16 @@
         }
 
         /* History & Leaderboard */
-        .history-item,
-        .leaderboard-entry {
+        .history-item, .leaderboard-entry {
             display: flex;
             align-items: center;
             padding: 16px;
             border-bottom: 1px solid var(--border-color);
-            transition: var(--transition);
         }
-
-        .history-item:hover,
-        .leaderboard-entry:hover {
-            background-color: rgba(var(--shadow-color), 0.04);
-        }
-
-        .history-item:last-child,
-        .leaderboard-entry:last-child {
-            border-bottom: none;
-        }
-
-        .history-details {
-            flex-grow: 1;
-        }
-
-        .history-details p {
-            margin: 2px 0;
-            font-size: 0.95rem;
-        }
+        
+        .history-item:last-child, .leaderboard-entry:last-child { border-bottom: none; }
+        .history-details { flex-grow: 1; }
+        .history-details p { margin: 2px 0; font-size: 0.95rem; }
 
         .status {
             font-weight: 500;
@@ -672,58 +574,20 @@
             border-radius: 20px;
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .status.pending {
-            background-color: #FFF9C4;
-            color: #795548;
-        }
+        .status.pending { background-color: #FFF9C4; color: #795548; }
+        .status.accepted { background-color: #C8E6C9; color: #2E7D32; }
+        .status.rejected { background-color: #FFCDD2; color: #C62828; }
 
-        .status.accepted {
-            background-color: #C8E6C9;
-            color: #2E7D32;
-        }
+        .leaderboard-entry .rank { font-size: 1.5rem; font-weight: 700; color: var(--text-secondary); width: 40px; }
+        .leaderboard-entry .winner-info { flex-grow: 1; margin: 0 16px; }
+        .leaderboard-entry .winner-name { font-weight: 600; }
+        .leaderboard-entry .tournament-name { font-size: 0.9rem; color: var(--text-secondary); }
+        .leaderboard-entry .won-at { font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
+        .leaderboard-entry .material-icons { font-size: 2rem; color: var(--accent-color); }
 
-        .status.rejected {
-            background-color: #FFCDD2;
-            color: #C62828;
-        }
-
-        .leaderboard-entry .rank {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            width: 40px;
-        }
-
-        .leaderboard-entry .winner-info {
-            flex-grow: 1;
-            margin: 0 16px;
-        }
-
-        .leaderboard-entry .winner-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .leaderboard-entry .tournament-name {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .leaderboard-entry .won-at {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-align: right;
-        }
-
-        .leaderboard-entry .material-icons {
-            font-size: 2rem;
-            color: var(--accent-color);
-        }
-
-        /* --- Profile Page Styles --- */
+        /* Profile Page Styles */
         .profile-info-item {
             display: flex;
             align-items: center;
@@ -732,10 +596,7 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .profile-info-item:last-child {
-            border-bottom: none;
-        }
-
+        .profile-info-item:last-child { border-bottom: none; }
         .profile-info-item .material-icons {
             font-size: 2.2rem;
             color: var(--primary-color);
@@ -743,165 +604,37 @@
             padding: 12px;
             border-radius: 50%;
         }
+        .profile-info-item div span { display: block; font-size: 0.9rem; color: var(--text-secondary); }
+        .profile-info-item div strong { font-size: 1.1rem; font-weight: 600; }
 
-        .profile-info-item div span {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 2px;
-        }
-
-        .profile-info-item div strong {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* --- Wallet Page Styles --- */
-        .wallet-card {
-            background: #1C1C1E;
-            color: #f0f0f0;
-            border: 1px solid #3A3A3C;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .wallet-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .wallet-item:last-child {
-            border-bottom: none;
-        }
-
-        .wallet-info span {
-            display: block;
-            font-size: 0.9rem;
-            color: #b0b0b0;
-            margin-bottom: 4px;
-        }
-
-        .wallet-info strong {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #ffffff;
-            font-family: var(--font-heading);
-        }
+        /* Wallet Page Styles */
+        .wallet-card { background: #1C1C1E; color: #f0f0f0; border-color: #3A3A3C; }
+        .wallet-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .wallet-item:last-child { border-bottom: none; }
+        .wallet-info span { display: block; font-size: 0.9rem; color: #b0b0b0; margin-bottom: 4px; }
+        .wallet-info strong { font-size: 1.4rem; font-weight: 600; color: #ffffff; }
 
         .wallet-button {
             padding: 10px 20px;
             font-size: 0.9rem;
             border-radius: 8px;
-            border: none;
-            cursor: pointer;
             font-weight: 600;
-            text-transform: none;
-            transition: var(--transition);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .button-transactions {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .button-transactions:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .button-add-cash {
-            background-color: #2ebd61;
-            color: white;
-        }
-
-        .button-add-cash:hover {
-            background-color: #25a354;
-            transform: translateY(-2px);
-        }
-
-        .button-withdraw {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .button-withdraw:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Update Modal Styles */
-        #update-overlay {
-            z-index: 998;
-        }
-
-        #update-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 999;
-            max-width: 450px;
-            width: 90%;
-            animation: fadeIn 0.3s ease;
-        }
-
-        #update-description-display {
-            background: var(--background);
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid var(--border-color);
-            white-space: pre-wrap;
-        }
+        .button-transactions { background-color: var(--primary-color); color: white; }
+        .button-add-cash { background-color: #2ebd61; color: white; }
+        .button-withdraw { background-color: var(--primary-color); color: white; }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .app-bar {
-                padding: 8px 16px;
-            }
-
-            .app-bar .title {
-                font-size: 1.1rem;
-            }
-
-            .app-bar .balance {
-                padding: 6px 10px;
-                font-size: 0.85rem;
-            }
-
-            .app-bar .profile-info {
-                display: none;
-            }
-
-            main {
-                padding: 16px;
-            }
-
-            #tournament-list {
-                grid-template-columns: 1fr;
-            }
-
-            .leaderboard-entry .winner-info {
-                margin: 0 12px;
-            }
-
-            .wallet-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-
-            .wallet-item .wallet-button {
-                width: 100%;
-                text-align: center;
-            }
+            .app-bar { padding: 8px 16px; }
+            .app-bar .title { font-size: 1.1rem; }
+            .app-bar .balance { display: none; } /* Hide balance on small screens */
+            .app-bar .profile-info { display: none; }
+            main { padding: 16px; }
+            #tournament-list { grid-template-columns: 1fr; }
+            .wallet-item { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .wallet-item .wallet-button { width: 100%; text-align: center; justify-content: center; }
         }
     </style>
 </head>
@@ -916,10 +649,7 @@
         </div>
         <div class="balance">
             <i class="material-icons-outlined">account_balance_wallet</i>
-            <span id="wallet-balance-wrapper">
-                <span id="wallet-balance">₹0.00</span>
-                <span id="wallet-balance-bonus" style="display: none;"></span>
-            </span>
+            <span id="wallet-balance">₹0.00</span>
         </div>
     </header>
     <header class="app-bar" id="secondary-app-bar" style="display: none;">
@@ -932,26 +662,11 @@
             Tournament App
             <div class="username" id="drawer-username">User Name</div>
         </div>
-        <div class="drawer-item" id="nav-home">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </div>
-        <div class="drawer-item" id="nav-profile">
-            <i class="material-icons">account_circle</i>
-            <span>My Profile</span>
-        </div>
-        <div class="drawer-item" id="nav-wallet">
-            <i class="material-icons">account_balance_wallet</i>
-            <span>My Wallet</span>
-        </div>
-        <div class="drawer-item" id="nav-my-tournaments">
-            <i class="material-icons">history</i>
-            <span>My Tournaments</span>
-        </div>
-        <div class="drawer-item" id="nav-leaderboard">
-            <i class="material-icons">leaderboard</i>
-            <span>Leaderboard</span>
-        </div>
+        <div class="drawer-item" id="nav-home"><i class="material-icons">home</i><span>Home</span></div>
+        <div class="drawer-item" id="nav-profile"><i class="material-icons">account_circle</i><span>My Profile</span></div>
+        <div class="drawer-item" id="nav-wallet"><i class="material-icons">account_balance_wallet</i><span>My Wallet</span></div>
+        <div class="drawer-item" id="nav-my-tournaments"><i class="material-icons">history</i><span>My Tournaments</span></div>
+        <div class="drawer-item" id="nav-leaderboard"><i class="material-icons">leaderboard</i><span>Leaderboard</span></div>
         <div style="flex-grow: 1;"></div>
         <div class="drawer-item theme-toggle">
             <i class="material-icons">brightness_4</i>
@@ -961,10 +676,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        <div class="drawer-item" id="logout-btn">
-            <i class="material-icons">exit_to_app</i>
-            <span>Logout</span>
-        </div>
+        <div class="drawer-item" id="logout-btn"><i class="material-icons">exit_to_app</i><span>Logout</span></div>
     </div>
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
@@ -978,13 +690,11 @@
                     <form id="login-form">
                         <div class="form-group">
                             <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
-                            <i class="material-icons">email</i>
+                            <input type="email" id="login-email" required><i class="material-icons">email</i>
                         </div>
                         <div class="form-group">
                             <label for="login-password">Password</label>
-                            <input type="password" id="login-password" required>
-                            <i class="material-icons">lock</i>
+                            <input type="password" id="login-password" required><i class="material-icons">lock</i>
                         </div>
                         <p class="error-message" id="login-error" style="display: none;"></p>
                         <button type="submit" class="button" style="width: 100%;">Log In</button>
@@ -996,18 +706,15 @@
                     <form id="signup-form">
                         <div class="form-group">
                             <label for="signup-username">Username (Unique)</label>
-                            <input type="text" id="signup-username" required>
-                            <i class="material-icons">person</i>
+                            <input type="text" id="signup-username" required><i class="material-icons">person</i>
                         </div>
                         <div class="form-group">
                             <label for="signup-email">Email</label>
-                            <input type="email" id="signup-email" required>
-                            <i class="material-icons">email</i>
+                            <input type="email" id="signup-email" required><i class="material-icons">email</i>
                         </div>
                         <div class="form-group">
                             <label for="signup-password">Password (Min. 6 characters)</label>
-                            <input type="password" id="signup-password" required minlength="6">
-                            <i class="material-icons">lock_open</i>
+                            <input type="password" id="signup-password" required minlength="6"><i class="material-icons">lock_open</i>
                         </div>
                         <p class="error-message" id="signup-error" style="display: none;"></p>
                         <button type="submit" class="button" style="width: 100%;">Sign Up</button>
@@ -1017,32 +724,16 @@
             </div>
         </section>
 
-        <section id="home-page" class="page-section">
-            <div id="tournament-list">
-                <!-- Tournament cards will be injected here by JavaScript -->
-            </div>
+        <section id="home-page" class="page-section"></section>
+            <div id="tournament-list"></div>
         </section>
 
         <section id="profile-page" class="page-section">
             <div class="card" style="max-width: 600px; margin: 0 auto;">
-                <div class="card-header">
-                    <h2 class="card-title">My Profile</h2>
-                </div>
+                <div class="card-header"><h2 class="card-title">My Profile</h2></div>
                 <div class="card-content" style="padding: 0;">
-                    <div class="profile-info-item">
-                        <i class="material-icons">badge</i>
-                        <div>
-                            <span>Username</span>
-                            <strong id="profile-page-username">Loading...</strong>
-                        </div>
-                    </div>
-                    <div class="profile-info-item">
-                        <i class="material-icons">email</i>
-                        <div>
-                            <span>Email Address</span>
-                            <strong id="profile-page-email">Loading...</strong>
-                        </div>
-                    </div>
+                    <div class="profile-info-item"><i class="material-icons">badge</i><div><span>Username</span><strong id="profile-page-username">...</strong></div></div>
+                    <div class="profile-info-item"><i class="material-icons">email</i><div><span>Email Address</span><strong id="profile-page-email">...</strong></div></div>
                 </div>
             </div>
         </section>
@@ -1051,84 +742,59 @@
             <div class="card wallet-card" style="max-width: 600px; margin: 0 auto;">
                 <div class="card-content" style="padding: 0;">
                     <div class="wallet-item">
-                        <div class="wallet-info">
-                            <span>Total Balance</span>
-                            <strong id="wallet-page-total">₹0.00</strong>
-                        </div>
-                        <button class="wallet-button button-transactions" id="wallet-transactions-btn">Transactions</button>
+                        <div class="wallet-info"><span>Total Balance</span><strong id="wallet-page-total">₹0.00</strong></div>
+                        <button class="button wallet-button button-transactions" id="wallet-transactions-btn">Transactions</button>
                     </div>
                     <div class="wallet-item">
-                        <div class="wallet-info">
-                            <span>Deposit & Winnings</span>
-                            <strong id="wallet-page-deposit">₹0.00</strong>
-                        </div>
-                        <button class="wallet-button button-add-cash" id="wallet-add-cash-btn">ADD CASH</button>
+                        <div class="wallet-info"><span>Deposit & Winnings</span><strong id="wallet-page-deposit">₹0.00</strong></div>
+                        <button class="button wallet-button button-add-cash" id="wallet-add-cash-btn">Add Cash</button>
                     </div>
                     <div class="wallet-item">
-                        <div class="wallet-info">
-                            <span>Bonus Balance</span>
-                            <strong id="wallet-page-bonus">₹0.00</strong>
-                        </div>
-                        <button class="wallet-button button-withdraw" id="wallet-withdraw-btn">WITHDRAW</button>
+                        <div class="wallet-info"><span>Bonus Balance</span><strong id="wallet-page-bonus">₹0.00</strong></div>
+                        <button class="button wallet-button button-withdraw" id="wallet-withdraw-btn">Withdraw</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="add-funds-page" class="page-section">
-            <div class="card" style="max-width: 500px; margin: 0 auto;">
-                <div class="card-header">
-                    <h2 class="card-title">Add Funds to Wallet</h2>
-                </div>
+             <div class="card" style="max-width: 500px; margin: 0 auto;">
+                <div class="card-header"><h2 class="card-title">Add Funds to Wallet</h2></div>
                 <div class="card-content">
                     <p>Enter the amount you wish to add and proceed to pay using any UPI app.</p>
                     <form id="add-funds-form">
                         <div class="form-group">
                             <label for="deposit-amount">Amount to Add (₹)</label>
-                            <input type="number" id="deposit-amount" required min="10" placeholder="e.g., 100">
-                            <i class="material-icons">currency_rupee</i>
-                            <small>Minimum deposit is ₹10. UPI: your-upi-id@okhdfcbank</small>
+                            <input type="number" id="deposit-amount" required min="10" placeholder="e.g., 100"><i class="material-icons">currency_rupee</i>
+                            <small>Minimum deposit is ₹10. Your UPI ID: your-upi@oksbi</small>
                         </div>
-                        <button type="submit" class="button" style="width: 100%;">
-                            <i class="material-icons">qr_code_scanner</i>
-                            <span>Generate Payment QR</span>
-                        </button>
+                        <button type="submit" class="button" style="width: 100%;"><i class="material-icons">qr_code_scanner</i><span>Generate QR</span></button>
                     </form>
                     <div id="payment-details-container" style="display: none; text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px dashed var(--border-color);">
-                        <h3 style="font-family: var(--font-heading); color: var(--text-primary);">Scan or Click to Pay</h3>
-                        <p>Use any UPI app to complete the payment.</p>
-                        <img id="upi-qr-code" src="" alt="UPI QR Code" style="max-width: 250px; width: 100%; border-radius: var(--border-radius); border: 4px solid var(--surface); box-shadow: 0 4px 10px rgba(var(--shadow-color), 0.1);">
+                        <h3>Scan or Click to Pay</h3>
+                        <img id="upi-qr-code" src="" alt="UPI QR Code" style="max-width: 250px; width: 100%; border-radius: 12px; margin-top: 16px;">
                         <p id="payment-amount-display" style="font-size: 1.2rem; font-weight: 600; margin-top: 16px;"></p>
-                        <a id="upi-payment-link" href="#" class="button button-accent" style="margin-top: 16px;">
-                            <i class="material-icons">phone_android</i>
-                            <span>Pay with UPI App</span>
-                        </a>
-                        <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
-                            <strong>Important:</strong> After payment, funds will be credited to your account within a few minutes after admin verification.
-                        </p>
+                        <a id="upi-payment-link" href="#" class="button button-accent" style="margin-top: 16px;"><i class="material-icons">phone_android</i><span>Pay with App</span></a>
+                        <p style="margin-top: 24px; font-size: 0.9rem;"><strong>Important:</strong> After payment, funds are credited upon admin verification.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="withdraw-page" class="page-section">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Withdraw Funds</h2>
-                </div>
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <div class="card-header"><h2 class="card-title">Withdraw Funds</h2></div>
                 <div class="card-content">
                     <form id="withdraw-form">
                         <div class="form-group">
-                            <label for="withdraw-phonepe">UPI ID / PhonePe Number</label>
-                            <input type="text" id="withdraw-upi" required>
-                            <i class="material-icons">payment</i>
+                            <label for="withdraw-upi">UPI ID / Phone Number</label>
+                            <input type="text" id="withdraw-upi" required><i class="material-icons">payment</i>
                             <small>Enter a valid UPI ID or 10-digit number.</small>
                         </div>
                         <div class="form-group">
                             <label for="withdraw-amount">Amount (₹)</label>
-                            <input type="number" id="withdraw-amount" required min="1">
-                            <i class="material-icons">currency_rupee</i>
-                            <small>Available to Withdraw: <span id="withdraw-available-balance">₹0.00</span></small>
+                            <input type="number" id="withdraw-amount" required min="1"><i class="material-icons">currency_rupee</i>
+                            <small>Withdrawable Balance: <span id="withdraw-available-balance">₹0.00</span></small>
                         </div>
                         <p class="alert-message error-message" id="withdraw-error" style="display: none;"></p>
                         <p class="alert-message success-message" id="withdraw-success" style="display: none;"></p>
@@ -1136,65 +802,27 @@
                     </form>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Withdrawal History</h2>
-                </div>
-                <div class="card-content" style="padding: 0;">
-                    <div id="withdrawal-history">
-                        <p style="padding: 24px;">No previous requests.</p>
-                    </div>
-                </div>
+             <div class="card" style="max-width: 600px; margin: 24px auto 0;">
+                <div class="card-header"><h2 class="card-title">Withdrawal History</h2></div>
+                <div id="withdrawal-history" class="card-content" style="padding: 0;"></div>
             </div>
         </section>
-
+        
         <section id="leaderboard-page" class="page-section">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">🏆 Leaderboard</h2>
-                </div>
-                <div class="card-content" style="padding: 0;">
-                    <div id="leaderboard-content">
-                        <p style="padding: 24px;">Loading leaderboard...</p>
-                    </div>
-                </div>
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <div class="card-header"><h2 class="card-title">🏆 Leaderboard</h2></div>
+                <div id="leaderboard-content" class="card-content" style="padding: 0;"></div>
             </div>
         </section>
 
         <section id="my-tournaments-page" class="page-section">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">My Joined Tournaments</h2>
-                </div>
-                <div class="card-content" style="padding: 0;">
-                    <div id="my-tournaments-list">
-                        <p style="padding: 24px;">Loading your tournament history...</p>
-                    </div>
-                </div>
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <div class="card-header"><h2 class="card-title">My Tournaments</h2></div>
+                <div id="my-tournaments-list" class="card-content" style="padding: 0;"></div>
             </div>
         </section>
-    </main>
 
-    <!-- Update Modal -->
-    <div id="update-overlay" class="drawer-overlay"></div>
-    <div id="update-modal" class="card">
-        <div class="card-header">
-            <h2 class="card-title">🚀 App Update Available</h2>
-        </div>
-        <div class="card-content">
-            <p>A new version of the app is ready!</p>
-            <p><strong>Version:</strong> <span id="update-version-display"></span></p>
-            <p><strong>What's New:</strong></p>
-            <div id="update-description-display"></div>
-        </div>
-        <div class="card-actions" style="justify-content: space-between; padding: 20px;">
-            <button id="update-later-btn" class="button" style="background: var(--text-secondary); color: var(--text-primary);">Later</button>
-            <a id="update-now-link" href="#" target="_blank" class="button button-accent">
-                <i class="material-icons">system_update</i>
-                <span>Update Now</span>
-            </a>
-        </div>
-    </div>
+    </main>
 
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -1221,7 +849,7 @@
             runTransaction
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        // --- Your web app's Firebase configuration ---
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDZsRpAktNNB9GPslwhB6ldy-p0CTLaIY4",
             authDomain: "tubesoftyt.firebaseapp.com",
@@ -1229,7 +857,8 @@
             projectId: "tubesoftyt",
             storageBucket: "tubesoftyt.appspot.com",
             messagingSenderId: "882353288559",
-            appId: "1:882353288559:web:e704290c28176b8773e49a"
+            appId: "1:882353288559:web:e704290c28176b8773e49a",
+            measurementId: "G-PVB1BVL7Z0"
         };
         
         // Initialize Firebase
@@ -1237,735 +866,344 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // --- App Version ---
-        const currentAppVersion = "1.0.0";
-
-
         // --- DOM Elements ---
         const mainLoader = document.getElementById('main-loader');
         const authSection = document.getElementById('auth-section');
-        const loginCard = document.getElementById('login-card');
-        const signupCard = document.getElementById('signup-card');
         const loginForm = document.getElementById('login-form');
         const signupForm = document.getElementById('signup-form');
         const loginError = document.getElementById('login-error');
         const signupError = document.getElementById('signup-error');
-        const showSignupBtn = document.getElementById('show-signup-btn');
-        const showLoginBtn = document.getElementById('show-login-btn');
         const mainAppBar = document.getElementById('main-app-bar');
         const secondaryAppBar = document.getElementById('secondary-app-bar');
-        const appBarTitle = document.getElementById('app-bar-title');
-        const secondaryTitle = document.getElementById('secondary-title');
-        const backBtn = document.getElementById('back-btn');
-        const drawerToggleBtn = document.getElementById('drawer-toggle-btn');
         const drawerMenu = document.getElementById('drawer-menu');
         const drawerOverlay = document.getElementById('drawer-overlay');
-        const profileUsername = document.getElementById('profile-username');
-        const drawerUsername = document.getElementById('drawer-username');
-        const walletBalance = document.getElementById('wallet-balance');
-        const logoutBtn = document.getElementById('logout-btn');
-        const homePage = document.getElementById('home-page');
-        const tournamentList = document.getElementById('tournament-list');
-        const withdrawPage = document.getElementById('withdraw-page');
-        const withdrawForm = document.getElementById('withdraw-form');
-        const withdrawUpiInput = document.getElementById('withdraw-upi');
-        const withdrawAmountInput = document.getElementById('withdraw-amount');
-        const withdrawAvailableBalance = document.getElementById('withdraw-available-balance');
-        const withdrawError = document.getElementById('withdraw-error');
-        const withdrawSuccess = document.getElementById('withdraw-success');
-        const withdrawalHistory = document.getElementById('withdrawal-history');
-        const leaderboardPage = document.getElementById('leaderboard-page');
-        const leaderboardContent = document.getElementById('leaderboard-content');
-        const navHome = document.getElementById('nav-home');
-        const navLeaderboard = document.getElementById('nav-leaderboard');
-        const themeSwitch = document.getElementById('theme-switch');
-        const profilePage = document.getElementById('profile-page');
-        const navProfile = document.getElementById('nav-profile');
-        const profilePageUsername = document.getElementById('profile-page-username');
-        const profilePageEmail = document.getElementById('profile-page-email');
-        const myTournamentsPage = document.getElementById('my-tournaments-page');
-        const navMyTournaments = document.getElementById('nav-my-tournaments');
-        const myTournamentsList = document.getElementById('my-tournaments-list');
-        const addFundsPage = document.getElementById('add-funds-page');
-        const addFundsForm = document.getElementById('add-funds-form');
-        const depositAmountInput = document.getElementById('deposit-amount');
-        const paymentDetailsContainer = document.getElementById('payment-details-container');
-        const upiQrCodeImg = document.getElementById('upi-qr-code');
-        const upiPaymentLink = document.getElementById('upi-payment-link');
-        const paymentAmountDisplay = document.getElementById('payment-amount-display');
-        const updateOverlay = document.getElementById('update-overlay');
-        const updateModal = document.getElementById('update-modal');
-        const updateVersionDisplay = document.getElementById('update-version-display');
-        const updateDescriptionDisplay = document.getElementById('update-description-display');
-        const updateLaterBtn = document.getElementById('update-later-btn');
-        const updateNowLink = document.getElementById('update-now-link');
-        const navWallet = document.getElementById('nav-wallet');
-        const walletPage = document.getElementById('wallet-page');
-        const walletPageTotal = document.getElementById('wallet-page-total');
-        const walletPageDeposit = document.getElementById('wallet-page-deposit');
-        const walletPageBonus = document.getElementById('wallet-page-bonus');
-        const walletTransactionsBtn = document.getElementById('wallet-transactions-btn');
-        const walletAddCashBtn = document.getElementById('wallet-add-cash-btn');
-        const walletWithdrawBtn = document.getElementById('wallet-withdraw-btn');
-
+        const pageSections = document.querySelectorAll('.page-section');
+        const walletBalanceEl = document.getElementById('wallet-balance');
+        const withdrawAvailableBalanceEl = document.getElementById('withdraw-available-balance');
+        
         let currentUser = null;
         let currentUserData = null;
-        let currentRealBalance = 0;
-        let currentBonusBalance = 0;
-        let allTournamentsListener = null;
-        let withdrawalHistoryListener = null;
-        let appUpdateListener = null;
-        let isUpdateAvailable = false;
-        let availableUpdateData = null;
         let pageHistory = ['auth-section'];
+        let listeners = {};
 
-        // --- UI / Theme Management ---
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeSwitch.checked = theme === 'dark';
-        }
-
-        themeSwitch.addEventListener('change', (e) => {
-            applyTheme(e.target.checked ? 'dark' : 'light');
-        });
-
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(savedTheme);
-
-        // --- Utility Functions ---
-        function showLoader() {
-            mainLoader.style.display = 'block';
-        }
-
-        function hideLoader() {
-            mainLoader.style.display = 'none';
+        // --- Core App Logic ---
+        function showLoader(show) {
+            mainLoader.style.display = show ? 'block' : 'none';
         }
 
         function showPage(pageId, isBack = false) {
             if (!isBack && pageId !== pageHistory[pageHistory.length - 1]) {
                 pageHistory.push(pageId);
             }
-
-            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            pageSections.forEach(section => section.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
 
             const pageTitles = {
-                'home-page': 'Home',
-                'withdraw-page': 'Withdraw Funds',
-                'leaderboard-page': 'Leaderboard',
-                'profile-page': 'My Profile',
-                'my-tournaments-page': 'My Tournaments',
-                'wallet-page': 'My Wallet',
-                'add-funds-page': 'Add Funds'
+                'home-page': 'Home', 'withdraw-page': 'Withdraw Funds', 'leaderboard-page': 'Leaderboard',
+                'profile-page': 'My Profile', 'my-tournaments-page': 'My Tournaments',
+                'wallet-page': 'My Wallet', 'add-funds-page': 'Add Funds'
             };
 
-            if (pageId === 'home-page') {
-                mainAppBar.style.display = 'flex';
-                secondaryAppBar.style.display = 'none';
-                appBarTitle.textContent = pageTitles[pageId];
-            } else if (pageId === 'auth-section') {
-                mainAppBar.style.display = 'none';
-                secondaryAppBar.style.display = 'none';
-                pageHistory = ['auth-section'];
-            } else {
-                mainAppBar.style.display = 'none';
-                secondaryAppBar.style.display = 'flex';
-                secondaryTitle.textContent = pageTitles[pageId] || 'Page';
-                if (pageId === 'add-funds-page') {
-                    addFundsForm.reset();
-                    paymentDetailsContainer.style.display = 'none';
-                }
-            }
+            const isMainPage = pageId === 'home-page';
+            mainAppBar.style.display = isMainPage ? 'flex' : 'none';
+            secondaryAppBar.style.display = !isMainPage && pageId !== 'auth-section' ? 'flex' : 'none';
+            if (!isMainPage) document.getElementById('secondary-title').textContent = pageTitles[pageId] || 'Page';
+            
             closeDrawer();
         }
-
-        function toggleDrawer() {
-            drawerMenu.classList.toggle('open');
-            drawerOverlay.classList.toggle('open');
-        }
-
+        
         function closeDrawer() {
             drawerMenu.classList.remove('open');
             drawerOverlay.classList.remove('open');
         }
 
-        function formatTimestamp(timestamp) {
-            if (!timestamp) return 'N/A';
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-IN', {
-                dateStyle: 'medium',
-                timeStyle: 'short'
-            });
-        }
-
-        function formatMatchTime(dateStr, timeStr) {
-            if (!dateStr || !timeStr) return 'TBA';
-            const [year, month, day] = dateStr.split('-');
-            const [hours, minutes] = timeStr.split(':');
-            const date = new Date(year, month - 1, day, hours, minutes);
-            return date.toLocaleString('en-IN', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
-        }
-
-        function updateWalletDisplay(real, bonus) {
-            currentRealBalance = real || 0;
-            currentBonusBalance = bonus || 0;
-            const totalPlayable = currentRealBalance + currentBonusBalance;
-            walletBalance.textContent = `₹${totalPlayable.toFixed(2)}`;
-            withdrawAvailableBalance.textContent = `₹${currentRealBalance.toFixed(2)}`;
-            updateWalletPageDisplay();
-        }
-        
-        function updateWalletPageDisplay() {
-            const total = currentRealBalance + currentBonusBalance;
-            walletPageTotal.textContent = `₹${total.toFixed(2)}`;
-            walletPageDeposit.textContent = `₹${currentRealBalance.toFixed(2)}`;
-            walletPageBonus.textContent = `₹${currentBonusBalance.toFixed(2)}`;
-        }
-
-
         function displayMessage(element, message, isError = true) {
             element.textContent = message;
             element.style.display = 'flex';
-            element.classList.toggle('error-message', isError);
-            element.classList.toggle('success-message', !isError);
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
+            element.className = `alert-message ${isError ? 'error-message' : 'success-message'}`;
+            setTimeout(() => element.style.display = 'none', 5000);
+        }
+        
+        function updateWalletUI(real = 0, bonus = 0) {
+            const total = real + bonus;
+            walletBalanceEl.textContent = `₹${total.toFixed(2)}`;
+            withdrawAvailableBalanceEl.textContent = `₹${real.toFixed(2)}`;
+            document.getElementById('wallet-page-total').textContent = `₹${total.toFixed(2)}`;
+            document.getElementById('wallet-page-deposit').textContent = `₹${real.toFixed(2)}`;
+            document.getElementById('wallet-page-bonus').textContent = `₹${bonus.toFixed(2)}`;
         }
 
         // --- Authentication ---
-        onAuthStateChanged(auth, (user) => {
-            showLoader();
+        onAuthStateChanged(auth, user => {
+            showLoader(true);
+            detachAllListeners();
             if (user) {
                 currentUser = user;
-                const userRef = ref(db, `users/${user.uid}`);
-                onValue(userRef, (snapshot) => {
-                    hideLoader();
+                listeners.user = onValue(ref(db, `users/${user.uid}`), snapshot => {
+                    showLoader(false);
                     if (snapshot.exists()) {
                         currentUserData = snapshot.val();
                         if (currentUserData.isBlocked) {
-                            alert('Your account has been blocked. Please contact support.');
-                            handleLogout();
+                            alert('Your account is blocked.');
+                            signOut(auth);
                             return;
                         }
-                        profileUsername.textContent = currentUserData.username;
-                        drawerUsername.textContent = currentUserData.username;
-                        updateWalletDisplay(currentUserData.walletBalance, currentUserData.bonusBalance);
-                        profilePageUsername.textContent = currentUserData.username;
-                        profilePageEmail.textContent = currentUserData.email;
-
+                        document.getElementById('profile-username').textContent = currentUserData.username;
+                        document.getElementById('drawer-username').textContent = currentUserData.username;
+                        document.getElementById('profile-page-username').textContent = currentUserData.username;
+                        document.getElementById('profile-page-email').textContent = currentUserData.email;
+                        updateWalletUI(currentUserData.walletBalance, currentUserData.bonusBalance);
                         showPage('home-page');
-                        loadAllTournaments();
-                        loadWithdrawalHistory();
-                        checkForAppUpdate();
-                    } else {
-                        handleLogout();
-                    }
-                }, (error) => {
-                    hideLoader();
-                    handleLogout();
+                        loadTournaments();
+                    } else { signOut(auth); }
                 });
             } else {
                 currentUser = null;
                 currentUserData = null;
-                if (allTournamentsListener) allTournamentsListener();
-                if (withdrawalHistoryListener) withdrawalHistoryListener();
-                if (appUpdateListener) appUpdateListener();
                 showPage('auth-section');
-                loginForm.reset();
-                signupForm.reset();
-                hideLoader();
+                showLoader(false);
             }
         });
+        
+        function detachAllListeners() {
+            Object.values(listeners).forEach(listener => listener());
+            listeners = {};
+        }
 
-        loginForm.addEventListener('submit', async (e) => {
+        loginForm.addEventListener('submit', e => {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
+            const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            showLoader();
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                displayMessage(loginError, "Login failed: " + mapAuthError(error.code));
-                hideLoader();
-            }
+            showLoader(true);
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(err => displayMessage(document.getElementById('login-error'), "Login failed. Check credentials."));
         });
 
-        signupForm.addEventListener('submit', async (e) => {
+        signupForm.addEventListener('submit', async e => {
             e.preventDefault();
             const username = document.getElementById('signup-username').value.trim().toLowerCase();
             const email = document.getElementById('signup-email').value.trim();
             const password = document.getElementById('signup-password').value;
 
-            if (password.length < 6) {
-                displayMessage(signupError, "Password must be at least 6 characters.");
+            if (password.length < 6) { displayMessage(document.getElementById('signup-error'), "Password too short."); return; }
+            if (!/^[a-z0-9_]+$/.test(username)) { displayMessage(document.getElementById('signup-error'), "Invalid username format."); return; }
+            
+            showLoader(true);
+            const usernameSnap = await get(ref(db, `usernames/${username}`));
+            if (usernameSnap.exists()) {
+                showLoader(false);
+                displayMessage(document.getElementById('signup-error'), "Username is already taken.");
                 return;
             }
-            if (!/^[a-z0-9_]+$/.test(username)) {
-                displayMessage(signupError, "Username can only contain lowercase letters, numbers, and underscores (_).");
-                return;
-            }
-
-            showLoader();
-            const usernameRef = ref(db, `usernames/${username}`);
+            
             try {
-                const usernameSnap = await get(usernameRef);
-                if (usernameSnap.exists()) {
-                    displayMessage(signupError, "This username is already taken.");
-                    hideLoader();
-                    return;
-                }
-
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
                 const userData = {
-                    username: username,
-                    email: user.email,
-                    walletBalance: 0,
-                    bonusBalance: 0,
-                    createdAt: serverTimestamp(),
-                    isBlocked: false
+                    username, email, walletBalance: 0, bonusBalance: 0, 
+                    createdAt: serverTimestamp(), isBlocked: false
                 };
-                await set(ref(db, `users/${user.uid}`), userData);
-                await set(ref(db, `usernames/${username}`), { uid: user.uid });
-            } catch (error) {
-                displayMessage(signupError, "Sign up failed: " + mapAuthError(error.code));
-                hideLoader();
+                await set(ref(db, `users/${userCredential.user.uid}`), userData);
+                await set(ref(db, `usernames/${username}`), { uid: userCredential.user.uid });
+            } catch (err) {
+                showLoader(false);
+                displayMessage(document.getElementById('signup-error'), "Signup failed. Email may be in use.");
             }
         });
 
-        logoutBtn.addEventListener('click', handleLogout);
-
-        function handleLogout() {
-            showLoader();
-            signOut(auth).catch((error) => {
-                console.error("Sign-out error:", error);
-                hideLoader();
-            });
-        }
-
-        showSignupBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginCard.style.display = 'none';
-            signupCard.style.display = 'block';
+        // --- Navigation & UI Events ---
+        document.getElementById('drawer-toggle-btn').addEventListener('click', () => {
+            drawerMenu.classList.add('open');
+            drawerOverlay.classList.add('open');
         });
-
-        showLoginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            signupCard.style.display = 'none';
-            loginCard.style.display = 'block';
+        document.getElementById('back-btn').addEventListener('click', () => {
+             if (pageHistory.length > 1) { pageHistory.pop(); showPage(pageHistory[pageHistory.length - 1], true); }
         });
-
-        function mapAuthError(code) {
-            switch (code) {
-                case 'auth/invalid-email': return 'Invalid email format.';
-                case 'auth/user-not-found': case 'auth/wrong-password': return 'Incorrect email or password.';
-                case 'auth/email-already-in-use': return 'This email is already registered.';
-                case 'auth/weak-password': return 'Password is too weak.';
-                case 'auth/network-request-failed': return 'Network error. Please check your connection.';
-                default: return `An unknown error occurred.`;
-            }
-        }
-
-        // --- Navigation Handlers ---
-        drawerToggleBtn.addEventListener('click', toggleDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
-        navHome.addEventListener('click', () => showPage('home-page'));
-        navProfile.addEventListener('click', () => showPage('profile-page'));
-        navWallet.addEventListener('click', () => showPage('wallet-page'));
-        navMyTournaments.addEventListener('click', () => {
-            showPage('my-tournaments-page');
-            loadMyJoinedTournaments();
-        });
-        navLeaderboard.addEventListener('click', () => {
-            showPage('leaderboard-page');
-            loadLeaderboard();
-        });
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+        document.getElementById('show-signup-btn').addEventListener('click', e => { e.preventDefault(); document.getElementById('login-card').style.display = 'none'; document.getElementById('signup-card').style.display = 'block'; });
+        document.getElementById('show-login-btn').addEventListener('click', e => { e.preventDefault(); document.getElementById('signup-card').style.display = 'none'; document.getElementById('login-card').style.display = 'block'; });
+        document.getElementById('theme-switch').addEventListener('change', e => { document.documentElement.setAttribute('data-theme', e.target.checked ? 'dark' : 'light'); });
+        
+        // Page Navigation
+        document.getElementById('nav-home').addEventListener('click', () => showPage('home-page'));
+        document.getElementById('nav-profile').addEventListener('click', () => showPage('profile-page'));
+        document.getElementById('nav-wallet').addEventListener('click', () => showPage('wallet-page'));
+        document.getElementById('nav-my-tournaments').addEventListener('click', () => { showPage('my-tournaments-page'); loadMyTournaments(); });
+        document.getElementById('nav-leaderboard').addEventListener('click', () => { showPage('leaderboard-page'); loadLeaderboard(); });
+        document.getElementById('wallet-add-cash-btn').addEventListener('click', () => showPage('add-funds-page'));
+        document.getElementById('wallet-withdraw-btn').addEventListener('click', () => showPage('withdraw-page'));
+        document.getElementById('wallet-transactions-btn').addEventListener('click', () => { showPage('my-tournaments-page'); loadMyTournaments(); });
 
-        backBtn.addEventListener('click', () => {
-            if (pageHistory.length > 1) {
-                pageHistory.pop();
-                showPage(pageHistory[pageHistory.length - 1], true);
-            }
-        });
-
-        walletAddCashBtn.addEventListener('click', () => showPage('add-funds-page'));
-        walletWithdrawBtn.addEventListener('click', () => showPage('withdraw-page'));
-        walletTransactionsBtn.addEventListener('click', () => showPage('my-tournaments-page'));
-
-
-        // --- Tournament Loading & Display ---
-        function loadAllTournaments() {
-            const tournamentsRef = ref(db, 'tournaments');
-            if (allTournamentsListener) allTournamentsListener();
-            allTournamentsListener = onValue(tournamentsRef, (snapshot) => {
-                tournamentList.innerHTML = '';
-                if (!snapshot.exists()) {
-                    tournamentList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">No tournaments available right now.</p>';
-                    return;
-                }
+        // --- Tournament Logic ---
+        function loadTournaments() {
+            const listEl = document.getElementById('tournament-list');
+            listEl.innerHTML = '<div class="loader" style="display: block;"></div>';
+            listeners.tournaments = onValue(query(ref(db, 'tournaments'), orderByChild('createdAt')), snapshot => {
+                listEl.innerHTML = '';
+                if (!snapshot.exists()) { listEl.innerHTML = '<p>No tournaments right now.</p>'; return; }
                 const tournaments = [];
                 snapshot.forEach(child => tournaments.push({ id: child.key, ...child.val() }));
-                tournaments.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                tournaments.forEach(displayTournamentCard);
-            }, (error) => {
-                tournamentList.innerHTML = '<p style="text-align: center; color: var(--error-color); grid-column: 1 / -1;">Failed to load tournaments.</p>';
+                tournaments.reverse().forEach(t => listEl.appendChild(createTournamentCard(t)));
             });
         }
-
-        async function displayTournamentCard(data) {
+        
+        function createTournamentCard(data) {
             const card = document.createElement('div');
             card.className = 'card tournament-card';
-
             const participants = data.participants ? Object.keys(data.participants) : [];
-            const participantCount = participants.length;
-            const maxPlayers = data.maxPlayers || 0;
             const hasJoined = currentUser && data.participants && data.participants[currentUser.uid];
-            const status = data.status || 'active';
-
-            let buttonText = 'Join Now';
-            let buttonIcon = 'login';
-            let isButtonDisabled = false;
-
-            if (status === 'finished' || status === 'cancelled') {
-                buttonText = status === 'finished' ? 'Finished' : 'Cancelled';
-                buttonIcon = status === 'finished' ? 'check_circle' : 'cancel';
-                isButtonDisabled = true;
-            } else if (participantCount >= maxPlayers) {
-                buttonText = 'Full';
-                isButtonDisabled = true;
-            } else if (hasJoined) {
-                buttonText = 'Joined';
-                buttonIcon = 'check_circle';
-                isButtonDisabled = true;
-            }
-
-            const winnerHtml = status === 'finished' && data.winner && data.winner.username ? `
-                <div class="winner-display">
-                    <i class="material-icons">emoji_events</i>
-                    <span>Winner: <strong>${data.winner.username}</strong></span>
-                </div>` : '';
-
-            const bannerHtml = data.bannerUrl ? `<img src="${data.bannerUrl}" alt="Tournament Banner" class="tournament-banner" loading="lazy">` : '';
-
-            const roomInfoHtml = hasJoined && status === 'active' && (data.roomId || data.roomPassword) ?
-                `<div class="room-details"><p><strong>Room ID:</strong> ${data.roomId || 'TBA'}<br><strong>Password:</strong> ${data.roomPassword || 'TBA'}</p></div>` : '';
+            const isFull = participants.length >= data.maxPlayers;
+            
+            let btnHTML = `<button class="button join-button" data-id="${data.id}" data-fee="${data.entryFee}">Join Now</button>`;
+            if (data.status !== 'active') btnHTML = `<button class="button" disabled>${data.status}</button>`;
+            else if (isFull) btnHTML = `<button class="button" disabled>Full</button>`;
+            else if (hasJoined) btnHTML = `<button class="button" disabled>Joined</button>`;
             
             card.innerHTML = `
-                ${bannerHtml}
-                <div class="card-content">
-                    <div class="details-wrapper">
-                        <div class="title-container">
-                             <h3 class="card-title">${data.name || 'N/A'}</h3>
-                             <span class="tournament-status-badge status-${status}">${status}</span>
-                        </div>
-                        <div class="tournament-info">
-                            <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹${data.entryFee || 0}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹${data.prize || 0}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">groups</i><span>Players: <strong>${participantCount}/${maxPlayers}</strong></span></div>
-                            <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>${formatMatchTime(data.matchDate, data.matchTime)}</strong></span></div>
-                        </div>
-                        ${winnerHtml}
-                        ${roomInfoHtml}
-                        <div class="participant-list"><strong>Joined (${participantCount}/${maxPlayers}):</strong> Loading...</div>
+                ${data.bannerUrl ? `<img src="${data.bannerUrl}" class="tournament-banner">` : ''}
+                <div class="details-wrapper">
+                    <div class="title-container">
+                        <h3 class="card-title">${data.name}</h3>
+                        <span class="tournament-status-badge status-${data.status}">${data.status}</span>
                     </div>
-                    <div class="card-actions">
-                        <button class="button join-button" data-tournament-id="${data.id}" data-entry-fee="${data.entryFee || 0}" ${isButtonDisabled ? 'disabled' : ''}>
-                            <i class="material-icons">${buttonIcon}</i>
-                            <span>${buttonText}</span>
-                        </button>
+                    <div class="tournament-info">
+                        <div class="info-item"><i class="material-icons">paid</i><span>Fee: <strong>₹${data.entryFee}</strong></span></div>
+                        <div class="info-item"><i class="material-icons">emoji_events</i><span>Prize: <strong>₹${data.prize}</strong></span></div>
+                        <div class="info-item"><i class="material-icons">groups</i><span>Players: <strong>${participants.length}/${data.maxPlayers}</strong></span></div>
+                        <div class="info-item"><i class="material-icons">schedule</i><span>Time: <strong>${new Date(data.matchTime).toLocaleString()}</strong></span></div>
                     </div>
-                </div>`;
-            tournamentList.appendChild(card);
-
-            if (participantCount > 0) {
-                fetchParticipantUsernames(participants).then(names => {
-                    const listEl = card.querySelector('.participant-list');
-                    if (listEl) listEl.innerHTML = `<strong>Joined (${participantCount}/${maxPlayers}):</strong> ${names.map(name => `<span>${name}</span>`).join('') || 'None'}`;
-                });
-            } else {
-                 const listEl = card.querySelector('.participant-list');
-                 if (listEl) listEl.innerHTML = `<strong>Joined (0/${maxPlayers}):</strong> None`;
-            }
-
-            const joinButton = card.querySelector('.join-button');
-            if (joinButton && !isButtonDisabled) {
-                joinButton.addEventListener('click', handleJoinTournament);
-            }
+                    ${data.status === 'finished' && data.winner ? `<div class="winner-display"><i class="material-icons">emoji_events</i>Winner: <strong>${data.winner.username}</strong></div>` : ''}
+                    ${hasJoined && data.roomId ? `<div class="room-details"><strong>Room ID:</strong> ${data.roomId}<br><strong>Password:</strong> ${data.roomPassword || 'N/A'}</div>` : ''}
+                </div>
+                <div class="card-actions">${btnHTML}</div>`;
+            
+            const joinBtn = card.querySelector('.join-button');
+            if (joinBtn) joinBtn.addEventListener('click', handleJoin);
+            return card;
         }
+        
+        async function handleJoin(event) {
+            const btn = event.currentTarget;
+            const tournamentId = btn.dataset.id;
+            const entryFee = parseInt(btn.dataset.fee);
+            const totalBalance = (currentUserData.walletBalance || 0) + (currentUserData.bonusBalance || 0);
 
-        async function fetchParticipantUsernames(uids) {
-            const promises = uids.map(uid => get(ref(db, `users/${uid}/username`)));
-            const snapshots = await Promise.all(promises);
-            return snapshots.map(snap => snap.val() || 'Unknown');
-        }
+            if (totalBalance < entryFee) { alert("Insufficient balance."); return; }
+            if (!confirm(`Join for ₹${entryFee}? Bonus balance will be used first.`)) return;
 
-        async function handleJoinTournament(event) {
-            if (isUpdateAvailable) {
-                showUpdateModal(availableUpdateData);
-                return;
-            }
-            if (!currentUser) { alert("Please log in to join."); return; }
-
-            const button = event.currentTarget;
-            const tournamentId = button.dataset.tournamentId;
-            const entryFee = parseInt(button.dataset.entryFee, 10);
-            const totalPlayableBalance = currentRealBalance + currentBonusBalance;
-
-            if (totalPlayableBalance < entryFee) {
-                alert("Insufficient balance. Please add funds to your wallet.");
-                return;
-            }
-
-            if (!confirm(`Join tournament for ₹${entryFee}? This will use your bonus balance first.`)) return;
-
-            button.disabled = true;
-            button.querySelector('span').textContent = 'Joining...';
-
-            const tournamentRef = ref(db, `tournaments/${tournamentId}`);
-
+            btn.disabled = true;
+            btn.textContent = 'Joining...';
+            
             try {
-                const result = await runTransaction(tournamentRef, (currentData) => {
-                    if (!currentData || currentData.status !== 'active' || (currentData.participants && currentData.participants[currentUser.uid])) {
-                        return; // Abort transaction
-                    }
-                    const participantCount = currentData.participants ? Object.keys(currentData.participants).length : 0;
-                    if (participantCount >= currentData.maxPlayers) {
-                        return; // Abort transaction
-                    }
+                const result = await runTransaction(ref(db, `tournaments/${tournamentId}`), currentData => {
+                    if (!currentData || currentData.status !== 'active' || (currentData.participants?.[currentUser.uid])) return;
+                    if ((currentData.participants ? Object.keys(currentData.participants).length : 0) >= currentData.maxPlayers) return;
                     if (!currentData.participants) currentData.participants = {};
                     currentData.participants[currentUser.uid] = true;
                     return currentData;
                 });
 
                 if (result.committed) {
-                    const bonusToUse = Math.min(entryFee, currentBonusBalance);
-                    const realMoneyToUse = entryFee - bonusToUse;
+                    const bonusToUse = Math.min(entryFee, currentUserData.bonusBalance);
+                    const realToUse = entryFee - bonusToUse;
                     await update(ref(db, `users/${currentUser.uid}`), {
-                        walletBalance: currentRealBalance - realMoneyToUse,
-                        bonusBalance: currentBonusBalance - bonusToUse
+                        walletBalance: currentUserData.walletBalance - realToUse,
+                        bonusBalance: currentUserData.bonusBalance - bonusToUse
                     });
-                    alert(`Successfully joined! ₹${entryFee} deducted.`);
-                } else {
-                    alert("Failed to join. The tournament might be full or no longer active.");
-                    button.disabled = false;
-                    button.querySelector('span').textContent = 'Join Now';
-                }
+                    alert('Successfully joined!');
+                } else { throw new Error('Failed to join. Tournament may be full or closed.'); }
             } catch (error) {
-                alert("An error occurred while trying to join.");
-                button.disabled = false;
-                button.querySelector('span').textContent = 'Join Now';
+                alert(error.message);
+                btn.disabled = false;
+                btn.textContent = 'Join Now';
             }
         }
-
-        // --- Add Funds & Withdrawal ---
-        addFundsForm.addEventListener('submit', (e) => {
+        
+        // --- Wallet & Other Pages ---
+        addFundsForm.addEventListener('submit', e => {
             e.preventDefault();
-            const amount = parseFloat(depositAmountInput.value);
-            if (isNaN(amount) || amount < 10) { alert("Please enter a valid amount (minimum ₹10)."); return; }
-            
-            const vpa = 'your-upi-id@okhdfcbank'; // IMPORTANT: Change this to your actual UPI ID
-            const payeeName = 'Your Name or Company'; // IMPORTANT: Change this
-            const transactionNote = `Deposit for user: ${currentUserData.username}`;
-
-            const upiUrl = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(payeeName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-
-            upiQrCodeImg.src = qrCodeUrl;
-            upiPaymentLink.href = upiUrl;
-            paymentAmountDisplay.textContent = `Amount to Pay: ₹${amount.toFixed(2)}`;
-            paymentDetailsContainer.style.display = 'block';
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            if (!amount || amount < 10) { alert("Min deposit is ₹10."); return; }
+            const vpa = 'your-upi-id@oksbi'; // IMPORTANT: CHANGE THIS
+            const payeeName = 'Your Name';   // IMPORTANT: CHANGE THIS
+            const upiUrl = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(payeeName)}&am=${amount.toFixed(2)}&cu=INR`;
+            document.getElementById('upi-qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+            document.getElementById('upi-payment-link').href = upiUrl;
+            document.getElementById('payment-amount-display').textContent = `Amount to Pay: ₹${amount.toFixed(2)}`;
+            document.getElementById('payment-details-container').style.display = 'block';
         });
 
-        withdrawForm.addEventListener('submit', async (e) => {
+        withdrawForm.addEventListener('submit', async e => {
             e.preventDefault();
-            const upiId = withdrawUpiInput.value.trim();
-            const amount = parseInt(withdrawAmountInput.value, 10);
+            const upiId = document.getElementById('withdraw-upi').value.trim();
+            const amount = parseInt(document.getElementById('withdraw-amount').value);
+            if (!upiId || !amount || amount <= 0) { displayMessage(document.getElementById('withdraw-error'), "Invalid details."); return; }
+            if (amount > currentUserData.walletBalance) { displayMessage(document.getElementById('withdraw-error'), "Insufficient withdrawable balance."); return; }
             
-            if (!upiId) { displayMessage(withdrawError, "Please enter a valid UPI ID or Phone number."); return; }
-            if (isNaN(amount) || amount <= 0) { displayMessage(withdrawError, "Please enter a valid amount."); return; }
-            if (amount > currentRealBalance) { displayMessage(withdrawError, "Insufficient withdrawable balance."); return; }
-
-            const button = withdrawForm.querySelector('button[type="submit"]');
-            button.disabled = true;
-            button.textContent = 'Submitting...';
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
 
             try {
                 await set(push(ref(db, 'withdrawals')), {
-                    userId: currentUser.uid,
-                    username: currentUserData.username,
-                    upiId: upiId,
-                    amount: amount,
-                    status: 'pending',
-                    requestedAt: serverTimestamp()
+                    userId: currentUser.uid, username: currentUserData.username, upiId, amount, 
+                    status: 'pending', requestedAt: serverTimestamp()
                 });
-                await update(ref(db, `users/${currentUser.uid}`), { walletBalance: currentRealBalance - amount });
-                displayMessage(withdrawSuccess, `Withdrawal request for ₹${amount} submitted.`, false);
-                withdrawForm.reset();
-            } catch (error) {
-                displayMessage(withdrawError, "Failed to submit request.");
-            } finally {
-                button.disabled = false;
-                button.innerHTML = '<i class="material-icons">send</i>Submit Request';
-            }
+                await update(ref(db, `users/${currentUser.uid}`), { walletBalance: currentUserData.walletBalance - amount });
+                displayMessage(document.getElementById('withdraw-success'), "Request submitted.", false);
+                e.target.reset();
+            } catch (err) { displayMessage(document.getElementById('withdraw-error'), "Request failed."); }
+            finally { btn.disabled = false; }
         });
-        
-        function loadWithdrawalHistory() {
-            if (!currentUser) return;
-            const q = query(ref(db, 'withdrawals'), orderByChild('userId'), equalTo(currentUser.uid));
-            if (withdrawalHistoryListener) withdrawalHistoryListener();
-            withdrawalHistoryListener = onValue(q, (snapshot) => {
-                withdrawalHistory.innerHTML = '';
-                if (!snapshot.exists()) {
-                    withdrawalHistory.innerHTML = '<p style="padding: 24px;">No withdrawal history.</p>';
-                    return;
-                }
-                const requests = [];
-                snapshot.forEach(child => requests.push({ id: child.key, ...child.val() }));
-                requests.sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
-                withdrawalHistory.innerHTML = requests.map(req => `
-                    <div class="history-item">
-                        <div class="history-details">
-                            <p><strong>Amount:</strong> ₹${req.amount} to ${req.upiId}</p>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary);">On: ${formatTimestamp(req.requestedAt)}</p>
-                        </div>
-                        <span class="status ${req.status}">${req.status}</span>
-                    </div>`).join('');
+
+        async function loadMyTournaments() {
+            const listEl = document.getElementById('my-tournaments-list');
+            listEl.innerHTML = '<div class="loader" style="display: block;"></div>';
+            const snapshot = await get(query(ref(db, 'tournaments'), orderByChild('createdAt')));
+            if (!snapshot.exists()) { listEl.innerHTML = '<p>No tournaments found.</p>'; return; }
+            
+            const joinedTournaments = [];
+            snapshot.forEach(child => {
+                const t = { id: child.key, ...child.val() };
+                if (t.participants?.[currentUser.uid]) joinedTournaments.push(t);
             });
-        }
-        
-        // --- History & Leaderboard ---
-        async function loadMyJoinedTournaments() {
-            if (!currentUser) return;
-            myTournamentsList.innerHTML = '<div class="loader" style="display: block;"></div>';
-            try {
-                const snapshot = await get(ref(db, 'tournaments'));
-                if (!snapshot.exists()) throw new Error();
-                
-                const joined = [];
-                snapshot.forEach(child => {
-                    const t = { id: child.key, ...child.val() };
-                    if (t.participants && t.participants[currentUser.uid]) joined.push(t);
-                });
 
-                if (joined.length === 0) {
-                    myTournamentsList.innerHTML = '<p style="padding: 24px;">You have not joined any tournaments yet.</p>';
-                    return;
-                }
-
-                joined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                myTournamentsList.innerHTML = joined.map(t => {
-                    let statusHtml = `<span class="status pending">ACTIVE</span>`;
-                    if (t.status === 'finished') {
-                        statusHtml = t.winner && t.winner.uid === currentUser.uid ?
-                            `<span class="status accepted">WIN - ₹${t.prize}</span>` :
-                            `<span class="status rejected">LOSS</span>`;
-                    } else if (t.status === 'cancelled') {
-                         statusHtml = `<span class="status rejected">CANCELLED</span>`;
-                    }
-                    return `
-                        <div class="history-item">
-                            <div class="history-details">
-                                <p><strong>${t.name}</strong></p>
-                                <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    Fee: ₹${t.entryFee} | On: ${formatMatchTime(t.matchDate, t.matchTime)}
-                                </p>
-                            </div>
-                            ${statusHtml}
-                        </div>`;
-                }).join('');
-            } catch {
-                myTournamentsList.innerHTML = '<p style="padding: 24px;">Could not load tournament history.</p>';
-            }
+            if (joinedTournaments.length === 0) { listEl.innerHTML = '<p>You have not joined any tournaments.</p>'; return; }
+            
+            listEl.innerHTML = joinedTournaments.reverse().map(t => {
+                let statusHtml = `<span class="status pending">ACTIVE</span>`;
+                if (t.status === 'finished') {
+                    statusHtml = t.winner?.uid === currentUser.uid 
+                        ? `<span class="status accepted">WIN - ₹${t.prize}</span>`
+                        : `<span class="status rejected">LOSS</span>`;
+                } else if (t.status === 'cancelled') { statusHtml = `<span class="status rejected">CANCELLED</span>`; }
+                return `<div class="history-item"><div class="history-details"><p><strong>${t.name}</strong></p><p>Fee: ₹${t.entryFee}</p></div>${statusHtml}</div>`;
+            }).join('');
         }
         
         async function loadLeaderboard() {
-            leaderboardContent.innerHTML = '<div class="loader" style="display: block;"></div>';
-            try {
-                const q = query(ref(db, 'tournaments'), orderByChild('status'), equalTo('finished'));
-                const snapshot = await get(q);
-                if (!snapshot.exists()) throw new Error();
-
-                const winners = [];
-                snapshot.forEach(child => {
-                    const data = child.val();
-                    if (data.winner && data.winner.uid) {
-                        winners.push({
-                            name: data.name || 'Unnamed',
-                            username: data.winner.username,
-                            wonAt: data.finishedAt || data.createdAt
-                        });
-                    }
-                });
-                
-                if (winners.length === 0) {
-                    leaderboardContent.innerHTML = '<p style="padding: 24px;">No winners have been declared yet.</p>';
-                    return;
-                }
-
-                winners.sort((a, b) => (b.wonAt || 0) - (a.wonAt || 0));
-                leaderboardContent.innerHTML = winners.map((entry, index) => `
+            const contentEl = document.getElementById('leaderboard-content');
+            contentEl.innerHTML = '<div class="loader" style="display: block;"></div>';
+            const snapshot = await get(query(ref(db, 'tournaments'), orderByChild('status'), equalTo('finished')));
+            if (!snapshot.exists()) { contentEl.innerHTML = '<p>No finished tournaments yet.</p>'; return; }
+            
+            const winners = [];
+            snapshot.forEach(child => { if (child.val().winner) winners.push(child.val()); });
+            
+            if (winners.length === 0) { contentEl.innerHTML = '<p>No winners declared.</p>'; return; }
+            
+            contentEl.innerHTML = winners
+                .sort((a,b) => (b.finishedAt || 0) - (a.finishedAt || 0))
+                .map((entry, i) => `
                     <div class="leaderboard-entry">
-                        <span class="rank">${index + 1}</span>
-                        <i class="material-icons">${index < 3 ? 'military_tech' : 'emoji_events'}</i>
+                        <span class="rank">${i + 1}</span>
+                        <i class="material-icons">${i < 3 ? 'military_tech' : 'emoji_events'}</i>
                         <div class="winner-info">
-                            <div class="winner-name">${entry.username}</div>
+                            <div class="winner-name">${entry.winner.username}</div>
                             <div class="tournament-name">Won: ${entry.name}</div>
                         </div>
-                        <span class="won-at">${formatTimestamp(entry.wonAt)}</span>
                     </div>`).join('');
-            } catch {
-                 leaderboardContent.innerHTML = '<p style="padding: 24px;">No finished tournaments found.</p>';
-            }
         }
-        
-        // --- App Update Checker ---
-        function checkForAppUpdate() {
-            if (appUpdateListener) appUpdateListener();
-            const appUpdateRef = ref(db, 'appUpdate');
-            appUpdateListener = onValue(appUpdateRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const updateData = snapshot.val();
-                    if (updateData.version && updateData.version > currentAppVersion) {
-                        isUpdateAvailable = true;
-                        availableUpdateData = updateData;
-                    } else {
-                        isUpdateAvailable = false;
-                        availableUpdateData = null;
-                    }
-                }
-            });
-        }
-        
-        function showUpdateModal(data) {
-            updateVersionDisplay.textContent = data.version || 'N/A';
-            updateDescriptionDisplay.textContent = data.description || 'No description provided.';
-            updateNowLink.href = data.updateLink || '#';
-            updateLaterBtn.style.display = data.forceUpdate ? 'none' : 'inline-flex';
-            updateModal.style.display = 'block';
-            updateOverlay.style.display = 'block';
-        }
-        
-        function hideUpdateModal() {
-            updateModal.style.display = 'none';
-            updateOverlay.style.display = 'none';
-        }
-        
-        updateLaterBtn.addEventListener('click', hideUpdateModal);
-        updateOverlay.addEventListener('click', () => {
-            if (updateLaterBtn.style.display !== 'none') hideUpdateModal();
-        });
 
     </script>
 </body>
-
 </html>
