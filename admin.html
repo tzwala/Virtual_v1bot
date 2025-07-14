@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1976D2;
+            --primary-dark: #0D47A1;
+            --accent-color: #FFA000;
+            --background-color: #F4F6F8;
+            --surface-color: #FFFFFF;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --border-color: #E0E0E0;
+            --error-color: #D32F2F;
+            --success-color: #388E3C;
+            --font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            display: none; /* Hidden by default until authenticated */
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(180deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            padding-top: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 0 0 30px 0;
+            padding: 0 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left-color: var(--accent-color);
+        }
+
+        .nav-item .material-icons {
+            margin-right: 15px;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card.accent {
+             background-color: var(--accent-color);
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .stat-card .label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .button-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .button-accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .button-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .button-danger {
+            background-color: var(--error-color);
+            color: white;
+        }
+        .button-secondary {
+            background-color: var(--text-secondary);
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--background-color);
+            font-weight: 500;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #security-warning {
+            background-color: var(--error-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Tournament<br>Admin Panel</h1>
+            <div class="nav-item active" data-page="dashboard">
+                <i class="material-icons">dashboard</i>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-page="tournaments">
+                <i class="material-icons">emoji_events</i>
+                <span>Tournaments</span>
+            </div>
+            <div class="nav-item" data-page="users">
+                <i class="material-icons">people</i>
+                <span>Users</span>
+            </div>
+            <div class="nav-item" data-page="withdrawals">
+                <i class="material-icons">paid</i>
+                <span>Withdrawals</span>
+                 <span id="pending-withdrawals-badge" style="background: var(--accent-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; margin-left: auto; display: none;"></span>
+            </div>
+             <div class="nav-item" data-page="settings">
+                <i class="material-icons">settings</i>
+                <span>App Settings</span>
+            </div>
+        </aside>
+
+        <main>
+            <!-- DASHBOARD PAGE -->
+            <section id="dashboard-page" class="page active">
+                <h2>Dashboard</h2>
+                 <div id="security-warning">
+                    ⚠️ This admin panel has full database access. Keep this file secure and private.
+                 </div>
+                <div class="stats-grid" style="margin-top: 25px;">
+                    <div class="stat-card">
+                        <div id="total-users" class="value">0</div>
+                        <div class="label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="total-tournaments" class="value">0</div>
+                        <div class="label">Active Tournaments</div>
+                    </div>
+                    <div class="stat-card accent">
+                        <div id="pending-withdrawals" class="value">0</div>
+                        <div class="label">Pending Withdrawals</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOURNAMENTS PAGE -->
+            <section id="tournaments-page" class="page">
+                <h2>Tournament Management</h2>
+                <div class="card">
+                    <h3>Create New Tournament</h3>
+                    <form id="create-tournament-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="t-name">Tournament Name</label>
+                                <input type="text" id="t-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="t-banner">Banner Image URL</label>
+                                <input type="url" id="t-banner" placeholder="https://example.com/image.png">
+                            </div>
+                            <div class="form-group">
+                                <label for="t-fee">Entry Fee (₹)</label>
+                                <input type="number" id="t-fee" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="t-prize">Prize Pool (₹)</label>
+                                <input type="number" id="t-prize" required min="0">
+                            </div>
+                             <div class="form-group">
+                                <label for="t-players">Max Players</label>
+                                <input type="number" id="t-players" required min="2">
+                            </div>
+                            <div class="form-group">
+                                <label for="t-date">Match Date</label>
+                                <input type="date" id="t-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="t-time">Match Time</label>
+                                <input type="time" id="t-time" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="button button-primary">Create Tournament</button>
+                    </form>
+                </div>
+                 <div class="card">
+                    <h3>Existing Tournaments</h3>
+                    <div id="tournament-list-admin"></div>
+                </div>
+            </section>
+
+            <!-- USERS PAGE -->
+            <section id="users-page" class="page">
+                <h2>User Management</h2>
+                <div class="card">
+                     <div class="form-group full-width">
+                        <label for="user-search">Search by Username or Email</label>
+                        <input type="text" id="user-search" placeholder="Start typing to filter...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Wallet (₹)</th>
+                                <th>Bonus (₹)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- WITHDRAWALS PAGE -->
+            <section id="withdrawals-page" class="page">
+                <h2>Withdrawal Requests</h2>
+                <div class="card">
+                     <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Username</th>
+                                <th>PhonePe</th>
+                                <th>Amount (₹)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawal-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- SETTINGS PAGE -->
+            <section id="settings-page" class="page">
+                <h2>App Settings</h2>
+                 <div class="card">
+                    <h3>Force App Update</h3>
+                     <p>Use this to notify users about a new version of the app.</p>
+                    <form id="app-update-form">
+                         <div class="form-group">
+                            <label for="app-version">Version (e.g., 1.0.1)</label>
+                            <input type="text" id="app-version" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="app-description">Update Description (What's new?)</label>
+                            <textarea id="app-description" rows="4"></textarea>
+                        </div>
+                         <div class="form-group">
+                            <label for="app-link">Update URL/Link</label>
+                            <input type="url" id="app-link" required>
+                        </div>
+                         <div class="form-group">
+                             <label>
+                                <input type="checkbox" id="app-force-update">
+                                Force Update (User cannot skip)
+                             </label>
+                        </div>
+                        <button type="submit" class="button button-primary">Save Settings</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    <div id="participants-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-participants-modal">×</span>
+            <h3 id="participants-modal-title">Tournament Participants</h3>
+            <div id="participants-list"></div>
+        </div>
+    </div>
+    
+     <div id="wallet-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-wallet-modal">×</span>
+            <h3 id="wallet-modal-title">Adjust Wallet</h3>
+            <form id="wallet-adjustment-form">
+                <input type="hidden" id="wallet-user-id">
+                 <div class="form-group">
+                    <label for="wallet-type">Balance Type</label>
+                    <select id="wallet-type">
+                        <option value="walletBalance">Main Wallet</option>
+                        <option value="bonusBalance">Bonus Wallet</option>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="adjustment-amount">Amount (Use negative to subtract)</label>
+                    <input type="number" id="adjustment-amount" required placeholder="e.g., 100 or -50">
+                </div>
+                <button type="submit" class="button button-primary">Update Balance</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getDatabase, ref, set, get, onValue, push, update, remove, runTransaction, serverTimestamp, query, orderByChild
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // IMPORTANT: Use the exact same Firebase config as your user-facing app
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZsRpAktNNB9GPslwhB6ldy-p0CTLaIY4",
+            authDomain: "tubesoftyt.firebaseapp.com",
+            databaseURL: "https://tubesoftyt-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tubesoftyt",
+            storageBucket: "tubesoftyt.firebasestorage.app",
+            messagingSenderId: "882353288559",
+            appId: "1:882353288559:web:e704290c28176b8773e49a",
+            measurementId: "G-PVB1BVL7Z0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- Simple Authentication ---
+        const ADMIN_PASSWORD = "admin123"; // CHANGE THIS PASSWORD!
+        
+        function authenticate() {
+            const password = prompt("Enter Admin Password:");
+            if (password === ADMIN_PASSWORD) {
+                document.body.style.display = 'flex';
+                initializeApp();
+            } else {
+                alert("Incorrect Password. Access Denied.");
+                document.body.innerHTML = `<h1 style="text-align: center; margin-top: 50px;">Access Denied</h1>`;
+                document.body.style.display = 'block';
+            }
+        }
+        
+        // --- Core App Logic ---
+        function initializeApp() {
+            // Setup Navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    pages.forEach(p => p.classList.remove('active'));
+
+                    item.classList.add('active');
+                    document.getElementById(`${item.dataset.page}-page`).classList.add('active');
+                });
+            });
+            
+            // Initial data loads
+            loadDashboardStats();
+            loadAllTournaments();
+            loadAllUsers();
+            loadAllWithdrawals();
+            loadAppSettings();
+
+            // Setup Forms
+            setupForms();
+            setupModals();
+            setupSearch();
+        }
+        
+        // --- Data Loading and Rendering ---
+        
+        function loadDashboardStats() {
+            onValue(ref(db, 'users'), (snapshot) => {
+                document.getElementById('total-users').textContent = snapshot.exists() ? snapshot.size : 0;
+            });
+             onValue(query(ref(db, 'tournaments'), orderByChild('status'), "active"), (snapshot) => {
+                 document.getElementById('total-tournaments').textContent = snapshot.exists() ? snapshot.size : 0;
+            });
+            onValue(query(ref(db, 'withdrawals'), orderByChild('status'), "pending"), (snapshot) => {
+                const count = snapshot.exists() ? snapshot.size : 0;
+                document.getElementById('pending-withdrawals').textContent = count;
+                const badge = document.getElementById('pending-withdrawals-badge');
+                badge.textContent = count;
+                badge.style.display = count > 0 ? 'inline-block' : 'none';
+            });
+        }
+        
+        function loadAllTournaments() {
+            onValue(ref(db, 'tournaments'), (snapshot) => {
+                const container = document.getElementById('tournament-list-admin');
+                container.innerHTML = '';
+                if (!snapshot.exists()) {
+                    container.innerHTML = '<p>No tournaments found.</p>';
+                    return;
+                }
+                const tournaments = [];
+                snapshot.forEach(child => {
+                     tournaments.push({ id: child.key, ...child.val() });
+                });
+                 tournaments.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+                
+                 tournaments.forEach(t => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `
+                        <h4>${t.name} (Status: ${t.status})</h4>
+                        <p>Fee: ₹${t.entryFee} | Prize: ₹${t.prize} | Players: ${t.participants ? Object.keys(t.participants).length : 0}/${t.maxPlayers}</p>
+                        <div class="action-buttons">
+                           <button class="button button-secondary view-participants" data-id="${t.id}">View Participants</button>
+                           ${t.status === 'active' ? `<button class="button button-success set-winner" data-id="${t.id}">Set Winner</button>` : ''}
+                           ${t.status === 'active' ? `<button class="button button-danger cancel-tournament" data-id="${t.id}">Cancel</button>` : ''}
+                           <button class="button button-danger delete-tournament" data-id="${t.id}">Delete</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+        }
+        
+        let allUsersData = []; // Cache for searching
+        function loadAllUsers() {
+            onValue(ref(db, 'users'), (snapshot) => {
+                allUsersData = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach(child => {
+                        allUsersData.push({ id: child.key, ...child.val() });
+                    });
+                }
+                renderUserTable(allUsersData);
+            });
+        }
+        
+        function renderUserTable(users) {
+            const tableBody = document.getElementById('user-table-body');
+            tableBody.innerHTML = '';
+             users.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${(user.walletBalance || 0).toFixed(2)}</td>
+                    <td>${(user.bonusBalance || 0).toFixed(2)}</td>
+                    <td>${user.isBlocked ? '<span style="color:red">Blocked</span>' : '<span style="color:green">Active</span>'}</td>
+                    <td class="action-buttons">
+                        <button class="button button-accent adjust-wallet" data-id="${user.id}" data-username="${user.username}">Adjust Wallet</button>
+                        <button class="button ${user.isBlocked ? 'button-success' : 'button-danger'} toggle-block" data-id="${user.id}">
+                            ${user.isBlocked ? 'Unblock' : 'Block'}
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function loadAllWithdrawals() {
+            onValue(ref(db, 'withdrawals'), (snapshot) => {
+                const tableBody = document.getElementById('withdrawal-table-body');
+                tableBody.innerHTML = '';
+                if (!snapshot.exists()) {
+                     tableBody.innerHTML = '<tr><td colspan="6">No withdrawal requests.</td></tr>';
+                    return;
+                }
+                
+                const requests = [];
+                snapshot.forEach(child => {
+                     requests.push({ id: child.key, ...child.val() });
+                });
+                
+                // Sort by status (pending first), then by date
+                requests.sort((a,b) => {
+                    if (a.status === 'pending' && b.status !== 'pending') return -1;
+                    if (a.status !== 'pending' && b.status === 'pending') return 1;
+                    return (b.requestedAt || 0) - (a.requestedAt || 0);
+                });
+
+                requests.forEach(req => {
+                    const row = document.createElement('tr');
+                     row.innerHTML = `
+                        <td>${new Date(req.requestedAt).toLocaleString()}</td>
+                        <td>${req.username}</td>
+                        <td>${req.phonePeNumber}</td>
+                        <td>${req.amount.toFixed(2)}</td>
+                        <td>${req.status}</td>
+                        <td class="action-buttons">
+                            ${req.status === 'pending' ? `
+                               <button class="button button-success approve-withdrawal" data-id="${req.id}">Approve</button>
+                               <button class="button button-danger reject-withdrawal" data-id="${req.id}" data-user-id="${req.userId}" data-amount="${req.amount}">Reject</button>
+                            ` : '<span>Completed</span>'}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            });
+        }
+        
+         function loadAppSettings() {
+            get(ref(db, 'appUpdate')).then(snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    document.getElementById('app-version').value = data.version || '';
+                    document.getElementById('app-description').value = data.description || '';
+                    document.getElementById('app-link').value = data.updateLink || '';
+                    document.getElementById('app-force-update').checked = data.forceUpdate || false;
+                }
+            });
+        }
+        
+        // --- Form and Action Handlers ---
+        
+        function setupForms() {
+            // Create Tournament
+            document.getElementById('create-tournament-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newTournament = {
+                    name: document.getElementById('t-name').value,
+                    bannerUrl: document.getElementById('t-banner').value,
+                    entryFee: parseInt(document.getElementById('t-fee').value),
+                    prize: parseInt(document.getElementById('t-prize').value),
+                    maxPlayers: parseInt(document.getElementById('t-players').value),
+                    matchDate: document.getElementById('t-date').value,
+                    matchTime: document.getElementById('t-time').value,
+                    status: 'active',
+                    createdAt: serverTimestamp()
+                };
+                const newTournamentRef = push(ref(db, 'tournaments'));
+                set(newTournamentRef, newTournament)
+                    .then(() => {
+                        alert('Tournament created successfully!');
+                        e.target.reset();
+                    })
+                    .catch(err => alert('Error: ' + err.message));
+            });
+            
+             // App Settings Update
+            document.getElementById('app-update-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const settings = {
+                    version: document.getElementById('app-version').value,
+                    description: document.getElementById('app-description').value,
+                    updateLink: document.getElementById('app-link').value,
+                    forceUpdate: document.getElementById('app-force-update').checked,
+                };
+                 update(ref(db, 'appUpdate'), settings)
+                    .then(() => alert('App settings updated!'))
+                    .catch(err => alert('Error: ' + err.message));
+            });
+
+            // Wallet Adjustment
+            document.getElementById('wallet-adjustment-form').addEventListener('submit', (e) => {
+                 e.preventDefault();
+                 const userId = document.getElementById('wallet-user-id').value;
+                 const type = document.getElementById('wallet-type').value;
+                 const amount = parseFloat(document.getElementById('adjustment-amount').value);
+                 
+                 if (isNaN(amount)) {
+                     alert("Please enter a valid number.");
+                     return;
+                 }
+                 
+                 const userBalanceRef = ref(db, `users/${userId}/${type}`);
+                 runTransaction(userBalanceRef, (currentBalance) => {
+                     return (currentBalance || 0) + amount;
+                 }).then(() => {
+                     alert("Balance updated successfully!");
+                     document.getElementById('wallet-modal').style.display = 'none';
+                 }).catch(err => alert("Error: " + err.message));
+            });
+        }
+        
+        // Using event delegation for dynamic buttons
+        document.body.addEventListener('click', (e) => {
+            const target = e.target;
+            const tournamentId = target.dataset.id;
+            
+            // Tournament actions
+            if (target.classList.contains('delete-tournament')) {
+                if(confirm('Are you sure you want to PERMANENTLY delete this tournament? This cannot be undone.')) {
+                    remove(ref(db, `tournaments/${tournamentId}`));
+                }
+            }
+             if (target.classList.contains('cancel-tournament')) {
+                if(confirm('Are you sure you want to cancel this tournament? Entry fees will be refunded to all participants.')) {
+                    cancelTournament(tournamentId);
+                }
+            }
+            if(target.classList.contains('view-participants')) {
+                 showParticipantsModal(tournamentId);
+            }
+            if(target.classList.contains('set-winner')) {
+                setTournamentWinner(tournamentId);
+            }
+
+            // User actions
+            if (target.classList.contains('toggle-block')) {
+                 const userRef = ref(db, `users/${target.dataset.id}/isBlocked`);
+                 get(userRef).then(snapshot => {
+                     set(userRef, !snapshot.val());
+                 });
+            }
+             if (target.classList.contains('adjust-wallet')) {
+                showWalletModal(target.dataset.id, target.dataset.username);
+            }
+            
+            // Withdrawal actions
+            if (target.classList.contains('approve-withdrawal')) {
+                update(ref(db, `withdrawals/${target.dataset.id}`), { status: 'approved' });
+            }
+            if(target.classList.contains('reject-withdrawal')) {
+                if(confirm('Are you sure you want to reject this withdrawal? The amount will be refunded to the user.')) {
+                    const updates = {};
+                    updates[`withdrawals/${target.dataset.id}/status`] = 'rejected';
+                    update(ref(db), updates);
+                    
+                    const amountToRefund = parseFloat(target.dataset.amount);
+                    const userWalletRef = ref(db, `users/${target.dataset.userId}/walletBalance`);
+                    runTransaction(userWalletRef, (currentBalance) => {
+                         return (currentBalance || 0) + amountToRefund;
+                    });
+                }
+            }
+        });
+
+        async function cancelTournament(tournamentId) {
+            const tRef = ref(db, `tournaments/${tournamentId}`);
+            try {
+                const snapshot = await get(tRef);
+                if (!snapshot.exists()) throw new Error("Tournament not found");
+
+                const tournament = snapshot.val();
+                if (tournament.status !== 'active') {
+                    alert("Only active tournaments can be cancelled.");
+                    return;
+                }
+
+                // Refund all participants
+                if (tournament.participants) {
+                    const fee = tournament.entryFee || 0;
+                    for (const userId of Object.keys(tournament.participants)) {
+                        const userWalletRef = ref(db, `users/${userId}/walletBalance`);
+                        await runTransaction(userWalletRef, (balance) => (balance || 0) + fee);
+                        
+                        const userBonusRef = ref(db, `users/${userId}/bonusBalance`);
+                        // This simplistic refund doesn't know how much was paid from bonus,
+                        // so it refunds all to main balance. A more complex system would store transaction details.
+                    }
+                }
+
+                // Update tournament status
+                await update(tRef, { status: 'cancelled' });
+                alert('Tournament cancelled and fees refunded.');
+
+            } catch (error) {
+                alert('Error cancelling tournament: ' + error.message);
+            }
+        }
+
+        async function setTournamentWinner(tournamentId) {
+            const tRef = ref(db, `tournaments/${tournamentId}`);
+            try {
+                const tSnapshot = await get(tRef);
+                if(!tSnapshot.exists()) throw new Error("Tournament not found");
+                
+                const tournament = tSnapshot.val();
+                const participants = tournament.participants;
+                if(!participants || Object.keys(participants).length === 0) {
+                    alert("This tournament has no participants.");
+                    return;
+                }
+
+                // Get usernames for the prompt
+                let promptMessage = "Select the winner:\n";
+                const userIds = Object.keys(participants);
+                const userPromises = userIds.map(uid => get(ref(db, `users/${uid}/username`)));
+                const userSnapshots = await Promise.all(userPromises);
+                const userChoices = userSnapshots.map((snap, index) => ({ uid: userIds[index], username: snap.val() }));
+
+                userChoices.forEach((user, index) => {
+                    promptMessage += `${index + 1}: ${user.username}\n`;
+                });
+
+                const choiceIndex = parseInt(prompt(promptMessage)) - 1;
+
+                if (isNaN(choiceIndex) || choiceIndex < 0 || choiceIndex >= userChoices.length) {
+                    alert("Invalid selection.");
+                    return;
+                }
+                
+                const winner = userChoices[choiceIndex];
+                
+                if(!confirm(`Are you sure you want to declare ${winner.username} as the winner? They will receive the prize of ₹${tournament.prize}.`)) {
+                    return;
+                }
+
+                // Award prize and update status
+                const winnerWalletRef = ref(db, `users/${winner.uid}/walletBalance`);
+                await runTransaction(winnerWalletRef, (balance) => (balance || 0) + tournament.prize);
+                
+                await update(tRef, {
+                    status: 'finished',
+                    winner: {
+                        uid: winner.uid,
+                        username: winner.username
+                    },
+                    finishedAt: serverTimestamp()
+                });
+
+                alert(`${winner.username} has been declared the winner!`);
+
+            } catch(error) {
+                alert('Error setting winner: ' + error.message);
+            }
+        }
+        
+        // --- Modals and Search ---
+        function setupModals() {
+            const participantsModal = document.getElementById('participants-modal');
+            const walletModal = document.getElementById('wallet-modal');
+
+            document.getElementById('close-participants-modal').onclick = () => participantsModal.style.display = 'none';
+            document.getElementById('close-wallet-modal').onclick = () => walletModal.style.display = 'none';
+            
+            window.onclick = (event) => {
+                if (event.target == participantsModal) participantsModal.style.display = "none";
+                if (event.target == walletModal) walletModal.style.display = "none";
+            }
+        }
+
+        async function showParticipantsModal(tournamentId) {
+            const modal = document.getElementById('participants-modal');
+            const title = document.getElementById('participants-modal-title');
+            const list = document.getElementById('participants-list');
+            
+            const tSnapshot = await get(ref(db, `tournaments/${tournamentId}`));
+            const tournament = tSnapshot.val();
+            
+            title.textContent = `${tournament.name} - Participants`;
+            list.innerHTML = 'Loading...';
+            modal.style.display = 'block';
+            
+            if (!tournament.participants) {
+                list.innerHTML = '<p>No participants have joined yet.</p>';
+                return;
+            }
+            
+            const uids = Object.keys(tournament.participants);
+            const userPromises = uids.map(uid => get(ref(db, `users/${uid}`)));
+            const userSnapshots = await Promise.all(userPromises);
+            
+            list.innerHTML = userSnapshots.map(snap => `
+                <div style="padding: 8px; border-bottom: 1px solid #eee;">
+                    <strong>${snap.val().username}</strong> (${snap.val().email})
+                </div>
+            `).join('');
+        }
+        
+        function showWalletModal(userId, username) {
+            const modal = document.getElementById('wallet-modal');
+            document.getElementById('wallet-modal-title').textContent = `Adjust Wallet for ${username}`;
+            document.getElementById('wallet-user-id').value = userId;
+            document.getElementById('wallet-adjustment-form').reset();
+            modal.style.display = 'block';
+        }
+
+        function setupSearch() {
+            document.getElementById('user-search').addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                if (!searchTerm) {
+                    renderUserTable(allUsersData);
+                    return;
+                }
+                const filteredUsers = allUsersData.filter(user => 
+                    user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm)
+                );
+                renderUserTable(filteredUsers);
+            });
+        }
+        
+        // --- Start the app ---
+        authenticate();
+
+    </script>
+</body>
+
+</html>
