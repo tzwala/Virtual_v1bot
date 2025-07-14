@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>HaldarAi</title>
+
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-text-color: #000000;
+            --tg-theme-button-color: #2481cc;
+            --tg-theme-button-text-color: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            overflow: hidden; /* Prevents scrolling the whole page */
+        }
+
+        .app-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: var(--tg-theme-bg-color);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 30px); /* Full viewport height minus padding */
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .user-info {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .balance {
+            font-size: 1.2em;
+            font-weight: 600;
+            background-color: #f0f0f0;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* Main Content & Pages */
+        #main-content {
+            flex-grow: 1; /* Takes up available space */
+            overflow-y: auto; /* Allows scrolling only within the main content */
+        }
+        .page { 
+            display: none; 
+            padding: 20px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .page.active { 
+            display: block; 
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* Task List */
+        .task-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .task span {
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            background-color: #28a745; /* Green */
+            transition: background-color 0.2s ease;
+        }
+        .action-btn.go-btn { 
+            background-color: var(--tg-theme-button-color); 
+        }
+        .action-btn:disabled { 
+            background-color: #ccc; 
+            cursor: not-allowed; 
+        }
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Referral Page */
+        .invite-card { 
+            text-align: center; 
+            padding: 30px; 
+            background: linear-gradient(135deg, #e9f5ff, #d6eaff); 
+            border-radius: 15px; 
+            margin-bottom: 20px;
+        }
+        .invite-card h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        .back-link { 
+            display: inline-block; 
+            margin-top: 15px; 
+            color: var(--tg-theme-button-color); 
+            text-decoration: none; 
+            font-weight: 500;
+        }
+
+        /* Footer Navigation */
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #e0e0e0;
+            background-color: var(--tg-theme-bg-color);
+        }
+        .nav-btn {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            font-size: 1em;
+            padding: 12px;
+            cursor: pointer;
+            color: var(--tg-theme-text-color);
+            font-weight: 500;
+            border-radius: 10px;
+            transition: background-color 0.2s ease;
+        }
+        .nav-btn.active {
+            background-color: #e0e0e0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="user-info">
+                Hi, <span id="user-name">User</span>!
+            </div>
+            <div class="balance">
+                <span id="coin-balance">0</span> 🪙
+            </div>
+        </header>
+
+        <!-- Main Content: This area will be scrollable -->
+        <main id="main-content">
+            <!-- Earn Page (Default) -->
+            <div id="earn-page" class="page">
+                <h2>Earn Rewards</h2>
+                <div class="task-list">
+                    <div class="task">
+                        <span>Daily Check-In: Day 1</span>
+                        <button id="claim-check-in" class="action-btn">Claim 300 💎</button>
+                    </div>
+                     <div class="task">
+                        <span>Watch Latest Video</span>
+                        <button class="action-btn go-btn">Go 80 💎</button>
+                    </div>
+                     <div class="task">
+                        <span>Visit Channel</span>
+                        <button class="action-btn go-btn">Go 10 💎</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Page -->
+            <div id="referral-page" class="page">
+                <div class="invite-card">
+                    <h3>Invite New Friends</h3>
+                    <p>Invite friends and get <strong>10%</strong> of their earnings and <strong>+3 💎</strong> for each friend!</p>
+                    <button id="invite-btn" class="action-btn">Invite a Friend</button>
+                </div>
+                 <a href="#" class="back-link" onclick="switchPage('earn-page')">← Back to Earn</a>
+            </div>
+        </main>
+
+        <!-- Footer Navigation -->
+        <footer class="footer-nav">
+            <button class="nav-btn active" data-page="earn-page">💰 Earn</button>
+            <button class="nav-btn" data-page="referral-page">👥 Referral</button>
+        </footer>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the Telegram Web App SDK as soon as the DOM is ready
+            const tg = window.Telegram.WebApp;
+            tg.ready();
+            tg.expand(); // Expand the app to full height
+
+            // --- DOM Elements ---
+            const userNameEl = document.getElementById('user-name');
+            const coinBalanceEl = document.getElementById('coin-balance');
+            const claimCheckInBtn = document.getElementById('claim-check-in');
+            const inviteBtn = document.getElementById('invite-btn');
+            const mainContent = document.getElementById('main-content');
+            const navButtons = document.querySelectorAll('.nav-btn');
+
+            // --- App State ---
+            // In a real app, you would fetch this data from your backend
+            let state = {
+                user: tg.initDataUnsafe?.user || { first_name: 'Guest', id: '0' },
+                coinBalance: 100000,
+                isCheckInClaimed: false
+            };
+
+            // --- Functions ---
+            function updateUI() {
+                userNameEl.textContent = state.user.first_name;
+                coinBalanceEl.textContent = state.coinBalance.toLocaleString();
+                
+                if (state.isCheckInClaimed) {
+                    claimCheckInBtn.textContent = 'Claimed ✅';
+                    claimCheckInBtn.disabled = true;
+                }
+            }
+
+            function switchPage(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                // Show the target page
+                document.getElementById(pageId).classList.add('active');
+
+                // Update active state on nav buttons
+                navButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.page === pageId);
+                });
+
+                // Scroll to top of the content area
+                mainContent.scrollTop = 0;
+            }
+
+            // --- Event Listeners ---
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchPage(button.dataset.page);
+                });
+            });
+
+            claimCheckInBtn.addEventListener('click', () => {
+                if (!state.isCheckInClaimed) {
+                    state.coinBalance += 300;
+                    state.isCheckInClaimed = true;
+                    updateUI(); // Update the UI to reflect the new state
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+            });
+
+            inviteBtn.addEventListener('click', () => {
+                // Get your bot's username from the initData
+                const botUsername = tg.initDataUnsafe?.bot_username || 'your_bot_username'; 
+                // Create a unique referral link for the user
+                const referralLink = `https://t.me/${botUsername}?start=${state.user.id}`;
+                
+                const shareText = `Join me on HaldarAi and earn crypto rewards! 🚀`;
+
+                // Use the official Telegram method to open a share dialog
+                tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(shareText)}`);
+            });
+
+
+            // --- Initial Setup ---
+            updateUI();
+            switchPage('earn-page'); // Show the 'earn-page' by default
+        });
+    </script>
+</body>
+</html>
