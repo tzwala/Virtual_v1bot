@@ -1,43 +1,48 @@
-from telegram import Update, WebAppInfo, MenuButtonWebApp, ReplyKeyboardMarkup, KeyboardButton
-from telegram.ext import Application, CommandHandler, ContextTypes
+import requests
+from io import BytesIO
+from telegram import Update
+from telegram.constants import ChatAction
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
-# --- CONFIGURATION ---
-# 1. PASTE YOUR BOT TOKEN HERE
-BOT_TOKEN = "8123604231:AAFUIQCXc9meiQlA56veQjaiNs18H6ieuVk" 
+# Use your bot token here
+TELEGRAM_BOT_TOKEN = "8123604231:AAFUIQCXc9meiQlA56veQjaiNs18H6ieuVk"
 
-# 2. PASTE YOUR NETLIFY WEB APP URL HERE
-WEB_APP_URL = "https://virtualv1.vercel.app/"
-# ---------------------
-
-# This command handler is triggered when a user types /start
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """
-    Sends a welcome message and sets up the menu button to launch the web app.
-    """
-    # Set up the Menu Button to show the "HaldarAi" app
-    await context.bot.set_chat_menu_button(
-        chat_id=update.effective_chat.id,
-        menu_button=MenuButtonWebApp(text="Launch App", web_app=WebAppInfo(url=WEB_APP_URL))
-    )
-    
-    # Also, send a welcome message with a keyboard button as another way to open the app
-    keyboard = [
-        [KeyboardButton("🚀 Launch Virtual v1", web_app=WebAppInfo(url=WEB_APP_URL))]
-    ]
-    
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Welcome to Virtual v1! 🎉\n\n"
-        "Click the 'Launch' button below or use the menu to open the app.",
-        reply_markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+        "👋 Welcome to Virtual v1 Bot!\nSend me any text prompt and I will generate an AI image using Pollinations."
     )
 
-def main() -> None:
-    """Start the bot."""
-    print("Starting bot...")
-    application = Application.builder().token(BOT_TOKEN).build()
-    application.add_handler(CommandHandler("start", start))
-    print("Bot is running! Go to Telegram and press /start.")
-    application.run_polling()
+async def handle_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    prompt = update.message.text.strip()
+    if not prompt:
+        await update.message.reply_text("⚠️ Please send a non-empty prompt.")
+        return
+
+    await context.bot.send_chat_action(
+        chat_id=update.effective_chat.id, action=ChatAction.UPLOAD_PHOTO
+    )
+
+    try:
+        url = f"https://image.pollinations.ai/prompt/{requests.utils.quote(prompt)}?nologo=true"
+        resp = requests.get(url, timeout=60)
+        resp.raise_for_status()
+
+        bio = BytesIO(resp.content)
+        bio.name = "pollinations.jpg"
+        bio.seek(0)
+
+        await update.message.reply_photo(photo=bio, caption=f"Prompt: {prompt[:100]}")
+    except Exception as e:
+        print("Error:", e)
+        await update.message.reply_text("😕 Error generating image, please try again later.")
+
+def main():
+    app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_prompt))
+
+    print("✅ Virtual v1 Bot is running...")
+    app.run_polling()
 
 if __name__ == "__main__":
     main()
